@@ -19,7 +19,7 @@ class FoodList extends React.Component{
 
     componentDidMount(){
         console.log(Service.getServerHostName());
-        axios.get(Service.getServerHostName() + "/api/food/list")
+        axios.get(Service.getServerHostName() + "/api/food-list")
         .then(res => {
             console.log(res.data);
             this.setState({foodList : res.data.foods})
@@ -30,13 +30,14 @@ class FoodList extends React.Component{
 
     render(){
         return(
-            <div class="row">
+            <div className="col-md-12">
+            <div className="row">
             {
                 this.state.foodList.map((food,index) =>
-                    <div className="col-xs-6 col-sm-4 suggest px-1 py-1">
-                        <a href={"/food/" + food.id}>
+                    <div className="col-xs-6 col-md-4 suggest px-1 py-1">
+                        <a href={"/food-info/" + food.id}>
                             <div className="food-suggest">
-                                <img  src={"https://drive.google.com/uc?export=view&id=" + (food.imageUrl[0] ?  food.imageUrl[0] : "1KmBSjWIfb_GixqM20hu6qfXKTX9rMo94")} alt="" className="home-image" />
+                                <img  src={"https://drive.google.com/uc?export=view&id=" + (food.imageUrl[0] ?  food.imageUrl[0] : "19RNB4mhAvMXI_6ohPkYyc4l9Nv_OeMGW")} alt="" className="home-image" />
 
                                 <div className="food-detail-suggest">
                                     <div  className="icon-heart-suggest">
@@ -50,7 +51,7 @@ class FoodList extends React.Component{
 
                                         </li>
                                         <li className="li-child-suggest"><span> {food.prices}</span></li>
-                                        <li className="li-child-suggest">{ food.restaurant_name + ', ' + food.districtname + ', ' + food.cityname}</li>
+                                        <li className="li-child-suggest">{ food.street_number + ' ' + food.street_name + ', ' + food.district_name + ', ' + food.city_name }</li>
                                         <li className="li-child-suggest">{'Đăng bởi ' + food.username}</li>
                                     </ul>
                                 </div>
@@ -59,6 +60,7 @@ class FoodList extends React.Component{
                     </div>
                 )
             }
+            </div>
             </div>
 
         )

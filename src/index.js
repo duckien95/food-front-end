@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import './stylesheet/bootstrap.min.css'
 import './stylesheet/style.css'
-import { Route, BrowserRouter, Router } from 'react-router-dom';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
@@ -12,18 +12,33 @@ import SignUp from './components/authenticate/SignUp';
 import FoodList from './components/food/FoodList';
 import FoodCreate from './components/food/FoodCreate';
 import FoodDetail from './components/food/FoodDetail';
+import FoodEdit from './components/food/FoodEdit';
+import FoodByCategory from './components/food/FoodByCategory';
+import Nearby from './components/food/Nearby';
+import SearchResult from './components/food/SearchResult';
+import Navbar from "./components/Navbar";
+import Footer from './components/Footer';
+import Test from './components/Test'
 
 ReactDOM.render(
-    <BrowserRouter>
-        <div>
+    <Router>
+        <div className="container">
+            <Navbar />
             <Route exact path="/" component={App} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={SignUp} />
             <Route path="/food/list" component={FoodList} />
             <Route path="/food/create" component={FoodCreate} />
-            <Route path="/food/:foodId" component={FoodDetail} />
+            <Route path="/food-info/:foodId" component={FoodDetail} />
+            <Route path="/food/edit/:foodId" component={FoodEdit} />
+            <Route path="/food-category/:categoryId" component={FoodByCategory} />
+            <Route path="/test" component={Test} />
+            <Route path="/search" component={SearchResult} />
+            <Route path="/nearby/:place" component={Nearby} />
+            <Footer />
         </div>
-    </BrowserRouter>
+
+    </Router>
     , document.getElementById('root')
 );
 

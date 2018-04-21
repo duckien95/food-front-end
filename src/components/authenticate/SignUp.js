@@ -125,7 +125,7 @@ class Food extends React.Component {
 							</div>
 
                             <div className="form-group">
-                                <button type="submit" className="btn btn-info mb-3 maxWidth">Đăng ký</button>
+                                <button type="submit" className="btn btn-info mb-3 max-width">Đăng ký</button>
                             </div>
                         </form>
                     </div>

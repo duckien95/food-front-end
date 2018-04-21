@@ -20,11 +20,12 @@ class App extends Component {
 
     componentWillMount(){
         if(!Auth.loggedIn()){
-            this.props.history.replace('/login');
+
             console.log("not loggin");
         }
     }
     componentDidMount(){
+        console.log(this.props);
         // var user = JSON.parse(localStorage.getItem('user'));
         // console.log(user);
     }
@@ -32,8 +33,8 @@ class App extends Component {
 
     handleLogout(){
         Auth.logout()
-            console.log("history= " + this.props.history);
-            this.props.history.replace('/login');
+        // console.log("history= " + this.props.history);
+        // this.props.history.replace('/login');
     }
 
     render() {
@@ -41,12 +42,10 @@ class App extends Component {
             <div className="App">
 
                 <p className="App-intro">
-                    <p>{this.state.user.username}</p>
-                    <button type="button" className="form-submit" onClick={this.handleLogout}>Logout</button>
                 </p>
                 <FoodList />
-                <FoodCreate />
             </div>
+
 
         );
     }

@@ -123,7 +123,8 @@ class FoodCreate extends React.Component {
 
 		axios.post(Service.getServerHostName() + "/food/create", formData)
 		.then((result) => {
-				return (<Redirect to={'/'}/>)
+				window.location.reload();
+				// this.props.history.replace("/");
 				// access results...
 			})
 	}

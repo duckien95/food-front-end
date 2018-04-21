@@ -2,9 +2,11 @@ import decode from 'jwt-decode';
 export default class AuthService {
     constructor(domain) {
         this.domain = domain || 'http://localhost:8000'
-        this.fetch = this.fetch.bind(this)
+        this.fetch = this.fetch.bind(this);
+        this.signup = this.signup.bind(this);
         this.localSignUp = this.localSignUp.bind(this);
-        this.getProfile = this.getProfile.bind(this)
+        this.localLogin = this.localLogin.bind(this);
+        this.getProfile = this.getProfile.bind(this);
     }
 
 
@@ -109,7 +111,7 @@ export default class AuthService {
         //
         return fetch(url, {
             headers,
-            // ...options
+            ...options
         })
             .then(this._checkStatus)
             .then(response => response.json())

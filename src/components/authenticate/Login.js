@@ -35,7 +35,7 @@ class Login extends Component {
 
     componentDidMount(){
         $(".kep-login-facebook").text("Đăng nhập bằng facebook");
-        $('#msg')[0].style.visibility='hidden'
+        $('#msg')[0].style.visibility = 'hidden';
     }
 
     onSubmit(e){
@@ -145,9 +145,16 @@ class Login extends Component {
                     />
                 </div>
                 <form onSubmit ={this.onSubmit} className="col-sm-12">
-                    <div class="alert alert-danger" id="msg">
-                        {this.state.message}
-                    </div>
+                    {
+                        this.state.message === '' ?
+                        (<div class="alert alert-danger" id="msg" hidden >
+                            {this.state.message}
+                        </div>) :
+                        (<div class="alert alert-danger" id="msg"  >
+                            {this.state.message}
+                        </div>)
+                    }
+
                     <div class="form-group">
                         <input type="text" class="form-control" name="username" aria-describedby="emailHelp" placeholder="Tên đăng nhập" onChange={this.onChange} onInvalid={this.onInvalid} required/>
                     </div>
@@ -160,11 +167,11 @@ class Login extends Component {
                         <div className="form-row col-md-12">
 
                             <div className="col-md-6 mb-3">
-                                <button type="submit" class="btn btn-primary maxWidth">Đăng nhập</button>
+                                <button type="submit" class="btn btn-primary max-width">Đăng nhập</button>
                             </div>
 
                             <div className="col-md-6 mb-3">
-                                <button class="btn btn-danger maxWidth" onClick={this.localSignup}>Đăng ký</button>
+                                <button class="btn btn-danger max-width" onClick={this.localSignup}>Đăng ký</button>
                             </div>
                         </div>
                     </div>
