@@ -122,11 +122,12 @@ class FoodCreate extends React.Component {
 		console.log(formData);
 
 		axios.post(Service.getServerHostName() + "/food/create", formData)
-		.then((result) => {
-				window.location.reload();
+		.then( res => {
+			console.log(res);
+			window.location.reload();
 				// this.props.history.replace("/");
 				// access results...
-			})
+		})
 	}
 
 	onInvalid(e){
@@ -206,6 +207,7 @@ class FoodCreate extends React.Component {
 		// const { description, imageFile } = this.state;
 		return (
 			<form onSubmit={this.onSubmit} encType="multipart/form-data">
+				<div className="title-header text-center mb-3">Đăng bài viết mới</div>
 				<div className="form-group row">
 					<label htmlFor="name" className="col-sm-2 form-control-label">Tên món ăn</label>
 					<div className="col-sm-10">

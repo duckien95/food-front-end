@@ -375,6 +375,12 @@ if (process.env.NODE_ENV !== 'production') {
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(102);
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -682,7 +688,62 @@ module.exports = {
 
 
 /***/ }),
-/* 5 */
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Service = function (_React$Component) {
+    _inherits(Service, _React$Component);
+
+    function Service() {
+        _classCallCheck(this, Service);
+
+        var _this = _possibleConstructorReturn(this, (Service.__proto__ || Object.getPrototypeOf(Service)).call(this));
+
+        _this.getServerHostName = _this.getServerHostName.bind(_this);
+        _this.getListDistance = _this.getListDistance.bind(_this);
+        return _this;
+    }
+
+    _createClass(Service, [{
+        key: 'getServerHostName',
+        value: function getServerHostName() {
+            return 'http://localhost:8000';
+        }
+    }, {
+        key: 'getListDistance',
+        value: function getListDistance() {
+            return [{ value: '0.5', name: '0.5 km' }, { value: '1.0', name: '1.0 km' }, { value: '1.5', name: '1.5 km' }, { value: '2.0', name: '2.0 km' }, { value: '2.5', name: '2.5 km' }, { value: '3.0', name: '3.0 km' }, { value: '3.5', name: '3.5 km' }, { value: '4.0', name: '4.0 km' }];
+        }
+    }]);
+
+    return Service;
+}(_react2.default.Component);
+
+exports.default = Service;
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -739,71 +800,10 @@ module.exports = invariant;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(102);
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Service = function (_React$Component) {
-    _inherits(Service, _React$Component);
-
-    function Service() {
-        _classCallCheck(this, Service);
-
-        var _this = _possibleConstructorReturn(this, (Service.__proto__ || Object.getPrototypeOf(Service)).call(this));
-
-        _this.getServerHostName = _this.getServerHostName.bind(_this);
-        _this.getListDistance = _this.getListDistance.bind(_this);
-        return _this;
-    }
-
-    _createClass(Service, [{
-        key: 'getServerHostName',
-        value: function getServerHostName() {
-            return 'http://localhost:8000';
-        }
-    }, {
-        key: 'getListDistance',
-        value: function getListDistance() {
-            return [{ value: '0.5', name: '0.5 km' }, { value: '1.0', name: '1.0 km' }, { value: '1.5', name: '1.5 km' }, { value: '2.0', name: '2.0 km' }, { value: '2.5', name: '2.5 km' }, { value: '3.0', name: '3.0 km' }, { value: '3.5', name: '3.5 km' }, { value: '4.0', name: '4.0 km' }];
-        }
-    }]);
-
-    return Service;
-}(_react2.default.Component);
-
-exports.default = Service;
-
-/***/ }),
 /* 8 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: SyntaxError: Unexpected token (114:12)\n\n\u001b[0m \u001b[90m 112 | \u001b[39m        \u001b[36mreturn\u001b[39m fetch(url\u001b[33m,\u001b[39m {\n \u001b[90m 113 | \u001b[39m            headers\u001b[33m,\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 114 | \u001b[39m            \u001b[33m...\u001b[39moptions\n \u001b[90m     | \u001b[39m            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 115 | \u001b[39m        })\n \u001b[90m 116 | \u001b[39m            \u001b[33m.\u001b[39mthen(\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39m_checkStatus)\n \u001b[90m 117 | \u001b[39m            \u001b[33m.\u001b[39mthen(response \u001b[33m=>\u001b[39m response\u001b[33m.\u001b[39mjson())\u001b[0m\n");
+throw new Error("Module build failed: SyntaxError: Unexpected token (133:12)\n\n\u001b[0m \u001b[90m 131 | \u001b[39m        \u001b[36mreturn\u001b[39m fetch(url\u001b[33m,\u001b[39m {\n \u001b[90m 132 | \u001b[39m            headers\u001b[33m,\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 133 | \u001b[39m            \u001b[33m...\u001b[39moptions\n \u001b[90m     | \u001b[39m            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 134 | \u001b[39m        })\n \u001b[90m 135 | \u001b[39m            \u001b[33m.\u001b[39mthen(\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39m_checkStatus)\n \u001b[90m 136 | \u001b[39m            \u001b[33m.\u001b[39mthen(response \u001b[33m=>\u001b[39m response\u001b[33m.\u001b[39mjson())\u001b[0m\n");
 
 /***/ }),
 /* 9 */
@@ -12474,7 +12474,7 @@ exports.default = createTransitionManager;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react__);
@@ -12755,7 +12755,7 @@ var createTransitionManager = function createTransitionManager() {
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 var normalizeHeaderName = __webpack_require__(105);
 
 var DEFAULT_CONTENT_TYPE = {
@@ -13285,7 +13285,7 @@ var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isE
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_invariant__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -13404,7 +13404,7 @@ Link.contextTypes = {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react__);
@@ -13727,7 +13727,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _axios = __webpack_require__(6);
+var _axios = __webpack_require__(4);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -13735,7 +13735,7 @@ var _jquery = __webpack_require__(9);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _Service = __webpack_require__(7);
+var _Service = __webpack_require__(6);
 
 var _Service2 = _interopRequireDefault(_Service);
 
@@ -13890,7 +13890,7 @@ module.exports = function bind(fn, thisArg) {
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 var settle = __webpack_require__(106);
 var buildURL = __webpack_require__(108);
 var parseHeaders = __webpack_require__(109);
@@ -14153,11 +14153,11 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(11);
 
-var _Service = __webpack_require__(7);
+var _Service = __webpack_require__(6);
 
 var _Service2 = _interopRequireDefault(_Service);
 
-var _axios = __webpack_require__(6);
+var _axios = __webpack_require__(4);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -14313,7 +14313,8 @@ var FoodCreate = function (_React$Component) {
 
 			console.log(formData);
 
-			_axios2.default.post(Service.getServerHostName() + "/food/create", formData).then(function (result) {
+			_axios2.default.post(Service.getServerHostName() + "/food/create", formData).then(function (res) {
+				console.log(res);
 				window.location.reload();
 				// this.props.history.replace("/");
 				// access results...
@@ -14407,6 +14408,11 @@ var FoodCreate = function (_React$Component) {
 			return _react2.default.createElement(
 				"form",
 				{ onSubmit: this.onSubmit, encType: "multipart/form-data" },
+				_react2.default.createElement(
+					"div",
+					{ className: "title-header text-center mb-3" },
+					"\u0110\u0103ng b\xE0i vi\u1EBFt m\u1EDBi"
+				),
 				_react2.default.createElement(
 					"div",
 					{ className: "form-group row" },
@@ -14693,7 +14699,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _axios = __webpack_require__(6);
+var _axios = __webpack_require__(4);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -14701,7 +14707,7 @@ var _jquery = __webpack_require__(9);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _Service = __webpack_require__(7);
+var _Service = __webpack_require__(6);
 
 var _Service2 = _interopRequireDefault(_Service);
 
@@ -14731,23 +14737,38 @@ var SearchResult = function (_React$Component) {
         _this.state = {
             totalList: [],
             foodList: [],
-            msg: [],
+            msg: '',
+            distanceLevel: -1,
             distance: [],
             category: [],
             cateList: [],
             maxDistance: '',
-            foodCategoryList: []
+            foodCategoryList: [],
+            numberResult: ''
         };
 
         _this.handleDistanceChange = _this.handleDistanceChange.bind(_this);
+        _this.setSearchState = _this.setSearchState.bind(_this);
 
         return _this;
     }
 
     _createClass(SearchResult, [{
+        key: "setSearchState",
+        value: function setSearchState() {
+            this.setState({
+                foodList: [],
+                msg: "Không tìm thấy kết quả nào"
+            });
+            (0, _jquery2.default)('#search-found')[0].style.visibility = 'hidden';
+            (0, _jquery2.default)('.search-not-found')[0].style.visibility = 'visible';
+        }
+    }, {
         key: "componentDidMount",
         value: function componentDidMount() {
             var _this2 = this;
+
+            (0, _jquery2.default)('.search-not-found')[0].style.visibility = 'hidden';
 
             _axios2.default.get(Service.getServerHostName() + '/api/food/category-list').then(function (res) {
                 _this2.setState({ foodCategoryList: res.data.data });
@@ -14760,18 +14781,27 @@ var SearchResult = function (_React$Component) {
 
             var para = this.props.location.query;
             console.log(this.props.location.query === undefined);
+            // if(window.location.path)
             if (para !== undefined) {
-                this.setState({ foodList: para.food, totalList: para.food });
-            } else {
-                var localData = JSON.parse(localStorage.getItem('search'));
-                if (localData.length) {
-                    this.setState({ foodList: localData, totalList: localData });
-                    this.totalList = localData;
+                console.log(para.food);
+                if (para.food.length) {
+                    this.setState({ foodList: para.food, totalList: para.food, numberResult: para.food.length });
                 } else {
-                    this.setState({ msg: "Không tìm thấy kết quả nào" });
-                    this.setState({ foodList: [] });
+                    this.setSearchState();
+                }
+            } else {
+                var data = JSON.parse(localStorage.getItem('search'));
+                if (data.length) {
+                    // let data = JSON.parse(localData);
+                    console.log(data);
+                    this.setState({ foodList: data, totalList: data, numberResult: data.length });
+                } else {
+                    this.setSearchState();
                 }
             }
+
+            // $('#search-found')[0].style.visibility = this.state.msg === '' ? 'visible' :'hidden' ;
+
 
             // console.log(this.props.location.query);
         }
@@ -14788,7 +14818,7 @@ var SearchResult = function (_React$Component) {
                     temp.push(total[i]);
                 }
             }
-            this.setState({ foodList: temp });
+            this.setState({ foodList: temp, numberResult: temp.length, distanceLevel: dist });
         }
     }, {
         key: "render",
@@ -14800,18 +14830,24 @@ var SearchResult = function (_React$Component) {
                 { className: "" },
                 _react2.default.createElement(
                     "div",
-                    { className: "text-center" },
+                    { className: "text-center search-not-found alert alert-warning" },
                     this.state.msg
                 ),
                 _react2.default.createElement(
                     "div",
-                    { className: "card" },
+                    { className: "card", id: "search-found" },
                     _react2.default.createElement(
                         "div",
-                        { className: "card-header text-center" },
+                        { className: "card-header" },
                         _react2.default.createElement(
                             "div",
-                            { className: "float-right col-md-3" },
+                            { className: "float-left col-md-6 number-result-search text-danger" },
+                            this.state.numberResult > 0 ? 'Tìm thấy ' + this.state.numberResult + ' địa điểm ' : 'Không có địa điểm nào ',
+                            Number(this.state.distanceLevel) > 0 ? ' dưới ' + this.state.distanceLevel + ' km' : ''
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "float-right col-md-3 text-center" },
                             _react2.default.createElement(
                                 "select",
                                 { className: "custom-select", name: "distance", id: "distanceSelect", onChange: this.handleDistanceChange },
@@ -14939,15 +14975,15 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(11);
 
-var _axios = __webpack_require__(6);
+var _axios = __webpack_require__(4);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _Search = __webpack_require__(129);
+var _Search = __webpack_require__(130);
 
 var _Search2 = _interopRequireDefault(_Search);
 
-var _Service = __webpack_require__(7);
+var _Service = __webpack_require__(6);
 
 var _Service2 = _interopRequireDefault(_Service);
 
@@ -14989,7 +15025,8 @@ var Navbar = function (_React$Component) {
             Auth.logout();
             localStorage.removeItem('search');
             localStorage.removeItem('distance');
-            window.location.reload();
+            // window.location.reload();
+            window.location.replace("http://localhost:3000");
         }
     }, {
         key: 'componentDidMount',
@@ -15039,13 +15076,8 @@ var Navbar = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactRouterDom.Link,
                                             { to: '/', className: 'nav-link' },
-                                            'Trang ch\u1EE7'
+                                            'VIETFOOD'
                                         )
-                                    ),
-                                    _react2.default.createElement(
-                                        'li',
-                                        { className: 'nav-item' },
-                                        _react2.default.createElement(_reactRouterDom.Link, { to: '/', className: 'nav-link' })
                                     ),
                                     _react2.default.createElement(
                                         'li',
@@ -15068,7 +15100,7 @@ var Navbar = function (_React$Component) {
                                         )
                                     )
                                 ),
-                                this.state.login ? _react2.default.createElement(
+                                Auth.loggedIn ? _react2.default.createElement(
                                     'ul',
                                     { className: 'navbar-nav' },
                                     _react2.default.createElement(
@@ -15077,17 +15109,45 @@ var Navbar = function (_React$Component) {
                                         _react2.default.createElement(
                                             'span',
                                             { className: 'nav-link' },
-                                            'Xin ch\xE0o ',
-                                            this.state.user.username
+                                            this.state.user.provider === 'local' ? this.state.user.username : this.state.user.firstName + ' ' + this.state.user.lastName
                                         )
                                     ),
                                     _react2.default.createElement(
                                         'li',
                                         { className: 'nav-item active' },
+                                        _react2.default.createElement(_reactRouterDom.Link, { to: '/', className: 'nav-link', onClick: this.handleLogout })
+                                    ),
+                                    _react2.default.createElement(
+                                        'li',
+                                        { className: 'nav-item dropdown' },
                                         _react2.default.createElement(
-                                            _reactRouterDom.Link,
-                                            { to: '/', className: 'nav-link', onClick: this.handleLogout },
-                                            '\u0110\u0103ng xu\u1EA5t'
+                                            'a',
+                                            { className: 'nav-link dropdown-toggle', href: '#', id: 'navbarDropdown', role: 'button', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
+                                            _react2.default.createElement('i', { 'class': 'fa fa-cog' })
+                                        ),
+                                        _react2.default.createElement(
+                                            'div',
+                                            { className: 'dropdown-menu dropdown-menu-right', 'aria-labelledby': 'navbarDropdown' },
+                                            _react2.default.createElement(
+                                                'a',
+                                                { href: '/food-favorite/' + this.state.user.id, className: 'dropdown-item' },
+                                                'Danh s\xE1ch y\xEAu th\xEDch'
+                                            ),
+                                            _react2.default.createElement(
+                                                'a',
+                                                { href: '/food-like/' + this.state.user.id, className: 'dropdown-item' },
+                                                'C\xE1c m\xF3n \u0111\xE3 th\xEDch'
+                                            ),
+                                            _react2.default.createElement(
+                                                'a',
+                                                { href: '/food/create', className: 'dropdown-item' },
+                                                '\u0110\u0103ng b\xE0i'
+                                            ),
+                                            _react2.default.createElement(
+                                                'a',
+                                                { href: '/', className: 'dropdown-item', onClick: this.handleLogout },
+                                                '\u0110\u0103ng xu\u1EA5t'
+                                            )
                                         )
                                     )
                                 ) : _react2.default.createElement(
@@ -15126,11 +15186,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _axios = __webpack_require__(6);
+var _axios = __webpack_require__(4);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _Service = __webpack_require__(7);
+var _Service = __webpack_require__(6);
 
 var _Service2 = _interopRequireDefault(_Service);
 
@@ -15344,6 +15404,14 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(11);
 
+var _axios = __webpack_require__(4);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _Service = __webpack_require__(6);
+
+var _Service2 = _interopRequireDefault(_Service);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -15351,6 +15419,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Service = new _Service2.default();
 
 var Footer = function (_React$Component) {
     _inherits(Footer, _React$Component);
@@ -15360,7 +15430,10 @@ var Footer = function (_React$Component) {
 
         _classCallCheck(this, Footer);
 
-        (_this = _possibleConstructorReturn(this, (Footer.__proto__ || Object.getPrototypeOf(Footer)).call(this)), _this), _this.onClick = _this.onClick.bind(_this);
+        (_this = _possibleConstructorReturn(this, (Footer.__proto__ || Object.getPrototypeOf(Footer)).call(this)), _this), _this.state = {
+            cate: []
+        };
+        _this.onClick = _this.onClick.bind(_this);
         return _this;
     }
 
@@ -15370,29 +15443,29 @@ var Footer = function (_React$Component) {
             console.log(e.target.value);
         }
     }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            _axios2.default.get(Service.getServerHostName() + "/api/category").then(function (res) {
+                _this2.setState({ cate: res.data.data });
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
                 'footer',
-                { 'class': 'main-color' },
+                { className: 'main-color' },
                 _react2.default.createElement(
                     'div',
-                    { 'class': 'row' },
+                    { className: 'row' },
                     _react2.default.createElement(
                         'div',
-                        { 'class': 'col-md-4 col-sm-6 col-xs-12' },
-                        _react2.default.createElement(
-                            'span',
-                            { 'class': 'logo' },
-                            'LOGO'
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { 'class': 'col-md-4 col-sm-6 col-xs-12' },
+                        { className: 'col-md-4 col-sm-6 col-xs-12' },
                         _react2.default.createElement(
                             'ul',
-                            { 'class': 'menu' },
+                            { className: 'menu' },
                             _react2.default.createElement(
                                 'span',
                                 null,
@@ -15411,19 +15484,52 @@ var Footer = function (_React$Component) {
                                 'li',
                                 null,
                                 _react2.default.createElement(
-                                    'a',
-                                    { href: '#' },
-                                    'M\xF3n \u0103n'
+                                    _reactRouterDom.Link,
+                                    { to: '/' },
+                                    'Trang ch\u1EE7'
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                _react2.default.createElement(
+                                    _reactRouterDom.Link,
+                                    { to: '/' },
+                                    'Trang ch\u1EE7'
                                 )
                             )
                         )
                     ),
                     _react2.default.createElement(
                         'div',
-                        { 'class': 'col-md-4 col-sm-6 col-xs-12' },
+                        { className: 'col-md-4 col-sm-6 col-xs-12' },
                         _react2.default.createElement(
                             'ul',
-                            { 'class': 'address' },
+                            { className: 'menu' },
+                            _react2.default.createElement(
+                                'span',
+                                { className: 'logo' },
+                                '\u1EA8m th\u1EF1c Vi\u1EC7t Nam'
+                            ),
+                            this.state.cate.map(function (cate, index) {
+                                return _react2.default.createElement(
+                                    'li',
+                                    null,
+                                    _react2.default.createElement(
+                                        'a',
+                                        { href: '/food-category/' + cate.cate_id, className: 'no-padding' },
+                                        cate.cate_name
+                                    )
+                                );
+                            })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-md-4 col-sm-6 col-xs-12' },
+                        _react2.default.createElement(
+                            'ul',
+                            { className: 'address' },
                             _react2.default.createElement(
                                 'span',
                                 null,
@@ -15432,7 +15538,7 @@ var Footer = function (_React$Component) {
                             _react2.default.createElement(
                                 'li',
                                 null,
-                                _react2.default.createElement('i', { 'class': 'fa fa-phone', 'aria-hidden': 'true' }),
+                                _react2.default.createElement('i', { className: 'fa fa-phone', 'aria-hidden': 'true' }),
                                 ' ',
                                 _react2.default.createElement(
                                     'a',
@@ -15443,7 +15549,7 @@ var Footer = function (_React$Component) {
                             _react2.default.createElement(
                                 'li',
                                 null,
-                                _react2.default.createElement('i', { 'class': 'fa fa-map-marker', 'aria-hidden': 'true' }),
+                                _react2.default.createElement('i', { className: 'fa fa-map-marker', 'aria-hidden': 'true' }),
                                 ' ',
                                 _react2.default.createElement(
                                     'a',
@@ -15454,7 +15560,7 @@ var Footer = function (_React$Component) {
                             _react2.default.createElement(
                                 'li',
                                 null,
-                                _react2.default.createElement('i', { 'class': 'fa fa-envelope', 'aria-hidden': 'true' }),
+                                _react2.default.createElement('i', { className: 'fa fa-envelope', 'aria-hidden': 'true' }),
                                 ' ',
                                 _react2.default.createElement(
                                     'a',
@@ -15529,11 +15635,15 @@ var _FoodEdit = __webpack_require__(126);
 
 var _FoodEdit2 = _interopRequireDefault(_FoodEdit);
 
-var _FoodByCategory = __webpack_require__(127);
+var _FoodFavorite = __webpack_require__(127);
+
+var _FoodFavorite2 = _interopRequireDefault(_FoodFavorite);
+
+var _FoodByCategory = __webpack_require__(128);
 
 var _FoodByCategory2 = _interopRequireDefault(_FoodByCategory);
 
-var _Nearby = __webpack_require__(128);
+var _Nearby = __webpack_require__(129);
 
 var _Nearby2 = _interopRequireDefault(_Nearby);
 
@@ -15570,6 +15680,7 @@ _reactDom2.default.render(_react2.default.createElement(
         _react2.default.createElement(_reactRouterDom.Route, { path: '/food-info/:foodId', component: _FoodDetail2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/food/edit/:foodId', component: _FoodEdit2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/food-category/:categoryId', component: _FoodByCategory2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { path: '/food-favorite/:userId', component: _FoodFavorite2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/test', component: _Test2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/search', component: _SearchResult2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/nearby/:place', component: _Nearby2.default }),
@@ -34283,8 +34394,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../node_modules/css-loader/index.js!./bootstrap.min.css", function() {
-			var newContent = require("!!../../node_modules/css-loader/index.js!./bootstrap.min.css");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!./bootstrap.min.css", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!./bootstrap.min.css");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -34328,8 +34439,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../node_modules/css-loader/index.js!./style.css", function() {
-			var newContent = require("!!../../node_modules/css-loader/index.js!./style.css");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!./style.css", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!./style.css");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -34347,7 +34458,7 @@ exports = module.exports = __webpack_require__(18)(undefined);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900);", ""]);
 
 // module
-exports.push([module.i, "/* body {\n  padding: 50px;\n  font: 14px \"Lucida Grande\", Helvetica, Arial, sans-serif;\n} */\n\n/*a {\n  color: #00B7FF;\n}*/\n\nbody {\n    background: #eee\n}\n\n\n/**************************** FOOD DETAIL ****************************/\n.video-drive {\n    height: 420px;\n}\n.title-header{\n    flex-wrap: wrap;\n    margin-right: -15px;\n    margin-left: -15px;\n    font-size: 17px;\n    font-weight: 700;\n}\n/****************************END  FOOD DETAIL ****************************/\n\n/*************************** FOOD LIST ***************************/\n\n\n.food-suggest {\n    position: relative;\n    width: 100%;\n}\n.icon-heart-suggest {\n    position: absolute;\n    right: 10px;\n    top: 10px;\n    z-index: 1000;\n}\n\n.food-detail-info-suggest > li {\n    color: #fff;\n}\n\n.home-image {\n    width: 100%;\n    height: 180px;\n}\n\n.li-price-suggest {\n    font-size: 18px;\n    font-weight: 700 !important;\n}\n\n.food-detail-suggest{\n    position: absolute;\n    bottom: 0;\n    width: 100%;\n    height: 100%;\n    background: rgba(0, 0, 0, 0.6);\n\n}\n\nul.food-detail-info-suggest{\n    position: absolute;\n    bottom: 0;\n    padding-left: 16px;\n    list-style: none;\n    text-align: left;\n}\n\n.food-detail-info-suggest > li{\n    color: #fff;\n}\n.li-price-suggest{\n    font-size: 18px;\n    font-weight: 700 !important;\n}\n.li-child-suggest{\n    font-size: 13px;\n    font-weight: 500;\n}\n.price-detail-estimate{\n    background: #fbfbfb;\n    border-radius: 10px;\n    margin-top: 30px;\n}\n\n\n/*************************** END FOOD LIST ***************************/\n.max-width {\n    width: 100%;\n}\n.login-google-button {\n    font-family: Helvetica,sans-serif;\n    font-weight: 700;\n    -webkit-font-smoothing: antialiased;\n    color: #fff;\n    cursor: pointer;\n    display: inline-block;\n    font-size: calc(.27548vw + 12.71074px);\n    text-decoration: none;\n    text-transform: uppercase;\n    transition: background-color .3s,border-color .3s;\n    border: calc(.06887vw + .67769px) solid #dc3545;\n    padding: calc(.34435vw + 13.38843px) calc(.34435vw + 18.38843px);\n}\n.kep-login-facebook, .login-google-button {\n    width: 100% !important;\n}\n.no-padding {\n  padding-right: 0;\n  padding-left: 0;\n}\n\n.main-color {\n    background-color: #d63e6f;\n}\n\n.search-form{\n    z-index: 1000;\n}\n\n.navbar {\n\n\tfont-weight: 400;\n\tfont-size: 20px;\n\t/*height: 100px;*/\n}\n\n.main-color, .navbar-light .navbar-nav .nav-link {\n    color: #fff !important;\n}\n.navbar-expand-lg {\n    padding-bottom: 0 !important;\n}\n\n.mainContent {\n    margin-top: 180px;\n    padding-bottom: 50px;\n    /* padding-top: 50px; */\n}\n\n.nearby {\n    font-size: 26px;\n    line-height: 1.5em;\n    font-weight: 700;\n}\n\n.search {\n    margin-top: 8px;\n    display: inline-block;\n    width: 100%;\n    height: calc(2.25rem + 2px);\n    padding: .375rem 1.75rem .375rem .75rem;\n    line-height: 1.5;\n    color: #495057;\n    vertical-align: middle;\n    background-size: 8px 10px;\n    border: 1px solid #ced4da;\n    border-radius: .25rem;\n    -webkit-appearance: none;\n}\n\nbody{\n    font-family: 'Roboto', sans-serif;\n    word-wrap:break-word;\n    font-size: 16px;\n}\n\n.search-text{\n\tmargin-top:50px;\n\tbackground-color: #272d33;\n\tpadding-top:60px;\n\tpadding-bottom:60px;\n}\n\n.search-text .input-search{\n\theight:45px;\n\twidth:40%;\n\tpadding-left:20px;\n    color:#333;\n}\n\n.search-text .btn-search{\n    background: #da3e44;\n    font-family:Roboto;\n    border:none;\n\tcolor:#FFF;\n\theight: 45px;\n    width: 80px;\n}\n\n.search-text h4{\n    color: #FFF;\n    font-weight: 700;\n}\n\nfooter{\n    background-color: #33383c;\n    padding:30px 0px;\n    position: absolute;\n    left: 0;\n    right: 0;\n}\n\n.logo{\n    color:#FFF;\n    font-weight:700;\n    font-size:30px;\n}\n\n.address span , .menu span{\n   color: #FFF;\n   font-weight: bold;\n   border-bottom: 1px solid #c7c7c7;\n   padding:10px 0px;\n   display: block;\n   text-transform: uppercase;\n   font-size: 16px;\n   letter-spacing: 3px;\n}\n\n.address li a , .menu li a{\n    color:#FFF;\n    letter-spacing: 3px;\n    text-decoration:none;\n    font-size:14px;\n}\n\n.address li, .menu li{\n    margin:20px 0px;\n    list-style: none;\n}\n\n.address li a:hover , .menu li a:hover{\n    color: #da3e44;\n    -webkit-transition: all 1s ease-in-out;\n    -moz-transition: all 1s ease-in-out;\n    -o-transition: all 1s ease-in-out;\n    transition: all 1s ease-in-out;\n}\n\n.address .fa{\n    color: #da3e44;\n    margin-right: 10px;\n    font-size:18px;\n}\n\n\n/* --------------LOGIN AND SIGNUP FORM----------------- */\n\n.form-body{\n    background:#fff;\n    padding:20px;\n}\n.login-form{\n    background:rgba(255,255,255,0.8);\n  padding:20px;\n  border-top:3px solid#3e4043;\n}\n.innter-form{\n  padding-top:20px;\n}\n.final-login li{\n  width:50%;\n}\n\n.nav-tabs {\n    border-bottom: none !important;\n}\n\n.nav-tabs>li{\n  color:#222 !important;\n}\n.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {\n    color: #fff;\n    background-color: #d14d42;\n    border: none !important;\n    border-bottom-color: transparent;\n  border-radius:none !important;\n}\n.nav-tabs>li>a {\n    margin-right: 2px;\n    line-height: 1.428571429;\n    border: none !important;\n    border-radius:none !important;\n  text-transform:uppercase;\n  font-size:16px;\n}\n\n.social-login{\n  text-align:center;\n  font-size:12px;\n}\n.social-login p{\n  margin:15px 0;\n}\n.social-login ul{\n  margin:0;\n  padding:0;\n  list-style-type:none;\n}\n.social-login ul li{\n  width:33%;\n  float:left;\n    clear:fix;\n}\n.social-login ul li a{\n  font-size:13px;\n  color:#fff;\n  text-decoration:none;\n  padding:10px 0;\n  display:block;\n}\n.social-login ul li:nth-child(1) a{\n  background:#3b5998;\n}\n.social-login ul li:nth-child(2) a{\n  background:#e74c3d;\n}\n.social-login ul li:nth-child(3) a{\n  background:#3698d9;\n}\n.sa-innate-form input[type=text], input[type=password], input[type=file], textarea, select, email{\n    font-size:13px;\n  padding:10px;\n  border:1px solid#ccc;\n  outline:none;\n  width:100%;\n  margin:8px 0;\n\n}\n.sa-innate-form input[type=submit]{\n    border:1px solid#e64b3b;\n  background:#e64b3b;\n  color:#fff;\n  padding:10px 25px;\n  font-size:14px;\n  margin-top:5px;\n  }\n  .sa-innate-form input[type=submit]:hover{\n  border:1px solid#db3b2b;\n  background:#db3b2b;\n  color:#fff;\n  }\n\n  .sa-innate-form button{\n  border:1px solid#e64b3b;\n  background:#e64b3b;\n  color:#fff;\n  padding:10px 25px;\n  font-size:14px;\n  margin-top:5px;\n  }\n  .sa-innate-form button:hover{\n  border:1px solid#db3b2b;\n  background:#db3b2b;\n  color:#fff;\n  }\n    .sa-innate-form p{\n        font-size:13px;\n        padding-top:10px;\n    }\n", ""]);
+exports.push([module.i, "/* body {\n  padding: 50px;\n  font: 14px \"Lucida Grande\", Helvetica, Arial, sans-serif;\n} */\n\n/*a {\n  color: #00B7FF;\n}*/\n\nbody {\n    background: #eee\n}\n\nselect {\n    font-size: 16px !important;\n    letter-spacing: 0.1em !important;\n}\n\nselect > option {\n    letter-spacing: initial !important;\n}\n\n/**************************** FOOD DETAIL ****************************/\n.video-drive {\n    height: 425px;\n}\n\n.title {\n    flex-wrap: wrap;\n    margin-right: -15px;\n    margin-left: -15px;\n    font-size: 25px;\n    font-weight: 500;\n    line-height: 2.5;\n    letter-spacing: 1px;\n    color: #b7106a;\n    text-transform: uppercase;\n}\n\n.title-header{\n    flex-wrap: wrap;\n    margin-right: -15px;\n    margin-left: -15px;\n    font-size: 35px;\n    font-weight: 500;\n    line-height: 2.5;\n    letter-spacing: 1px;\n    color: #b7106a;\n    text-transform: uppercase;\n}\n/****************************END  FOOD DETAIL ****************************/\n\n/*************************** FOOD LIST ***************************/\n\n\n.food-suggest {\n    position: relative;\n    width: 100%;\n}\n.icon-heart-suggest {\n    position: absolute;\n    right: 10px;\n    top: 10px;\n    z-index: 1000;\n}\n\n.food-detail-info-suggest > li {\n    color: #fff;\n}\n\n.home-image {\n    width: 100%;\n    height: 180px;\n}\n\n.li-price-suggest {\n    font-size: 18px;\n    font-weight: 700 !important;\n}\n\n.food-detail-suggest{\n    position: absolute;\n    bottom: 0;\n    width: 100%;\n    height: 100%;\n    background: rgba(0, 0, 0, 0.6);\n\n}\n\nul.food-detail-info-suggest{\n    position: absolute;\n    bottom: 0;\n    padding-left: 16px;\n    list-style: none;\n    text-align: left;\n}\n\n.food-detail-info-suggest > li{\n    color: #fff;\n}\n.li-price-suggest{\n    font-size: 18px;\n    font-weight: 700 !important;\n}\n.li-child-suggest{\n    font-size: 13px;\n    font-weight: 500;\n}\n.price-detail-estimate{\n    background: #fbfbfb;\n    border-radius: 10px;\n    margin-top: 30px;\n}\n\n\n/*************************** END FOOD LIST ***************************/\n.max-width {\n    width: 100%;\n}\n.login-google-button {\n    font-family: Helvetica,sans-serif;\n    font-weight: 700;\n    -webkit-font-smoothing: antialiased;\n    color: #fff;\n    cursor: pointer;\n    display: inline-block;\n    font-size: calc(.27548vw + 12.71074px);\n    text-decoration: none;\n    text-transform: uppercase;\n    transition: background-color .3s,border-color .3s;\n    border: calc(.06887vw + .67769px) solid #dc3545;\n    padding: calc(.34435vw + 13.38843px) calc(.34435vw + 18.38843px);\n}\n.kep-login-facebook, .login-google-button {\n    width: 100% !important;\n}\n.no-padding {\n  padding-right: 0;\n  padding-left: 0;\n}\n\n.main-color {\n    background-color: #d63e6f;\n}\n\n.search-form{\n    z-index: 1000;\n}\n\n.navbar {\n\n\tfont-weight: 400;\n\tfont-size: 20px;\n\t/*height: 100px;*/\n}\n\n.main-color, .navbar-light .navbar-nav .nav-link {\n    color: #fff !important;\n}\n.navbar-expand-lg {\n    padding-bottom: 0 !important;\n}\n\n.main-content {\n    margin-top: 150px;\n    padding-bottom: 50px;\n    /* padding-top: 50px; */\n}\n\n.nearby-header {\n    font-size: 30px;\n    font-weight: 500;\n    line-height: 2;\n    letter-spacing: 1px;\n    color: #b7106a;\n    /* text-transform: uppercase; */\n}\n\n.nearby-title{\n    font-size: 25px;\n    font-weight: 500;\n    line-height: 1.5;\n}\n\n.search {\n    margin-top: 8px;\n    display: inline-block;\n    width: 100%;\n    height: calc(2.25rem + 2px);\n    padding: .375rem 1.75rem .375rem .75rem;\n    line-height: 1.5;\n    color: #495057;\n    vertical-align: middle;\n    background-size: 8px 10px;\n    border: 1px solid #ced4da;\n    border-radius: .25rem;\n    -webkit-appearance: none;\n}\n\n.search-not-found{\n    font-size: 22px;\n    font-weight: 400;\n    line-height: 1.8em;\n}\n.number-result-search{\n    font-size: 20px;\n    font-weight: 400;\n    line-height: 54px;\n    vertical-align: middle;\n}\n\nbody{\n    font-family: 'Roboto', sans-serif;\n    word-wrap:break-word;\n    font-size: 16px;\n}\n\n.search-text{\n\tmargin-top:50px;\n\tbackground-color: #272d33;\n\tpadding-top:60px;\n\tpadding-bottom:60px;\n}\n\n.search-text .input-search{\n\theight:45px;\n\twidth:40%;\n\tpadding-left:20px;\n    color:#333;\n}\n\n.search-text .btn-search{\n    background: #da3e44;\n    font-family:Roboto;\n    border:none;\n\tcolor:#FFF;\n\theight: 45px;\n    width: 80px;\n}\n\n.search-text h4{\n    color: #FFF;\n    font-weight: 700;\n}\n\nfooter{\n    background-color: #33383c;\n    padding:30px 0px;\n    position: absolute;\n    left: 0;\n    right: 0;\n    margin-top: 450px;\n}\n\n.logo{\n    color:#FFF;\n    font-weight:700;\n    font-size:30px;\n}\n\n.address span , .menu span{\n   color: #FFF;\n   font-weight: bold;\n   border-bottom: 1px solid #c7c7c7;\n   padding:10px 0px;\n   display: block;\n   text-transform: uppercase;\n   font-size: 16px;\n   letter-spacing: 3px;\n}\n\n.address li a , .menu li a{\n    color:#FFF;\n    letter-spacing: 3px;\n    text-decoration:none;\n    font-size:14px;\n}\n\n.address li, .menu li{\n    margin:20px 0px;\n    list-style: none;\n}\n\n.address li a:hover , .menu li a:hover{\n    color: #da3e44;\n    -webkit-transition: all 1s ease-in-out;\n    -moz-transition: all 1s ease-in-out;\n    -o-transition: all 1s ease-in-out;\n    transition: all 1s ease-in-out;\n}\n\n.address .fa{\n    color: #fff;\n    margin-right: 10px;\n    font-size:18px;\n}\n\n\n/* --------------LOGIN AND SIGNUP FORM----------------- */\n\n.form-body{\n    background:#fff;\n    padding:20px;\n}\n.login-form{\n    background:rgba(255,255,255,0.8);\n  padding:20px;\n  border-top:3px solid#3e4043;\n}\n.innter-form{\n  padding-top:20px;\n}\n.final-login li{\n  width:50%;\n}\n\n.nav-tabs {\n    border-bottom: none !important;\n}\n\n.nav-tabs>li{\n  color:#222 !important;\n}\n.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {\n    color: #fff;\n    background-color: #d14d42;\n    border: none !important;\n    border-bottom-color: transparent;\n  border-radius:none !important;\n}\n.nav-tabs>li>a {\n    margin-right: 2px;\n    line-height: 1.428571429;\n    border: none !important;\n    border-radius:none !important;\n  text-transform:uppercase;\n  font-size:16px;\n}\n\n.social-login{\n  text-align:center;\n  font-size:12px;\n}\n.social-login p{\n  margin:15px 0;\n}\n.social-login ul{\n  margin:0;\n  padding:0;\n  list-style-type:none;\n}\n.social-login ul li{\n  width:33%;\n  float:left;\n    clear:fix;\n}\n.social-login ul li a{\n  font-size:13px;\n  color:#fff;\n  text-decoration:none;\n  padding:10px 0;\n  display:block;\n}\n.social-login ul li:nth-child(1) a{\n  background:#3b5998;\n}\n.social-login ul li:nth-child(2) a{\n  background:#e74c3d;\n}\n.social-login ul li:nth-child(3) a{\n  background:#3698d9;\n}\n.sa-innate-form input[type=text], input[type=password], input[type=file], textarea, select, email{\n    font-size:13px;\n  padding:10px;\n  border:1px solid#ccc;\n  outline:none;\n  width:100%;\n  margin:8px 0;\n\n}\n.sa-innate-form input[type=submit]{\n    border:1px solid#e64b3b;\n  background:#e64b3b;\n  color:#fff;\n  padding:10px 25px;\n  font-size:14px;\n  margin-top:5px;\n  }\n  .sa-innate-form input[type=submit]:hover{\n  border:1px solid#db3b2b;\n  background:#db3b2b;\n  color:#fff;\n  }\n\n  .sa-innate-form button{\n  border:1px solid#e64b3b;\n  background:#e64b3b;\n  color:#fff;\n  padding:10px 25px;\n  font-size:14px;\n  margin-top:5px;\n  }\n  .sa-innate-form button:hover{\n  border:1px solid#db3b2b;\n  background:#db3b2b;\n  color:#fff;\n  }\n    .sa-innate-form p{\n        font-size:13px;\n        padding-top:10px;\n    }\n", ""]);
 
 // exports
 
@@ -35051,7 +35162,7 @@ var _warning = __webpack_require__(1);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _invariant = __webpack_require__(5);
+var _invariant = __webpack_require__(7);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -35428,7 +35539,7 @@ var _warning = __webpack_require__(1);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _invariant = __webpack_require__(5);
+var _invariant = __webpack_require__(7);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
@@ -36539,7 +36650,7 @@ module.exports = Array.isArray || function (arr) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_invariant__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -36643,7 +36754,7 @@ Prompt.contextTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_warning__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_warning__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_invariant__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_invariant__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_history__ = __webpack_require__(88);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -36774,7 +36885,7 @@ Redirect.contextTypes = {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(15);
@@ -37078,7 +37189,7 @@ var createBrowserHistory = function createBrowserHistory() {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(15);
@@ -37578,7 +37689,7 @@ var createMemoryHistory = function createMemoryHistory() {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react__);
@@ -37776,7 +37887,7 @@ StaticRouter.childContextTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_warning__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_warning__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_invariant__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_invariant__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__matchPath__ = __webpack_require__(27);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -38056,7 +38167,7 @@ exports.push([module.i, ".App {\n  text-align: center;\n}\n\n.App-logo {\n  anim
 "use strict";
 
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 var bind = __webpack_require__(44);
 var Axios = __webpack_require__(104);
 var defaults = __webpack_require__(29);
@@ -38143,7 +38254,7 @@ function isSlowBuffer (obj) {
 
 
 var defaults = __webpack_require__(29);
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 var InterceptorManager = __webpack_require__(113);
 var dispatchRequest = __webpack_require__(114);
 
@@ -38228,7 +38339,7 @@ module.exports = Axios;
 "use strict";
 
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -38308,7 +38419,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 "use strict";
 
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -38381,7 +38492,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 "use strict";
 
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 
 // Headers whose duplicates are ignored by node
 // c.f. https://nodejs.org/api/http.html#http_message_headers
@@ -38441,7 +38552,7 @@ module.exports = function parseHeaders(headers) {
 "use strict";
 
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -38559,7 +38670,7 @@ module.exports = btoa;
 "use strict";
 
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -38619,7 +38730,7 @@ module.exports = (
 "use strict";
 
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 
 function InterceptorManager() {
   this.handlers = [];
@@ -38678,7 +38789,7 @@ module.exports = InterceptorManager;
 "use strict";
 
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 var transformData = __webpack_require__(115);
 var isCancel = __webpack_require__(47);
 var defaults = __webpack_require__(29);
@@ -38771,7 +38882,7 @@ module.exports = function dispatchRequest(config) {
 "use strict";
 
 
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(5);
 
 /**
  * Transform the data for a request or a response
@@ -39204,7 +39315,7 @@ var Login = function (_Component) {
             }
 
             if (postData) {
-                this.Auth.login(postData).then(function (result) {
+                this.Auth.googleFaceLogin(postData).then(function (result) {
                     console.log("wellcome js,result = " + result);
                     _this3.props.history.replace('/');
                     // sessionStorage.setItem("userData", JSON.stringify(responseJson));
@@ -39221,6 +39332,18 @@ var Login = function (_Component) {
         key: 'render',
         value: function render() {
             var _this4 = this;
+
+            var responseFacebook = function responseFacebook(response) {
+                console.log("facebook console");
+                console.log(JSON.stringify(response));
+                _this4.signup(response, 'facebook');
+            };
+
+            var responseGoogle = function responseGoogle(response) {
+                console.log("google console");
+                // console.log(response);
+                _this4.signup(response, 'google');
+            };
 
             return _react2.default.createElement(
                 'div',
@@ -39302,18 +39425,6 @@ var Login = function (_Component) {
                     )
                 )
             );
-
-            var responseFacebook = function responseFacebook(response) {
-                console.log("facebook console");
-                console.log(JSON.stringify(response));
-                _this4.signup(response, 'facebook');
-            };
-
-            var responseGoogle = function responseGoogle(response) {
-                console.log("google console");
-                // console.log(response);
-                _this4.signup(response, 'google');
-            };
         }
     }]);
 
@@ -39558,11 +39669,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _axios = __webpack_require__(6);
+var _axios = __webpack_require__(4);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _Service = __webpack_require__(7);
+var _Service = __webpack_require__(6);
 
 var _Service2 = _interopRequireDefault(_Service);
 
@@ -39600,6 +39711,10 @@ var FoodDetail = function (_React$Component) {
             sameCateList: [],
             liked: '',
             favorited: '',
+            imageFile: [],
+            videoFile: [],
+            imageMsg: 'Chọn ảnh',
+            videoMsg: 'Chọn video',
             user: JSON.parse(localStorage.getItem('user'))
         };
 
@@ -39607,59 +39722,227 @@ var FoodDetail = function (_React$Component) {
         _this.onDelete = _this.onDelete.bind(_this);
         _this.onLike = _this.onLike.bind(_this);
         _this.onFavoriteList = _this.onFavoriteList.bind(_this);
+        _this.checkLikeFavorite = _this.checkLikeFavorite.bind(_this);
+        _this.onChange = _this.onChange.bind(_this);
+        _this.onOpenAddFile = _this.onOpenAddFile.bind(_this);
+        _this.onAddImgVideo = _this.onAddImgVideo.bind(_this);
         return _this;
     }
 
     _createClass(FoodDetail, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
+        key: 'onOpenAddFile',
+        value: function onOpenAddFile(e) {
+            (0, _jquery2.default)('#modalIV')[0].style.visibility = "hidden";
+            e.preventDefault();
+            var userLocal = localStorage.getItem('user');
+            if (userLocal === null) {
+                (0, _jquery2.default)('#hiddenModal')[0].click();
+            } else {
+                (0, _jquery2.default)('#modalIV')[0].style.visibility = "visible";
+            }
+        }
+    }, {
+        key: 'checkLikeFavorite',
+        value: function checkLikeFavorite() {
             var _this2 = this;
 
-            if (this.state.user !== undefined) {
-                _axios2.default.get(Service.getServerHostName() + '/like-favorite/' + this.state.food.id + '/' + this.state.user.id).then(function (res) {
+            var userLocal = localStorage.getItem('user');
+            if (userLocal !== null) {
+                console.log("not null");
+                return _axios2.default.get(Service.getServerHostName() + '/api/like-favorite/' + this.props.match.params.foodId + '/' + this.state.user.id).then(function (res) {
                     var data = res.data;
-                    console.log("componentWillMount");
                     console.log(data);
                     _this2.setState({
                         liked: data.like,
                         favorited: data.favorite
                     });
+                    return "okheee";
                 });
+            } else {
+                return _axios2.default.get(Service.getServerHostName() + '/api/cities').then(function (res) {
+                    return res;
+                });
+            }
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this3 = this;
+
+            console.log(localStorage.getItem('user'));
+            console.log('compare state vs undefined ' + (this.state.user !== undefined));
+            console.log('compare state vs null ' + (this.state.user !== null));
+
+            (0, _jquery2.default)('#approvePost')[0].style.visibility = 'hidden';
+            (0, _jquery2.default)('#editPost')[0].style.visibility = 'hidden';
+            (0, _jquery2.default)('#deletePost')[0].style.visibility = 'hidden';
+
+            this.checkLikeFavorite().then(function (res) {
+                // console.log(res);
+                // console.log(res);
+                // console.log("like" + this.state.liked);
+                // console.log("favorite" + this.state.favorited);
+            }).then(function (res) {
+
+                var foodId = _this3.props.match.params.foodId;
+                return _axios2.default.get(Service.getServerHostName() + '/api/food/' + foodId).then(function (res) {
+                    var data = res.data.data;
+                    console.log(data);
+                    console.log(res.data.data.videoUrl);
+                    var originPlace = data.street_number + ', ' + data.street_name + ', ' + data.district_name + ', ' + data.city_name;
+                    var nearbyUrl = originPlace.split(',').join('').replace(/\s/g, "-");
+                    var res_name = data.restaurant_name;
+                    _this3.setState({
+                        food: data,
+                        videoUrl: data.videoUrl,
+                        imageUrl: data.imageUrl,
+                        nearbyUrl: nearbyUrl,
+                        origin: originPlace,
+                        res_name: res_name
+                    });
+
+                    if (_this3.state.user !== null) {
+                        if (_this3.state.user.type === "admin") {
+                            (0, _jquery2.default)('#deletePost')[0].style.visibility = 'visible';
+                            (0, _jquery2.default)('#editPost')[0].style.visibility = 'visible';
+                            if (data.status === "pending") {
+                                (0, _jquery2.default)('#approvePost')[0].style.visibility = 'visible';
+                            }
+                        }
+                    }
+
+                    return data.category_id;
+                });
+            }).then(function (res) {
+                _axios2.default.get(Service.getServerHostName() + '/api/food-category/' + res).then(function (res) {
+                    _this3.setState({ sameCateList: res.data.data });
+                });
+            });
+        }
+    }, {
+        key: 'onChange',
+        value: function onChange(e) {
+            var state = this.state;
+
+            switch (e.target.name) {
+                case 'imageFile':
+
+                    state.imageFile = e.target.files;
+                    var list = e.target.files;
+                    var name = "";
+                    for (var i = 0; i < list.length; i++) {
+                        name += list[i].name + ', ';
+                    }
+                    state.imageMsg = name.slice(0, -1);
+                    break;
+
+                case 'videoFile':
+
+                    state.videoFile = e.target.files;
+                    list = e.target.files;
+                    name = "";
+                    for (i = 0; i < list.length; i++) {
+                        name += list[i].name + ', ';
+                    }
+                    state.videoMsg = name.slice(0, -1);
+                    break;
+            }
+
+            this.setState(state);
+        }
+    }, {
+        key: 'onAddImgVideo',
+        value: function onAddImgVideo(e) {
+            console.log(this.state.user !== null);
+            e.preventDefault();
+
+            if (this.state.user !== null) {
+                var _state = this.state,
+                    imageFile = _state.imageFile,
+                    videoFile = _state.videoFile;
+
+
+                var formData = new FormData();
+                var foodId = this.props.match.params.foodId;
+
+                formData.append("food_id", foodId);
+
+                for (var i = 0; i < imageFile.length; i++) {
+                    console.log(imageFile[i]);
+                    formData.append('uploadFile', imageFile[i]);
+                }
+
+                for (i = 0; i < videoFile.length; i++) {
+                    console.log(videoFile[i]);
+                    formData.append('uploadFile', videoFile[i]);
+                }
+
+                console.log(formData);
+
+                _axios2.default.post(Service.getServerHostName() + "/food/add-media-file", formData).then(function (result) {
+                    window.location.reload();
+                });
+            } else {
+                (0, _jquery2.default)('#hiddenModal')[0].click();
+                // alert("Đăng nhập để có thể tương tác")
             }
         }
     }, {
         key: 'onLike',
         value: function onLike(e) {
-            var user_id = this.state.user.id;
-            var food_id = this.state.food.id;
-            if (this.state.liked) {
-                this.setState({ liked: false });
-                // axios.post(Service.getServerHostName() + '/food/dislike', {user_id, food_id})
-                // .then(res => {
-                //     console.log(res);
-                // })
+            var _this4 = this;
+
+            if (this.state.user !== null) {
+                var user_id = this.state.user.id;
+                var food_id = this.state.food.id;
+                if (this.state.liked) {
+                    _axios2.default.post(Service.getServerHostName() + '/food/dislike', { user_id: user_id, food_id: food_id }).then(function (res) {
+                        console.log(res);
+                        if (res.status === 200) {
+                            _this4.setState({ liked: false });
+                        }
+                    });
+                } else {
+                    _axios2.default.post(Service.getServerHostName() + '/food/like', { user_id: user_id, food_id: food_id }).then(function (res) {
+                        console.log(res);
+                        if (res.status === 200) {
+                            _this4.setState({ liked: true });
+                        }
+                    });
+                }
             } else {
-                this.setState({ liked: true });
-                // axios.post(Service.getServerHostName() + '/food/like', {user_id, food_id})
-                // .then(res => {
-                //     console.log(res);
-                // })
+                (0, _jquery2.default)('#hiddenModal')[0].click();
+                // alert("Đăng nhập để có thể tương tác")
             }
         }
     }, {
         key: 'onFavoriteList',
         value: function onFavoriteList(e) {
-            var user_id = this.state.user.id;
-            var food_id = this.state.food.id;
-            if (this.state.favorited) {
-                this.setState({ favorited: false });
+            var _this5 = this;
+
+            if (this.state.user !== null) {
+                var user_id = this.state.user.id;
+                var food_id = this.state.food.id;
+                if (this.state.favorited) {
+
+                    _axios2.default.post(Service.getServerHostName() + '/food/disfavorite', { user_id: user_id, food_id: food_id }).then(function (res) {
+                        console.log(res);
+                        if (res.status === 200) {
+                            _this5.setState({ favorited: false });
+                        }
+                    });
+                } else {
+
+                    _axios2.default.post(Service.getServerHostName() + '/food/favorite', { user_id: user_id, food_id: food_id }).then(function (res) {
+                        if (res.status === 200) {
+                            _this5.setState({ favorited: true });
+                        }
+                    });
+                }
             } else {
-                this.setState({ favorited: true });
+                (0, _jquery2.default)('#hiddenModal')[0].click();
+                // alert("Đăng nhập để có thể tương tác")
             }
-            // axios.post(Service.getServerHostName() + '/food/favorite', {user_id, food_id})
-            // .then(res => {
-            //     console.log(res);
-            // })
         }
     }, {
         key: 'onApprove',
@@ -39675,90 +39958,16 @@ var FoodDetail = function (_React$Component) {
     }, {
         key: 'onDelete',
         value: function onDelete(e) {
-            var _this3 = this;
+            var _this6 = this;
 
             _axios2.default.get(Service.getServerHostName() + '/food/delete/' + this.state.food.id).then(function (res) {
                 console.log(res.status);
                 console.log(res.status === 200);
                 if (res.status === 200) {
-                    _this3.props.history.replace('/');
+                    _this6.props.history.replace('/');
                 }
             });
             console.log('delete');
-        }
-    }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            var _this4 = this;
-
-            // $('#likeBtn').addClass('btn-success');
-            console.log("eeee");
-            console.log(this.state.user !== undefined);
-
-            (0, _jquery2.default)('#approvePost')[0].style.visibility = 'hidden';
-            (0, _jquery2.default)('#editPost')[0].style.visibility = 'hidden';
-            (0, _jquery2.default)('#deletePost')[0].style.visibility = 'hidden';
-
-            // console.log(this.props.location);
-            var foodId = this.props.match.params.foodId;
-
-            _axios2.default.get(Service.getServerHostName() + '/api/food/' + foodId).then(function (res) {
-                // console.log(res.data.data['videoUrl']);
-                var data = res.data.data;
-                console.log(data);
-                console.log(res.data.data.videoUrl);
-                var originPlace = data.street_number + ', ' + data.street_name + ', ' + data.district_name + ', ' + data.city_name;
-                var nearbyUrl = originPlace.split(',').join('').replace(/\s/g, "-");
-                var res_name = data.restaurant_name;
-                _this4.setState({
-                    food: data,
-                    videoUrl: data.videoUrl,
-                    imageUrl: data.imageUrl,
-                    nearbyUrl: nearbyUrl,
-                    origin: originPlace,
-                    res_name: res_name
-                });
-
-                console.log(_this4.state.user.type === "admin");
-                console.log(_this4.state.user.type);
-
-                if (_this4.state.user.type === "admin") {
-                    (0, _jquery2.default)('#deletePost')[0].style.visibility = 'visible';
-                    (0, _jquery2.default)('#editPost')[0].style.visibility = 'visible';
-                    if (data.status === "pending") {
-                        (0, _jquery2.default)('#approvePost')[0].style.visibility = 'visible';
-                    }
-                } else {
-                    console.log("not admin");
-                }
-                return data.category_id;
-                console.log(data.imageUrl);
-            }).then(function (res) {
-                _axios2.default.get(Service.getServerHostName() + '/api/food-category/' + res).then(function (res) {
-                    _this4.setState({ sameCateList: res.data.data });
-                });
-            }).then(function (res) {
-
-                if (_this4.state.user !== undefined) {
-                    _axios2.default.get(Service.getServerHostName() + '/like-favorite/' + _this4.state.food.id + '/' + _this4.state.user.id).then(function (res) {
-                        var data = res.data;
-                        console.log("componentWillMount");
-                        console.log(data);
-                        _this4.setState({
-                            liked: data.like,
-                            favorited: data.favorite
-                        });
-                        return data;
-                    });
-                } else {
-                    return "finish";
-                }
-            }).then(function (res) {
-                console.log("final");
-                console.log(res);
-            });
-
-            console.log("like = " + this.state.like);
         }
     }, {
         key: 'render',
@@ -39843,7 +40052,7 @@ var FoodDetail = function (_React$Component) {
                                             null,
                                             _react2.default.createElement(
                                                 _reactRouterDom.Link,
-                                                { to: { pathname: '/nearby/' + this.state.nearbyUrl, query: { origin: this.state.origin, res_name: this.state.res_name, food: this.state.food } } },
+                                                { to: { pathname: '/nearby/' + this.state.nearbyUrl, query: { origin: this.state.origin, res_name: this.state.res_name, food_id: this.state.food.id } } },
                                                 this.state.food.street_number + ', ' + this.state.food.street_name + ',  ' + this.state.food.district_name + ',  ' + this.state.food.city_name
                                             )
                                         )
@@ -39859,14 +40068,18 @@ var FoodDetail = function (_React$Component) {
                                         _react2.default.createElement(
                                             'td',
                                             null,
-                                            this.state.food.cate_name
+                                            _react2.default.createElement(
+                                                _reactRouterDom.Link,
+                                                { to: '/food-category/' + this.state.food.category_id },
+                                                this.state.food.cate_name
+                                            )
                                         )
                                     )
                                 )
                             ),
                             _react2.default.createElement(
                                 'button',
-                                { className: this.state.liked ? 'btn btn-warning ' : 'btn btn-success', id: 'likeBtn', onClick: this.onLike },
+                                { className: this.state.liked ? 'btn btn-warning col-md-4' : 'btn btn-success col-md-4', id: 'likeBtn', onClick: this.onLike },
                                 this.state.liked ? 'Bỏ thích' : 'Thích',
                                 _react2.default.createElement('span', { className: 'fa fa-thumbs-o-up pl-2' })
                             ),
@@ -39883,7 +40096,7 @@ var FoodDetail = function (_React$Component) {
                     'div',
                     { className: 'col-md-8 no-padding' },
                     this.state.videoUrl.map(function (video) {
-                        return _react2.default.createElement('iframe', { className: 'max-width video-drive', src: "https://drive.google.com/file/d/" + video + "/preview" });
+                        return _react2.default.createElement('iframe', { className: 'max-width video-drive', key: 'key', src: "https://drive.google.com/file/d/" + video + "/preview" });
                     })
                 ),
                 _react2.default.createElement(
@@ -39918,6 +40131,80 @@ var FoodDetail = function (_React$Component) {
                                 { href: '/food/edit/' + this.state.food.id, className: 'max-width btn btn-primary', id: 'editPost' },
                                 ' S\u1EEDa b\xE0i'
                             )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-sm' },
+                            _react2.default.createElement(
+                                'button',
+                                { type: 'button', 'class': 'btn btn-success max-width', onClick: this.onOpenAddFile, 'data-toggle': 'modal', 'data-target': '#myModal' },
+                                'Th\xEAm \u1EA3nh/video'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { 'class': 'modal fade', id: 'myModal', role: 'dialog' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { 'class': 'modal-dialog modal-dialog-centered', id: 'modalIV' },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { 'class': 'modal-content' },
+                                        _react2.default.createElement(
+                                            'div',
+                                            { 'class': 'modal-header' },
+                                            _react2.default.createElement(
+                                                'h4',
+                                                { 'class': 'modal-title text-center' },
+                                                'Th\xEAm \u1EA3nh v\xE0 video'
+                                            ),
+                                            _react2.default.createElement(
+                                                'button',
+                                                { type: 'button', 'class': 'close', 'data-dismiss': 'modal' },
+                                                '\xD7'
+                                            )
+                                        ),
+                                        _react2.default.createElement(
+                                            'div',
+                                            { 'class': 'modal-body' },
+                                            _react2.default.createElement(
+                                                'form',
+                                                { onSubmit: this.onAddImgVideo, encType: 'multipart/form-data' },
+                                                _react2.default.createElement(
+                                                    'div',
+                                                    { className: 'col-sm-12 mb-3' },
+                                                    _react2.default.createElement('input', { className: 'custom-file-input', id: 'imageFile', name: 'imageFile', type: 'file', accept: 'image/*', multiple: 'multiple', onChange: this.onChange }),
+                                                    _react2.default.createElement(
+                                                        'label',
+                                                        { className: 'custom-file-label', htmlFor: 'imageFile' },
+                                                        this.state.imageMsg
+                                                    ),
+                                                    _react2.default.createElement('input', { className: 'custom-file-input d-none', name: 'uploadFile', multiple: 'multiple' })
+                                                ),
+                                                _react2.default.createElement(
+                                                    'div',
+                                                    { className: 'col-sm-12 mb-3' },
+                                                    _react2.default.createElement('input', { className: 'custom-file-input', id: 'videoFile', name: 'videoFile', type: 'file', accept: 'video/*', multiple: 'multiple', onChange: this.onChange }),
+                                                    _react2.default.createElement(
+                                                        'label',
+                                                        { className: 'custom-file-label', htmlFor: 'videoFile' },
+                                                        this.state.videoMsg
+                                                    ),
+                                                    _react2.default.createElement('input', { className: 'custom-file-input d-none', name: 'uploadFile', multiple: 'multiple' })
+                                                ),
+                                                _react2.default.createElement(
+                                                    'div',
+                                                    { className: 'form-group float-right' },
+                                                    _react2.default.createElement(
+                                                        'button',
+                                                        { type: 'submit', className: 'btn btn-info' },
+                                                        'Th\xEAm'
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
                         )
                     )
                 ),
@@ -39926,7 +40213,7 @@ var FoodDetail = function (_React$Component) {
                     { className: 'col-md-12' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'title-header px-1 py-1' },
+                        { className: 'title px-1 py-1' },
                         '\u1EA2nh v\u1EC1 m\xF3n \u0103n'
                     ),
                     _react2.default.createElement(
@@ -39936,9 +40223,58 @@ var FoodDetail = function (_React$Component) {
                             return _react2.default.createElement(
                                 'div',
                                 { className: 'col-md-4  px-1 py-1' },
-                                _react2.default.createElement('img', { src: "https://drive.google.com/uc?export=view&id=" + img, alt: '', className: 'home-image' })
+                                _react2.default.createElement('img', { key: img, src: "https://drive.google.com/uc?export=view&id=" + img, alt: '', className: 'home-image' })
                             );
                         })
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { 'class': 'col-md-12 alert-danger' },
+                    _react2.default.createElement(
+                        'button',
+                        { type: 'button', 'class': 'btn btn-primary', id: 'hiddenModal', 'data-toggle': 'modal', 'data-target': '#alertModal', hidden: true },
+                        'Open modal'
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { 'class': 'modal fade', id: 'alertModal' },
+                        _react2.default.createElement(
+                            'div',
+                            { 'class': 'modal-dialog modal-dialog-centered' },
+                            _react2.default.createElement(
+                                'div',
+                                { 'class': 'modal-content' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { 'class': 'modal-header' },
+                                    _react2.default.createElement(
+                                        'h4',
+                                        { 'class': 'modal-title' },
+                                        'TH\xD4NG B\xC1O'
+                                    ),
+                                    _react2.default.createElement(
+                                        'button',
+                                        { type: 'button', 'class': 'close', 'data-dismiss': 'modal' },
+                                        '\xD7'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { 'class': 'modal-body' },
+                                    'B\u1EA1n ph\u1EA3i \u0111\u0103ng nh\u1EADp \u0111\u1EC3 c\xF3 th\u1EC3  th\xEDch, l\u01B0u b\xE0i vi\u1EBFt v\xE0 t\u1EA3i \u1EA3nh l\xEAn'
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { 'class': 'modal-footer' },
+                                    _react2.default.createElement(
+                                        'button',
+                                        { type: 'button', 'class': 'btn btn-secondary', 'data-dismiss': 'modal' },
+                                        '\u0110\xF3ng'
+                                    )
+                                )
+                            )
+                        )
                     )
                 ),
                 _react2.default.createElement(
@@ -39946,10 +40282,10 @@ var FoodDetail = function (_React$Component) {
                     { className: 'col-md-12' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'title-header px-1 py-1' },
+                        { className: 'title px-1 py-1' },
                         this.state.food.cate_name,
                         ' t\u1EA1i ',
-                        this.state.food.cityname
+                        this.state.food.city_name
                     ),
                     _react2.default.createElement(
                         'div',
@@ -40045,11 +40381,11 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(11);
 
-var _Service = __webpack_require__(7);
+var _Service = __webpack_require__(6);
 
 var _Service2 = _interopRequireDefault(_Service);
 
-var _axios = __webpack_require__(6);
+var _axios = __webpack_require__(4);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -40201,9 +40537,6 @@ var FoodEdit = function (_React$Component) {
 		value: function onSubmit(e) {
 			var _this3 = this;
 
-			// console.log("before");
-			// console.log($("#name").val());
-
 			e.preventDefault();
 
 			var _state = this.state,
@@ -40348,6 +40681,11 @@ var FoodEdit = function (_React$Component) {
 			return _react2.default.createElement(
 				"form",
 				{ onSubmit: this.onSubmit, encType: "multipart/form-data" },
+				_react2.default.createElement(
+					"div",
+					{ className: "title-header text-center mb-3" },
+					"C\u1EADp nh\u1EADt b\xE0i vi\u1EBFt"
+				),
 				_react2.default.createElement(
 					"div",
 					{ className: "form-group row" },
@@ -40661,7 +40999,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _axios = __webpack_require__(6);
+var _axios = __webpack_require__(4);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -40669,7 +41007,167 @@ var _jquery = __webpack_require__(9);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _Service = __webpack_require__(7);
+var _Service = __webpack_require__(6);
+
+var _Service2 = _interopRequireDefault(_Service);
+
+var _AuthService = __webpack_require__(8);
+
+var _AuthService2 = _interopRequireDefault(_AuthService);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Auth = new _AuthService2.default();
+var Service = new _Service2.default();
+
+var FoodList = function (_React$Component) {
+    _inherits(FoodList, _React$Component);
+
+    function FoodList() {
+        _classCallCheck(this, FoodList);
+
+        var _this = _possibleConstructorReturn(this, (FoodList.__proto__ || Object.getPrototypeOf(FoodList)).call(this));
+
+        _this.state = {
+            foodList: []
+        };
+
+        return _this;
+    }
+
+    _createClass(FoodList, [{
+        key: "componentWillMount",
+        value: function componentWillMount() {}
+    }, {
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            console.log(Service.getServerHostName());
+            _axios2.default.get(Service.getServerHostName() + "/api/food-favorite/" + this.props.match.params.userId).then(function (res) {
+                // console.log(res.data);
+                var data = res.data.data;
+                if (data.length) {
+                    _this2.setState({ foodList: data });
+                } else {
+                    _this2.setState({ foodList: [] });
+                }
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement(
+                "div",
+                { className: "col-md-12" },
+                _react2.default.createElement(
+                    "div",
+                    { className: "row" },
+                    this.state.foodList.map(function (food, index) {
+                        return _react2.default.createElement(
+                            "div",
+                            { className: "col-xs-6 col-md-4 suggest px-1 py-1" },
+                            _react2.default.createElement(
+                                "a",
+                                { href: "/food-info/" + food.id },
+                                _react2.default.createElement(
+                                    "div",
+                                    { className: "food-suggest" },
+                                    _react2.default.createElement("img", { src: "https://drive.google.com/uc?export=view&id=" + (food.imageUrl[0] ? food.imageUrl[0] : "19RNB4mhAvMXI_6ohPkYyc4l9Nv_OeMGW"), alt: "", className: "home-image" }),
+                                    _react2.default.createElement(
+                                        "div",
+                                        { className: "food-detail-suggest" },
+                                        _react2.default.createElement(
+                                            "div",
+                                            { className: "icon-heart-suggest" },
+                                            _react2.default.createElement("span", { className: "glyphicon glyphicon-heart" }),
+                                            _react2.default.createElement("span", { className: "glyphicon glyphicon-heart" })
+                                        ),
+                                        _react2.default.createElement(
+                                            "ul",
+                                            { className: "food-detail-info-suggest" },
+                                            _react2.default.createElement("li", { className: "li-price-suggest" }),
+                                            _react2.default.createElement(
+                                                "li",
+                                                { className: "li-child-suggest" },
+                                                _react2.default.createElement(
+                                                    "span",
+                                                    null,
+                                                    " ",
+                                                    food.name,
+                                                    " "
+                                                )
+                                            ),
+                                            _react2.default.createElement(
+                                                "li",
+                                                { className: "li-child-suggest" },
+                                                _react2.default.createElement(
+                                                    "span",
+                                                    null,
+                                                    " ",
+                                                    food.prices
+                                                )
+                                            ),
+                                            _react2.default.createElement(
+                                                "li",
+                                                { className: "li-child-suggest" },
+                                                food.street_number + ' ' + food.street_name + ', ' + food.district_name + ', ' + food.city_name
+                                            ),
+                                            _react2.default.createElement(
+                                                "li",
+                                                { className: "li-child-suggest" },
+                                                'Đăng bởi ' + food.username
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        );
+                    })
+                )
+            );
+        }
+    }]);
+
+    return FoodList;
+}(_react2.default.Component);
+
+exports.default = FoodList;
+
+/***/ }),
+/* 128 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _axios = __webpack_require__(4);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _jquery = __webpack_require__(9);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _Service = __webpack_require__(6);
 
 var _Service2 = _interopRequireDefault(_Service);
 
@@ -40800,7 +41298,7 @@ var FoodByCategory = function (_React$Component) {
 exports.default = FoodByCategory;
 
 /***/ }),
-/* 128 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40816,7 +41314,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _axios = __webpack_require__(6);
+var _axios = __webpack_require__(4);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -40824,7 +41322,7 @@ var _jquery = __webpack_require__(9);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _Service = __webpack_require__(7);
+var _Service = __webpack_require__(6);
 
 var _Service2 = _interopRequireDefault(_Service);
 
@@ -40861,22 +41359,19 @@ var Nearby = function (_React$Component) {
     }
 
     _createClass(Nearby, [{
-        key: "componentWillMount",
-        value: function componentWillMount() {
-            console.log(this.props.location.query);
-        }
-    }, {
         key: "componentDidMount",
         value: function componentDidMount() {
             var _this2 = this;
 
             // console.log("props : " + this.props);
             // console.log(this.props);
+            console.log(this.props.location.query);
             var origin = this.props.match.params.place;
+            var locationData = this.props.location.query;
             var originUrl = origin.split('-').join(' ');
-            _axios2.default.get(Service.getServerHostName() + "/api/food-nearby/" + originUrl).then(function (res) {
+            _axios2.default.get(Service.getServerHostName() + "/api/food-nearby/" + originUrl + '/' + locationData.food_id).then(function (res) {
                 console.log(res.data);
-                _this2.setState({ foodList: res.data.data, origin: originUrl, info: _this2.props.location.query });
+                _this2.setState({ foodList: res.data.data, origin: originUrl, info: locationData });
             }).catch(function (err) {
                 console.log(err);
             });
@@ -40889,15 +41384,15 @@ var Nearby = function (_React$Component) {
                 { className: "col-md-12" },
                 _react2.default.createElement(
                     "div",
-                    { className: "text-center" },
+                    { className: "text-center mb-3" },
                     _react2.default.createElement(
                         "div",
-                        { className: "nearby" },
+                        { className: "nearby-title" },
                         "\u0110\u1ECBa \u0111i\u1EC3m \u1EDF g\u1EA7n"
                     ),
                     _react2.default.createElement(
                         "div",
-                        { className: "nearby" },
+                        { className: "nearby-header" },
                         this.state.info.res_name
                     ),
                     _react2.default.createElement(
@@ -40986,7 +41481,7 @@ var Nearby = function (_React$Component) {
 exports.default = Nearby;
 
 /***/ }),
-/* 129 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41008,7 +41503,7 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactRouterDom = __webpack_require__(11);
 
-var _axios = __webpack_require__(6);
+var _axios = __webpack_require__(4);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -41036,7 +41531,7 @@ var _Footer = __webpack_require__(53);
 
 var _Footer2 = _interopRequireDefault(_Footer);
 
-var _Service = __webpack_require__(7);
+var _Service = __webpack_require__(6);
 
 var _Service2 = _interopRequireDefault(_Service);
 
@@ -41125,8 +41620,7 @@ var Search = function (_React$Component) {
 
             e.preventDefault();
             localStorage.removeItem('distance');
-            console.log(this.props);
-            console.log("search");
+
             var _state = this.state,
                 districtSelected = _state.districtSelected,
                 streetSelected = _state.streetSelected,
@@ -41142,41 +41636,22 @@ var Search = function (_React$Component) {
                 console.log(res);
                 if (res.status === 200) {
                     // localStorage.setItem('search', JSON.stringify(res.data.data));
-                    if (res.data.status === "success") {
-                        _this3.setState({
-                            foodList: res.data.data
-                        });
-                    } else {
-                        _this3.setState({ msg: res.data.msg, foodList: [] });
-                    }
-
-                    console.log("before");
-                    // console.log(this.state.foodList);
-                    console.log("pathname = " + window.location.pathname);
+                    console.log(res.data.data);
+                    _this3.setState({
+                        foodList: res.data.data
+                    });
+                    localStorage.setItem('distance', _this3.state.distanceSelected);
 
                     if (window.location.pathname !== "/search") {
-                        console.log("redirect");
-
-                        // $('#link-to-search')[0].click();
-                        localStorage.setItem('distance', _this3.state.distanceSelected);
                         (0, _jquery2.default)('#link-to-search')[0].click();
-
-                        // return <Redirect to={{ pathname: '/search', query: { food: this.state.foodList } }} />
-                        console.log("lol");
-                        // window.location.replace("/");
                     } else {
-                        console.log("in search");
-                        // localStorage.removeItem('search');
+                        console.log("in /search page");
+                        localStorage.removeItem('search');
+                        localStorage.setItem('search', JSON.stringify(res.data.data));
                         window.location.reload();
-                        localStorage.setItem('search', JSON.stringify(_this3.state.foodList));
-                        localStorage.setItem('distance', _this3.state.distanceSelected);
-                        // window.location.reload();
-
-                        // $('#link-to-search')[0].click();
                     }
-                    console.log(window.location);
 
-                    console.log("after");
+                    console.log("pathname = " + window.location.pathname);
                 }
             });
         }

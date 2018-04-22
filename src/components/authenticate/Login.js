@@ -107,7 +107,7 @@ class Login extends Component {
         }
 
         if (postData) {
-            this.Auth.login(postData)
+            this.Auth.googleFaceLogin(postData)
                 .then((result) => {
                     console.log("wellcome js,result = " + result);
                     this.props.history.replace('/');
@@ -124,6 +124,19 @@ class Login extends Component {
     }
 
     render(){
+
+        const responseFacebook = (response) => {
+            console.log("facebook console");
+            console.log(JSON.stringify(response));
+            this.signup(response, 'facebook');
+        }
+
+        const responseGoogle = (response) => {
+            console.log("google console");
+            // console.log(response);
+            this.signup(response, 'google');
+        }
+
         return (
             <div class="jumbotron col-md-6 offset-md-3">
                 <div className="col-sm-12 mb-3">
@@ -180,18 +193,7 @@ class Login extends Component {
             </div>
         );
 
-    const responseFacebook = (response) => {
-        console.log("facebook console");
-        console.log(JSON.stringify(response));
-        this.signup(response, 'facebook');
     }
-
-    const responseGoogle = (response) => {
-        console.log("google console");
-        // console.log(response);
-        this.signup(response, 'google');
-    }
-}
 
 
 }

@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import './stylesheet/bootstrap.min.css'
-import './stylesheet/style.css'
+import './assets/css/bootstrap.min.css';
+import './assets/css/style.css';
+
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 
 import App from './App';
@@ -13,6 +14,7 @@ import FoodList from './components/food/FoodList';
 import FoodCreate from './components/food/FoodCreate';
 import FoodDetail from './components/food/FoodDetail';
 import FoodEdit from './components/food/FoodEdit';
+import FoodFavorite from './components/food/FoodFavorite';
 import FoodByCategory from './components/food/FoodByCategory';
 import Nearby from './components/food/Nearby';
 import SearchResult from './components/food/SearchResult';
@@ -32,12 +34,12 @@ ReactDOM.render(
             <Route path="/food-info/:foodId" component={FoodDetail} />
             <Route path="/food/edit/:foodId" component={FoodEdit} />
             <Route path="/food-category/:categoryId" component={FoodByCategory} />
+            <Route path="/food-favorite/:userId" component={FoodFavorite} />
             <Route path="/test" component={Test} />
             <Route path="/search" component={SearchResult} />
             <Route path="/nearby/:place" component={Nearby} />
             <Footer />
         </div>
-
     </Router>
     , document.getElementById('root')
 );

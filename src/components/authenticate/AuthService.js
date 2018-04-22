@@ -7,6 +7,25 @@ export default class AuthService {
         this.localSignUp = this.localSignUp.bind(this);
         this.localLogin = this.localLogin.bind(this);
         this.getProfile = this.getProfile.bind(this);
+        this.googleFaceLogin= this.googleFaceLogin.bind(this);
+    }
+
+
+
+    googleFaceLogin(postData){
+        console.log('in googleFaceLogin fucntion');
+        console.log(postData);
+        return this.fetch(`${this.domain}/auth/login-google-facebook`, {
+            method: 'POST',
+            body: JSON.stringify(postData)
+        }).then(res => {
+            console.log(JSON.stringify(res));
+            if(res.token !== null){
+                this.setToken(res)
+            }
+            return Promise.resolve(res);
+        })
+
     }
 
 
