@@ -1,5 +1,7 @@
 import decode from 'jwt-decode';
+import $ from 'jquery';
 export default class AuthService {
+
     constructor(domain) {
         this.domain = domain || 'http://localhost:8000'
         this.fetch = this.fetch.bind(this);
@@ -8,9 +10,31 @@ export default class AuthService {
         this.localLogin = this.localLogin.bind(this);
         this.getProfile = this.getProfile.bind(this);
         this.googleFaceLogin= this.googleFaceLogin.bind(this);
+        this.setDownloadPermission = this.setDownloadPermission.bind(this);
     }
 
+    setDownloadPermission(){
+        if(!this.loggedIn()){
+            $(window).contextmenu(function() {
+                return false;
+            });
+        }
+        // console.log(this.loggedIn);
 
+    }
+
+    editUser(editData) {
+        return this.fetch(`${this.domain}/auth/edit-user`, {
+            method: 'POST',
+            body: JSON.stringify(editData)
+        }).then(res => {
+            console.log(res);
+            if(res.token !== null){
+                this.setToken(res)
+            }
+            return Promise.resolve(res);
+        })
+    }
 
     googleFaceLogin(postData){
         console.log('in googleFaceLogin fucntion');

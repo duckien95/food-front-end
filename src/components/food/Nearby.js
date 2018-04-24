@@ -3,43 +3,42 @@ import axios from "axios"
 import Services from "../service/Service.js"
 const Service = new Services();
 
-class FoodList extends React.Component{
+class Nearby extends React.Component{
     constructor() {
         super();
         this.state  = {
             foodList : [],
+            origin: '',
+            info: ''
         }
 
     }
-    componentWillMount(){
-    }
 
     componentDidMount(){
-        console.log(Service.getServerHostName());
-        axios.get(Service.getServerHostName() + "/api/food-list")
+        // console.log("props : " + this.props);
+        // console.log(this.props);
+        // console.log(window.location);
+        var origin = this.props.match.params.place;
+        var locationData = this.props.location.state;
+        var originUrl = origin.split('-').join(' ');
+        axios.get(Service.getServerHostName() + "/api/food-nearby/" + originUrl + '/' + locationData.food_id)
         .then(res => {
             console.log(res.data);
-            this.setState({foodList : res.data.foods})
+            this.setState({foodList : res.data.data, origin : originUrl, info: locationData })
         }).catch(err => {
             console.log(err);
         })
-
-        var url = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=105+Quán+Thánh+Ba+Đình+Hà+Nội&destinations=106+A7+Ngõ+A1+Tôn+Thất+Tùng+Đống Đa+Hà Nội&key=AIzaSyAPiN-8Q1QKqw4-tqwogebchry4_lIn97E';
-
-        axios.get(url)
-        .then(res => {
-            console.log(res);
-        })
-        .catch(
-            err => {
-                console.log(err);
-            }
-        )
     }
 
     render(){
         return(
             <div className="col-md-12">
+            <div className="text-center mb-3">
+                <div className="nearby-title">Địa điểm ở gần</div>
+                <div className="nearby-header">{this.state.info.res_name}</div>
+                <div>{this.state.info.origin}</div>
+            </div>
+
             <div className="row">
             {
                 this.state.foodList.map((food,index) =>
@@ -60,6 +59,7 @@ class FoodList extends React.Component{
 
                                         </li>
                                         <li className="li-child-suggest"><span> {food.prices}</span></li>
+                                        <li className="li-child-suggest">{'Khoảng cách ' + food.distance}</li>
                                         <li className="li-child-suggest">{ food.street_number + ' ' + food.street_name + ', ' + food.district_name + ', ' + food.city_name }</li>
                                         <li className="li-child-suggest">{'Đăng bởi ' + food.first_name}</li>
                                     </ul>
@@ -70,6 +70,7 @@ class FoodList extends React.Component{
                 )
             }
             </div>
+
             </div>
 
         )
@@ -77,4 +78,4 @@ class FoodList extends React.Component{
 
 }
 
-export default FoodList;
+export default Nearby;

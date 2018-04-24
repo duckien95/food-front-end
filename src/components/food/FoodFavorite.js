@@ -11,39 +11,33 @@ class FoodList extends React.Component{
         }
 
     }
-    componentWillMount(){
-    }
 
     componentDidMount(){
         console.log(Service.getServerHostName());
-        axios.get(Service.getServerHostName() + "/api/food-list")
+        axios.get(Service.getServerHostName() + "/api/food-favorite/" + this.props.match.params.userId)
         .then(res => {
-            console.log(res.data);
-            this.setState({foodList : res.data.foods})
+            // console.log(res.data);
+            var data = res.data.data;
+            if(data.length){
+                this.setState({foodList : data});
+            }
+            else{
+                this.setState({foodList : []})
+            }
+
         }).catch(err => {
             console.log(err);
         })
-
-        var url = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=105+Quán+Thánh+Ba+Đình+Hà+Nội&destinations=106+A7+Ngõ+A1+Tôn+Thất+Tùng+Đống Đa+Hà Nội&key=AIzaSyAPiN-8Q1QKqw4-tqwogebchry4_lIn97E';
-
-        axios.get(url)
-        .then(res => {
-            console.log(res);
-        })
-        .catch(
-            err => {
-                console.log(err);
-            }
-        )
     }
 
     render(){
         return(
             <div className="col-md-12">
+            <div className="text-center title-header">DANH SÁCH CÁC BÀI VIẾT BẠN ĐÃ LƯU LẠI</div>
             <div className="row">
             {
                 this.state.foodList.map((food,index) =>
-                    <div className="col-xs-6 col-md-4 suggest px-1 py-1" key={index}>
+                    <div className="col-xs-6 col-md-4 suggest px-1 py-1">
                         <a href={"/food-info/" + food.id}>
                             <div className="food-suggest">
                                 <img  src={"https://drive.google.com/uc?export=view&id=" + (food.imageUrl[0] ?  food.imageUrl[0] : "19RNB4mhAvMXI_6ohPkYyc4l9Nv_OeMGW")} alt="" className="home-image" />
@@ -61,7 +55,7 @@ class FoodList extends React.Component{
                                         </li>
                                         <li className="li-child-suggest"><span> {food.prices}</span></li>
                                         <li className="li-child-suggest">{ food.street_number + ' ' + food.street_name + ', ' + food.district_name + ', ' + food.city_name }</li>
-                                        <li className="li-child-suggest">{'Đăng bởi ' + food.first_name}</li>
+                                        <li className="li-child-suggest">{'Đăng bởi ' + food.username}</li>
                                     </ul>
                                 </div>
                             </div>

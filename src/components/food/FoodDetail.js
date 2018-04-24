@@ -1,9 +1,12 @@
 import React from 'react'
 import axios from 'axios'
 import Services from "../service/Service"
+import AuthService from '../authenticate/AuthService'
 import {Link} from 'react-router-dom'
+import Lightbox from 'react-image-lightbox';
 import $ from "jquery";
 const Service = new Services();
+const Auth = new AuthService();
 
 class FoodDetail extends React.Component {
     constructor() {
@@ -24,6 +27,9 @@ class FoodDetail extends React.Component {
             imageMsg: 'Chọn ảnh',
             videoMsg: 'Chọn video',
             user : JSON.parse(localStorage.getItem('user')),
+            photoIndex: 0,
+            isOpen: false,
+            images : []
         }
 
         this.onApprove = this.onApprove.bind(this);
@@ -76,9 +82,21 @@ class FoodDetail extends React.Component {
     }
 
     componentDidMount(){
-        console.log(localStorage.getItem('user'));
-        console.log('compare state vs undefined ' + (this.state.user !== undefined));
-        console.log('compare state vs null ' + (this.state.user !== null));
+
+        Auth.setDownloadPermission();
+        $( document ).ready(function() {
+            $('.home-image').contextmenu(function() {
+                return false;
+                // alert( "Hello World!" );
+            });
+
+            console.log($(document).find('.home-image').length);
+        });
+
+
+        // console.log(localStorage.getItem('user'));
+        // console.log('compare state vs undefined ' + (this.state.user !== undefined));
+        // console.log('compare state vs null ' + (this.state.user !== null));
 
 
         $('#approvePost')[0].style.visibility='hidden';
@@ -102,16 +120,30 @@ class FoodDetail extends React.Component {
                     var data = res.data.data;
                     console.log(data);
                     console.log(res.data.data.videoUrl);
-                    var originPlace = (data.street_number + ', ' + data.street_name + ', ' + data.district_name + ', ' + data.city_name);
-                    var nearbyUrl = originPlace.split(',').join('').replace(/\s/g, "-");
+                    // var originPlace = (data.street_number + ', ' + data.street_name + ', ' + data.district_name + ', ' + data.city_name);
+                    var originPlace = '';
+                    originPlace += (data.street_number.length > 10) ? data.street_number : (data.street_number + ", " + data.street_name);
+                    originPlace += ", " + data.district_name + ", " + data.city_name;
+                    // console.log(originPlace);
+                    var nearbyRaw =  originPlace.split(',').join('');
+                    nearbyRaw = nearbyRaw.replace('/', '-');
+                    nearbyRaw = nearbyRaw.replace(/\s/g, "-");
+                    var nearbyUrl = nearbyRaw;
                     var res_name = data.restaurant_name;
+                    var imageSrc = data.imageUrl;
+                    var src = [];
+                    for (var i = 0; i < imageSrc.length; i++) {
+                        src.push('https://drive.google.com/uc?export=view&id=' + imageSrc[i]);
+                    }
+
                     this.setState({
                         food: data,
                         videoUrl : data.videoUrl,
                         imageUrl : data.imageUrl,
                         nearbyUrl : nearbyUrl,
                         origin : originPlace,
-                        res_name : res_name
+                        res_name : res_name,
+                        images: src
                     });
 
                     if(this.state.user !== null){
@@ -143,24 +175,74 @@ class FoodDetail extends React.Component {
         switch (e.target.name) {
             case 'imageFile':
 
-                state.imageFile = e.target.files;
-                var list = e.target.files;
-                var name = "";
-                for(var i=0; i < list.length; i++){
-                    name += list[i].name + ', ';
-                }
-                state.imageMsg = name.slice(0, -1);
-                break;
+				state.imageFile = e.target.files;
+				var files = e.target.files;
+				var name = "";
+				for(var i=0; i < files.length; i++){
+					name += files[i].name + ', ';
+				}
+				var preview = $('#previewImages').empty();
+		        // console.log(files);
+		        if(files.length){
+		            var preview = document.getElementById("previewImages");
+		            for (var i = 0; i < files.length; i++) {
+		                var file = files[i];
+		                var reader = new FileReader();
+		                reader.onload = function (e) {
+		                    var divElement = document.createElement("div");
+							divElement.className = "col-md-4 my-2";
+							var img = document.createElement("img");
+							img.height = "175";
+							img.className = "max-width"
+							img.src = e.target.result;
+							divElement.appendChild(img);
+							preview.appendChild(divElement);
+		                }
 
-            case 'videoFile':
+		            	reader.readAsDataURL(file);
+		            }
 
-                state.videoFile = e.target.files;
-                list = e.target.files;
-                name = "";
-                for(i=0; i < list.length; i++){
-                    name += list[i].name + ', ';
-                }
-                state.videoMsg = name.slice(0, -1);
+		        }
+
+				break;
+
+			case 'videoFile':
+
+				state.videoFile = e.target.files;
+				var files = e.target.files;
+				var name = "";
+				for(var i=0; i < files.length; i++){
+					name += files[i].name + ', ';
+				}
+				var preview = $('#previewVideos').empty();
+		        // console.log(files);
+		        if(files.length){
+		            var preview = document.getElementById("previewVideos");
+		            for (var i = 0; i < files.length; i++) {
+		                var file = files[i];
+		                var reader = new FileReader();
+		                reader.onload = function (e) {
+		                    var divElement = document.createElement("div");
+							divElement.className = "col-md-4 my-2";
+							var video = document.createElement("video");
+							var source  = document.createElement('source');
+							video.height = "175";
+							video.className = "max-width"
+							source.src = window.URL.createObjectURL(file);
+							video.appendChild(source);
+							// video.load(e.target.result);
+							divElement.appendChild(video);
+							preview.appendChild(divElement);
+		                }
+
+		            	reader.readAsDataURL(file);
+		            }
+
+		        }
+				break;
+
+            default :
+                // console.log('default');
                 break;
         }
 
@@ -292,72 +374,72 @@ class FoodDetail extends React.Component {
 
 
     render(){
+        const { photoIndex, isOpen, images, imageUrl, food, videoUrl, favorited, liked, nearbyUrl, origin, res_name } = this.state;
 
         return(
             <div className="row">
-                <div className="col-md-4 no-padding">
+                <div className="col-md-5 no-padding">
                     <div className="card video-drive">
                         <div className="card-header text-center">
-                            THÔNG TIN MÓN ĂN
+                            {food.name}
                         </div>
                         <div className="card-body">
 
                         <table className="table">
-                            <thead className="col-md-3">
-                                <th scope="row">Tên</th>
-                                <th scope="row">{this.state.food.name}</th>
-                            </thead>
+
                             <tbody>
                                 <tr>
-                                    <td scope="row" >Nhà hàng</td>
-                                    <td>{this.state.food.restaurant_name}</td>
+                                    <td >Nhà hàng</td>
+                                    <td>{food.restaurant_name}</td>
                                 </tr>
                                 <tr>
-                                    <td scope="row">Giá</td>
-                                    <td>{this.state.food.prices} VND</td>
+                                    <td>Giá</td>
+                                    <td>{food.prices} VND</td>
                                 </tr>
                                 <tr>
-                                    <td scope="row">Địa chỉ</td>
+                                    <td>Địa chỉ</td>
                                     <td>
-                                    <Link to={{  pathname: '/nearby/' + this.state.nearbyUrl, query: { origin: this.state.origin, res_name : this.state.res_name, food_id : this.state.food.id }} }>
-                                        {this.state.food.street_number + ', ' + this.state.food.street_name + ',  ' + this.state.food.district_name + ',  ' + this.state.food.city_name }
+                                    <Link to={{  pathname: '/nearby/' + nearbyUrl, state : { origin: origin, res_name : res_name, food_id : food.id }} }>
+                                        {food.street_number + ', ' + food.street_name + ',  ' + food.district_name + ',  ' + food.city_name }
                                     </Link>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td scope="row">Loại</td>
-                                    <td><Link to={'/food-category/' + this.state.food.category_id}>{this.state.food.cate_name}</Link></td>
+                                    <td>Loại</td>
+                                    <td><Link to={'/food-category/' + food.category_id}>{food.cate_name}</Link></td>
+                                </tr>
+                                <tr>
+                                    <td>Chi tiết</td>
+                                    <td>{food.description}</td>
                                 </tr>
                             </tbody>
                             </table>
-                            <button className={this.state.liked ? 'btn btn-warning col-md-4' : 'btn btn-success col-md-4'} id="likeBtn" onClick={this.onLike}>
-                                {this.state.liked ? 'Bỏ thích' : 'Thích'}
-                                <span className="fa fa-thumbs-o-up pl-2"></span>
-                            </button>
-                            <button className={this.state.favorited ? 'btn btn-warning ml-3' : 'btn btn-success ml-3'} id="favoriteBtn" onClick={this.onFavoriteList}>
-                                {this.state.favorited ? 'Xóa khỏi yêu thích' : 'Thêm vào yêu thích'}
-                                <span className="fa fa-bell pl-2"></span>
-                            </button>
+
                         </div>
                     </div>
                 </div>
-                <div className="col-md-8 no-padding">
+                <div className="col-md-7 no-padding">
                     {
-                       this.state.videoUrl.map((video) =>
-                           <iframe className="max-width video-drive" key="key" src={"https://drive.google.com/file/d/" + video + "/preview"}></iframe>
+                       videoUrl.map((video, index) =>
+                           <iframe key={index} className="max-width video-drive" title={index} src={"https://drive.google.com/file/d/" + video + "/preview"}></iframe>
                        )
                     }
                 </div>
-                <div className="col-md-12">
+
+                <div className="col-md-7 offset-md-5">
                     <div className="row">
+
                         <div className="col-sm">
-                            <button id="approvePost" className="max-width btn btn-info" onClick={this.onApprove}>Duyệt bài</button>
+                            <button className={liked ? 'btn btn-warning max-width' : 'btn btn-success max-width'} id="likeBtn" onClick={this.onLike}>
+                                {liked ? 'Bỏ thích' : 'Thích'}
+                                <span className="fa fa-thumbs-o-up pl-2"></span>
+                            </button>
                         </div>
                         <div className="col-sm">
-                            <button id="deletePost" className="max-width btn btn-danger"  onClick={this.onDelete}>Xóa bài</button>
-                        </div>
-                        <div className="col-sm">
-                            <a href={'/food/edit/' + this.state.food.id} className="max-width btn btn-primary" id="editPost"> Sửa bài</a>
+                            <button className={favorited ? 'btn btn-warning max-width' : 'btn btn-success max-width'} id="favoriteBtn" onClick={this.onFavoriteList}>
+                                {favorited ? 'Bỏ lưu bài viết' : 'Lưu lại bài viết'}
+                                <span className="fa fa-bell pl-2"></span>
+                            </button>
                         </div>
                         <div className="col-sm">
 
@@ -365,7 +447,7 @@ class FoodDetail extends React.Component {
 
 
                               <div class="modal fade" id="myModal" role="dialog">
-                                <div class="modal-dialog modal-dialog-centered" id="modalIV">
+                                <div class="modal-dialog modal-dialog-centered modal-lg" id="modalIV">
                                   <div class="modal-content">
                                     <div class="modal-header">
                                       <h4 class="modal-title text-center">Thêm ảnh và video</h4>
@@ -375,14 +457,26 @@ class FoodDetail extends React.Component {
                                         <form onSubmit={this.onAddImgVideo} encType="multipart/form-data">
 
                                             <div className="col-sm-12 mb-3">
-                                                <input className="custom-file-input" id="imageFile" name="imageFile"  type="file" accept="image/*" multiple='multiple' onChange={this.onChange}/>
-                                                <label className="custom-file-label"  htmlFor="imageFile">{this.state.imageMsg}</label>
-                                                <input className="custom-file-input d-none" name="uploadFile" multiple='multiple'/>
+                                                <div className="custom-file">
+                                                    <input className="custom-file-input" id="imageFile" name="imageFile"  type="file" accept="image/*" multiple='multiple' onChange={this.onChange} required/>
+                                                    <label className="custom-file-label" htmlFor="imageFile">Tải ảnh lên...</label>
+                                                    <input className="custom-file-input" name="uploadFile" multiple='multiple' hidden/>
+                                                </div>
                                             </div>
                                             <div className="col-sm-12 mb-3">
-                                                <input className="custom-file-input" id="videoFile" name="videoFile"  type="file" accept="video/*" multiple='multiple' onChange={this.onChange}/>
-                                                <label className="custom-file-label"  htmlFor="videoFile">{this.state.videoMsg}</label>
-                                                <input className="custom-file-input d-none" name="uploadFile" multiple='multiple'/>
+                                                <div id="previewImages" className="form-row">
+                                                </div>
+                                            </div>
+                                            <div className="col-sm-12 mb-3">
+                                                <div className="custom-file">
+                                                    <input className="custom-file-input" id="videoFile" name="videoFile"  type="file" accept="video/*" multiple='multiple' onChange={this.onChange}/>
+                                                    <label className="custom-file-label"  htmlFor="videoFile">Tải video lên...</label>
+                                                    <input className="custom-file-input d-none" name="uploadFile" multiple='multiple'/>
+                                                </div>
+                                            </div>
+                                            <div className="col-sm-12 mb-3">
+                                                <div id="previewVideos" className="form-row">
+                                                </div>
                                             </div>
                                             <div className="form-group float-right">
                             					<button type="submit" className="btn btn-info">Thêm</button>
@@ -397,25 +491,55 @@ class FoodDetail extends React.Component {
                               </div>
                         </div>
 
+                    </div>
+                </div>
+                <div className="col-md-12 mt-2">
+                    <div className="row">
+                        <div className="col-sm">
+                            <button id="approvePost" className="max-width btn btn-info" onClick={this.onApprove}>Duyệt bài</button>
+                        </div>
+                        <div className="col-sm">
+                            <button id="deletePost" className="max-width btn btn-danger"  onClick={this.onDelete}>Xóa bài</button>
+                        </div>
+                        <div className="col-sm">
+                            <a href={'/food/edit/' + food.id} className="max-width btn btn-primary" id="editPost"> Sửa bài</a>
                         </div>
                     </div>
-                    <div className="col-md-12">
-                        <div className="title px-1 py-1">Ảnh về món ăn</div>
-                        <div className="row">
-                            {
-                                this.state.imageUrl.map((img) =>
-                                    <div className="col-md-4  px-1 py-1">
-                                        <img key={img} src={"https://drive.google.com/uc?export=view&id=" + img } alt="" className="home-image" />
-                                    </div>
-                                )
-                            }
-                        </div>
+                </div>
+                <div className="col-md-12">
+                    <div className="title px-1 py-1">Ảnh về món ăn</div>
+                    <div className="row">
+                        {
+                            this.state.imageUrl.map((img) =>
+                                <div className="col-md-4  px-1 py-1" key={img}  onClick={() => this.setState({ isOpen: true })}>
+                                    <img  alt={img} src={"https://drive.google.com/uc?export=view&id=" + img } alt="" className="home-image" />
+                                </div>
+                            )
+                        }
                     </div>
+
+                    {isOpen && (
+                      <Lightbox
+                        mainSrc={images[photoIndex]}
+                        nextSrc={images[(photoIndex + 1) % images.length]}
+                        prevSrc={images[(photoIndex + images.length - 1) % images.length]}
+                        onCloseRequest={() => this.setState({ isOpen: false })}
+                        onMovePrevRequest={() =>
+                          this.setState({
+                            photoIndex: (photoIndex + images.length - 1) % images.length,
+                          })
+                        }
+                        onMoveNextRequest={() =>
+                          this.setState({
+                            photoIndex: (photoIndex + 1) % images.length,
+                          })
+                        }
+                      />
+                     )}
+                </div>
                     <div class="col-md-12 alert-danger">
 
-                    <button type="button" class="btn btn-primary" id="hiddenModal" data-toggle="modal" data-target="#alertModal" hidden>
-                        Open modal
-                    </button>
+
 
                         <div class="modal fade" id="alertModal">
                             <div class="modal-dialog modal-dialog-centered">
@@ -445,7 +569,7 @@ class FoodDetail extends React.Component {
                         <div className="row">
                         {
                             this.state.sameCateList.map((food,index) =>
-                                <div className="col-xs-6 col-md-4 suggest px-1 py-1">
+                                <div className="col-xs-6 col-md-4 suggest px-1 py-1" key={index}>
                                     <a href={"/food-info/" + food.id}>
                                         <div className="food-suggest">
                                             <img  src={"https://drive.google.com/uc?export=view&id=" + (food.imageUrl[0] ?  food.imageUrl[0] : "19RNB4mhAvMXI_6ohPkYyc4l9Nv_OeMGW")} alt="" className="home-image" />
@@ -463,7 +587,7 @@ class FoodDetail extends React.Component {
                                                     </li>
                                                     <li className="li-child-suggest"><span> {food.prices}</span></li>
                                                     <li className="li-child-suggest">{food.street_number + ' ' + food.street_name + ', ' + food.district_name + ', ' + food.city_name }</li>
-                                                    <li className="li-child-suggest">{'Đăng bởi ' + food.username}</li>
+                                                    <li className="li-child-suggest">{'Đăng bởi ' + food.first_name}</li>
                                                 </ul>
                                             </div>
                                         </div>

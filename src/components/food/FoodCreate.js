@@ -1,7 +1,7 @@
 import React from 'react';
-import { Redirect } from "react-router-dom"
 import Services from "../service/Service.js"
 import axios from 'axios'
+import $ from 'jquery'
 const Service = new Services();
 class FoodCreate extends React.Component {
 
@@ -59,23 +59,71 @@ class FoodCreate extends React.Component {
 			case 'imageFile':
 
 				state.imageFile = e.target.files;
-				var list = e.target.files;
+				var files = e.target.files;
 				var name = "";
-				for(var i=0; i < list.length; i++){
-					name += list[i].name + ', ';
+				for(var i=0; i < files.length; i++){
+					name += files[i].name + ', ';
 				}
 				state.listImageName = name.slice(0, -1);
+				var preview = $('#previewImages').empty();
+		        // console.log(files);
+		        if(files.length){
+		            var preview = document.getElementById("previewImages");
+		            for (var i = 0; i < files.length; i++) {
+		                var file = files[i];
+		                var reader = new FileReader();
+		                reader.onload = function (e) {
+		                    var divElement = document.createElement("div");
+							divElement.className = "col-md-3 my-1";
+							var img = document.createElement("img");
+							img.height = "200";
+							img.className = "max-width"
+							img.src = e.target.result;
+							divElement.appendChild(img);
+							preview.appendChild(divElement);
+		                }
+
+		            	reader.readAsDataURL(file);
+		            }
+
+		        }
+
 				break;
 
 			case 'videoFile':
 
 				state.videoFile = e.target.files;
-				list = e.target.files;
-				name = "";
-				for(i=0; i < list.length; i++){
-					name += list[i].name + ', ';
+				var files = e.target.files;
+				var name = "";
+				for(var i=0; i < files.length; i++){
+					name += files[i].name + ', ';
 				}
-				state.listVideoName = name.slice(0, -1);
+				state.listImageName = name.slice(0, -1);
+				var preview = $('#previewVideos').empty();
+		        // console.log(files);
+		        if(files.length){
+		            var preview = document.getElementById("previewVideos");
+		            for (var i = 0; i < files.length; i++) {
+		                var file = files[i];
+		                var reader = new FileReader();
+		                reader.onload = function (e) {
+		                    var divElement = document.createElement("div");
+							divElement.className = "col-md-3 my-1";
+							var video = document.createElement("video");
+							var source  = document.createElement('source');
+							video.height = "200";
+							video.className = "max-width"
+							source.src = window.URL.createObjectURL(file);
+							video.appendChild(source);
+							// video.load(e.target.result);
+							divElement.appendChild(video);
+							preview.appendChild(divElement);
+		                }
+
+		            	reader.readAsDataURL(file);
+		            }
+
+		        }
 				break;
 
 			default:
@@ -325,18 +373,39 @@ class FoodCreate extends React.Component {
 				</div>
 
 				<div className="form-group row">
-					<label  htmlFor="address" className="col-sm-2 form-control-label">Ảnh và Video</label>
+					<label  htmlFor="address" className="col-sm-2 form-control-label">Ảnh</label>
 					<div className="col-sm-10">
-						<div className="form-row">
-							<div className="col-sm-6 mb-3">
-								<input className="custom-file-input" id="imageFile" name="imageFile"  type="file" accept="image/*" multiple='multiple' onChange={this.onChange} required/>
-							  	<label className="custom-file-label"  htmlFor="imageFile">{this.state.listFileName}</label>
-								<input className="custom-file-input d-none" name="uploadFile" multiple='multiple'/>
-							</div>
-							<div className="col-sm-6 mb-3">
-								<input className="custom-file-input" id="videoFile" name="videoFile"  type="file" accept="video/*" multiple='multiple' onChange={this.onChange} required/>
-								<label className="custom-file-label"  htmlFor="videoFile">{this.state.listFileName}</label>
-							</div>
+						<div className="custom-file">
+						  	<input className="custom-file-input" id="imageFile" name="imageFile"  type="file" accept="image/*" multiple='multiple' onChange={this.onChange} required/>
+						  	<label className="custom-file-label" htmlFor="imageFile">Tải ảnh lên...</label>
+						  	<input className="custom-file-input" name="uploadFile" multiple='multiple' hidden/>
+						</div>
+					</div>
+				</div>
+
+				<div className="form-group row">
+					<label  htmlFor="address" className="col-sm-2 form-control-label"></label>
+					<div className="col-sm-10">
+						<div id="previewImages" className="form-row">
+						</div>
+					</div>
+				</div>
+
+
+				<div className="form-group row">
+					<label  htmlFor="address" className="col-sm-2 form-control-label">Video</label>
+					<div className="col-sm-10">
+						<div className="custom-file">
+							<input className="custom-file-input" id="videoFile" name="videoFile"  type="file" accept="video/*" multiple='multiple' onChange={this.onChange} required/>
+							<label className="custom-file-label"  htmlFor="videoFile">Tải video lên...</label>
+							<input className="custom-file-input d-none" name="uploadFile" multiple='multiple'/>
+						</div>
+					</div>
+				</div>
+				<div className="form-group row">
+					<label  htmlFor="address" className="col-sm-2 form-control-label"></label>
+					<div className="col-sm-10">
+						<div id="previewVideos" className="form-row">
 						</div>
 					</div>
 				</div>

@@ -1,7 +1,8 @@
 import React from 'react';
 import AuthService from './AuthService';
+import { Link } from 'react-router-dom'
 import $ from "jquery";
-class Food extends React.Component {
+class Signup extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -37,12 +38,12 @@ class Food extends React.Component {
 	onSubmit(e) {
 		e.preventDefault();
 		const { username, password, confirmPassword, firstname, lastname, email} = this.state;
+
 		if(confirmPassword !==  password){
-			$('#confirmPassword')[0].setCustomValidity("Email không hợp lệ");
-			console.log("email not valid");
+			// alert('mat khau khong khop')
+			this.setState({message: "Mật khẩu không khớp"});
+			return;
 		}
-
-
 
 		let provider = "local";
 
@@ -55,18 +56,21 @@ class Food extends React.Component {
         // formData.append('email', email);
 		// console.log(formData);
 		// var data =JSON.stringify({ username, password, provider, email, firstname, lastname});
-
+		//
 		this.Auth.localSignUp(username, password,  provider, email, firstname, lastname)
             .then(res =>{
 
-				console.log("res = " + JSON.stringify(res));
+				// console.log("res = " + JSON.stringify(res));
+				console.log('line 64');
+				console.log(res);
 				if(!res.success){
 					$('#msg')[0].style.visibility='visible';
 					this.setState({message: res.msg});
 					this.props.history.replace('/signup');
 				}
 				else {
-					this.props.history.replace('/');
+					// window.location.reload('/')
+					window.location.replace('/');
 				}
 
 
@@ -94,11 +98,17 @@ class Food extends React.Component {
 		return (
             <div className="col-md-6 offset-md-3">
                 <div className="card">
-                    <div className="card-header text-center">ĐĂNG KÝ TÀI KHOẢN</div>
+                    <div className="card-heade title text-center">ĐĂNG KÝ TÀI KHOẢN</div>
                     <div className="card-body">
-						<div class="alert alert-danger" role="alert" id="msg">
-							{this.state.message}
-						</div>
+						{
+							this.state.message ?
+							(
+							<div class="alert alert-danger mb-2 text-center" role="alert" id="msg">
+								{this.state.message}
+							</div>
+							) : ''
+						}
+
 			            <form onSubmit={this.onSubmit} encType="multipart/form-data">
 
 							<div className="form-group">
@@ -125,7 +135,11 @@ class Food extends React.Component {
 							</div>
 
                             <div className="form-group">
-                                <button type="submit" className="btn btn-info mb-3 max-width">Đăng ký</button>
+								<div className="form-row">
+									<button type="submit" className="btn btn-primary mr-1 col-sm max-width">Đăng ký</button>
+									<Link to={'/'} className="btn btn-danger ml-1 col-sm max-width">Quay lại</Link>
+								</div>
+
                             </div>
                         </form>
                     </div>
@@ -136,4 +150,4 @@ class Food extends React.Component {
 
 }
 
-export default Food
+export default Signup

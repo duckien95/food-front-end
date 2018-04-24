@@ -3,8 +3,8 @@ import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 
 import AuthService from './AuthService';
+import NavbarComponent from '.././Navbar';
 import $ from 'jquery';
-
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -23,6 +23,7 @@ class Login extends Component {
         this.onInvalid = this.onInvalid.bind(this);
 
         this.Auth = new AuthService();
+        this.Navbar = new NavbarComponent();
     }
 
 
@@ -50,7 +51,8 @@ class Login extends Component {
                     this.setState({message: res.msg});
                     this.props.history.replace('/login');
                 } else {
-                    this.props.history.replace('/');
+                    // this.props.history.replace('/');
+                    window.location.reload('/')
                 }
 
             })
@@ -109,17 +111,17 @@ class Login extends Component {
         if (postData) {
             this.Auth.googleFaceLogin(postData)
                 .then((result) => {
-                    console.log("wellcome js,result = " + result);
-                    this.props.history.replace('/');
-                    // sessionStorage.setItem("userData", JSON.stringify(responseJson));
-                    // this.setState({redirect: true});
+                    // console.log(result);
+                    // this.Navbar.setUserState(result.user);
+                    window.location.reload('/')
+
                 })
                 .catch((err)=> {
                     console.log("error");
                     alert(err);
                 });
         } else {
-            console.log("postdata not null");
+            console.log("postdata null");
         }
     }
 

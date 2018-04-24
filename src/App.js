@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import FoodList from './components/food/FoodList'
-import FoodCreate from './components/food/FoodCreate'
 import AuthService from './components/authenticate/AuthService';
 const Auth = new AuthService();
 
@@ -20,9 +19,10 @@ class App extends Component {
 
     componentWillMount(){
         if(!Auth.loggedIn()){
-
-            console.log("not loggin");
+            console.log("user not loggin");
         }
+
+        // console.log(this.props);
     }
     componentDidMount(){
         console.log(this.props);
