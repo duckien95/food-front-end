@@ -40,7 +40,9 @@ class Navbar extends React.Component{
         if(Auth.loggedIn()){
             this.setState({ login : true, user :JSON.parse(localStorage.getItem('user'))})
         }
-
+        // if(Auth.loggedIn()  && this.state.user.type === "admin"){
+        //     window.location.redirect('/admin/foods');
+        // }
         axios.get(Service.getServerHostName() + "/api/category")
         .then(res => {
             this.setState({ cate : res.data.data })
@@ -62,25 +64,49 @@ class Navbar extends React.Component{
                     <div className="container">
 
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul className="navbar-nav mr-auto">
-                                <li className="nav-item active">
-                                    <Link to={'/'} className="nav-link">VIETFOOD</Link>
-                                </li >
+                            {  Auth.loggedIn()  && this.state.user.type === "admin" ? (
+                                <ul className="navbar-nav mr-auto">
+                                    <li className="nav-item active">
+                                        <Link to={'/'} className="nav-link">Quản lý</Link>
+                                    </li >
+                                    <li className="nav-item">
+                                        <Link to={'/admin/foods'} className="nav-link">Món ăn</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link to={'/admin/users'} className="nav-link">User</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link to={'/admin/restaurants'} className="nav-link">Nhà hàng</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link to={'/admin/pending'} className="nav-link">Chờ duyệt</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link to={'/food/list'} className="nav-link">Website</Link>
+                                    </li>
+                                </ul>
+                            ) : (
+                                <ul className="navbar-nav mr-auto">
+                                    <li className="nav-item active">
+                                        <Link to={'/'} className="nav-link">VIETFOOD</Link>
+                                    </li >
 
-                                <li className="nav-item dropdown">
-                                    <a className="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Thực đơn
-                                    </a>
-                                    <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    {
-                                        this.state.cate.map((cate, index) =>
-                                            <a key={index} href={'/food-category/' + cate.cate_id } className="dropdown-item" >{cate.cate_name}</a>
+                                    <li className="nav-item dropdown">
+                                        <a className="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Thực đơn
+                                        </a>
+                                        <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        {
+                                            this.state.cate.map((cate, index) =>
+                                                <a key={index} href={'/food-category/' + cate.cate_id } className="dropdown-item" >{cate.cate_name}</a>
 
-                                        )
-                                    }
-                                    </div>
-                                </li>
-                            </ul>
+                                            )
+                                        }
+                                        </div>
+                                    </li>
+                                </ul>
+                            ) }
+
 
                                 { Auth.loggedIn()  ?
                                     (
@@ -100,6 +126,9 @@ class Navbar extends React.Component{
                                                 <i className="fa fa-cog"></i>
                                             </a>
                                             <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                                    {
+                                                        this.state.user.type !== "normal" ? <a href='/admin/pending' className="dropdown-item" >Duyệt bài</a> : ''
+                                                    }
                                                     <a href={'/food/create'} className="dropdown-item" >Đăng bài</a>
                                                     <a href={'/food-favorite/' + this.state.user.id } className="dropdown-item" >Bài viết đã lưu lại</a>
                                                     <a href={'/food-like/' + this.state.user.id } className="dropdown-item" >Bài viết đã thích</a>
@@ -124,7 +153,8 @@ class Navbar extends React.Component{
                         </div>
                         </div>
                     </nav>
-                    <Search />
+                    {  Auth.loggedIn()  && this.state.user.type === "admin" ? '' : <Search /> }
+
                 </div>
 
             </div>

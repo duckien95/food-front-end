@@ -61,21 +61,21 @@ class FoodCreate extends React.Component {
 				state.imageFile = e.target.files;
 				var files = e.target.files;
 				var name = "";
-				for(var i=0; i < files.length; i++){
+				for(let i=0; i < files.length; i++){
 					name += files[i].name + ', ';
 				}
 				state.listImageName = name.slice(0, -1);
 				var preview = $('#previewImages').empty();
 		        // console.log(files);
 		        if(files.length){
-		            var preview = document.getElementById("previewImages");
-		            for (var i = 0; i < files.length; i++) {
-		                var file = files[i];
-		                var reader = new FileReader();
+		            preview = document.getElementById("previewImages");
+		            for (let i = 0; i < files.length; i++) {
+		                let file = files[i];
+		                let reader = new FileReader();
 		                reader.onload = function (e) {
-		                    var divElement = document.createElement("div");
+		                    let divElement = document.createElement("div");
 							divElement.className = "col-md-3 my-1";
-							var img = document.createElement("img");
+							let img = document.createElement("img");
 							img.height = "200";
 							img.className = "max-width"
 							img.src = e.target.result;
@@ -93,34 +93,34 @@ class FoodCreate extends React.Component {
 			case 'videoFile':
 
 				state.videoFile = e.target.files;
-				var files = e.target.files;
-				var name = "";
-				for(var i=0; i < files.length; i++){
+				files = e.target.files;
+				for(let i=0; i < files.length; i++){
 					name += files[i].name + ', ';
 				}
 				state.listImageName = name.slice(0, -1);
-				var preview = $('#previewVideos').empty();
+				var previewVideos = $('#previewVideos').empty();
 		        // console.log(files);
 		        if(files.length){
-		            var preview = document.getElementById("previewVideos");
-		            for (var i = 0; i < files.length; i++) {
-		                var file = files[i];
-		                var reader = new FileReader();
-		                reader.onload = function (e) {
-		                    var divElement = document.createElement("div");
+		            previewVideos = document.getElementById("previewVideos");
+		            for (let i = 0; i < files.length; i++) {
+		                let file = files[i];
+		                let videoReader = new FileReader();
+
+		                videoReader.onload = function (e) {
+		                    let divElement = document.createElement("div");
 							divElement.className = "col-md-3 my-1";
-							var video = document.createElement("video");
-							var source  = document.createElement('source');
+							let video = document.createElement("video");
+							let source  = document.createElement('source');
 							video.height = "200";
 							video.className = "max-width"
 							source.src = window.URL.createObjectURL(file);
 							video.appendChild(source);
 							// video.load(e.target.result);
 							divElement.appendChild(video);
-							preview.appendChild(divElement);
+							previewVideos.appendChild(divElement);
 		                }
 
-		            	reader.readAsDataURL(file);
+		            	videoReader.readAsDataURL(file);
 		            }
 
 		        }
@@ -154,7 +154,7 @@ class FoodCreate extends React.Component {
 		formData.append('addressDetail', addressDetail);
 		formData.append('category', category);
 		formData.append('detail', detail);
-		formData.append("ownner_id", this.user.id);
+		formData.append("owner_id", this.user.id);
 		formData.append('restaurant', restaurant);
 
 		for(var i=0; i < imageFile.length; i++){

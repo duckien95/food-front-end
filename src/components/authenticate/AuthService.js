@@ -1,5 +1,4 @@
 import decode from 'jwt-decode';
-import $ from 'jquery';
 export default class AuthService {
 
     constructor(domain) {
@@ -14,11 +13,11 @@ export default class AuthService {
     }
 
     setDownloadPermission(){
-        if(!this.loggedIn()){
-            $(window).contextmenu(function() {
-                return false;
-            });
-        }
+        // if(!this.loggedIn()){
+        //     $(window).contextmenu(function() {
+        //         return false;
+        //     });
+        // }
         // console.log(this.loggedIn);
 
     }
@@ -134,6 +133,8 @@ export default class AuthService {
         // Clear user token and profile data from localStorage
         localStorage.removeItem('id_token');
         localStorage.removeItem('user');
+        localStorage.removeItem('search');
+        localStorage.removeItem('search-info');
     }
 
     getProfile() {

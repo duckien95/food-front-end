@@ -9,11 +9,11 @@ class Search extends React.Component{
     constructor() {
         super();
         this.state= {
-            category: -1,
-            detail: -1,
-            districtSelected: -1,
-            streetSelected: -1,
-            distanceSelected: -1,
+            category: '',
+            detail: '',
+            districtSelected: '',
+            streetSelected: '',
+            distanceSelected: '',
             content: '',
             district: [],
             street: [],
@@ -41,7 +41,20 @@ class Search extends React.Component{
 
     componentWillMount(){
         this.getMyLocation();
-        this.setState({ distance: Service.getListDistance() })
+        this.setState({ distance: Service.getListDistance() });
+        var localSeach = localStorage.getItem('search-info');
+        console.log(localSeach !== null);
+        if(localSeach !== null){
+            var searchInfo = JSON.parse(localSeach);
+            console.log(searchInfo);
+            this.setState({
+                category: searchInfo.category,
+                detail: searchInfo.detail,
+                districtSelected: searchInfo.districtSelected,
+                streetSelected: searchInfo.streetSelected,
+                distanceSelected: searchInfo.distanceSelected
+            })
+        }
     }
 
     componentDidMount(){
@@ -58,24 +71,47 @@ class Search extends React.Component{
 			this.setState({ district: res.data.data[1] });
 		});
 
+
+        var category_id = this.state.category;
+        if(category_id){
+            axios.get(Service.getServerHostName() + "/api/category/detail").then(res => {
+                console.log(res.data.data[category_id]);
+                this.setState({cateDetail: res.data.data[category_id]})
+            });
+        }
+
+        // console.log(this.state.districtSelected);
+
+
         // console.log('latitude : ' + this.state.latitude);
     }
 
     onSearch(e){
 
-        this.setState({
-            category: -1,
-            detail: -1,
-            districtSelected: -1,
-            streetSelected: -1,
-            distanceSelected: -1,
-            content: '',
-        });
 
         e.preventDefault();
         localStorage.removeItem('distance');
+        localStorage.removeItem('search-info');
 
-        const { districtSelected, streetSelected, distanceSelected, category, detail, content, latitude, longitude } = this.state;
+        const { content, latitude, longitude } = this.state;
+        var districtSelected = (this.state.districtSelected ? this.state.districtSelected : -1);
+        var streetSelected = (this.state.streetSelected ? this.state.streetSelected : -1);
+        var distanceSelected = (this.state.distanceSelected ? this.state.distanceSelected : -1);
+        var detail = (this.state.detail ? this.state.detail : -1);
+        var category = (this.state.category ? this.state.category : -1);
+        // console.log(districtSelected);
+
+
+
+        localStorage.setItem('search-info',
+            JSON.stringify({
+                districtSelected : districtSelected,
+                streetSelected: -1,
+                disanceSelected : distanceSelected,
+                category : category,
+                detail : detail
+            })
+        );
         var data = { districtSelected, streetSelected, distanceSelected,  category, detail, content, latitude, longitude };
         axios.post(Service.getServerHostName() + '/api/food-search', data)
         .then(res => {
@@ -89,12 +125,13 @@ class Search extends React.Component{
                 localStorage.setItem('distance', this.state.distanceSelected);
 
                 if(window.location.pathname !== "/search"){
+                    localStorage.setItem('search', JSON.stringify(res.data.data));
                     $('#link-to-search')[0].click();
                 }
 
                 else {
                     console.log("in search page");
-                    localStorage.removeItem('search');
+                    // localStorage.removeItem('search');
                     localStorage.setItem('search', JSON.stringify(res.data.data));
                     window.location.reload();
                 }
@@ -184,6 +221,7 @@ class Search extends React.Component{
     }
 
     render() {
+        var { districtSelected, category, detail } = this.state;
         return (
             <div className="main-color">
             <div className="container">
@@ -192,38 +230,26 @@ class Search extends React.Component{
 					<div className="form-row">
                         <div className="col-sm mb-1">
                             <select className="custom-select" name="district" onChange={this.handleDistrictChange} onInvalid={this.onInvalid}>
-                                <option value="-1" selected>Quận/Huyện</option>
+                                <option value="-1" disabled selected>Quận/Huyện</option>
                                 {
                                     this.state.district.map((dist, index) =>
-                                        <option key={index} value={dist.district_id}>
-                                            {dist.district_name}
-                                        </option>
+                                        Number(districtSelected) === dist.district_id ?
+                                        (<option key={index} value={dist.district_id} selected>{dist.district_name}</option>)
+                                        : (<option key={index} value={dist.district_id}>{dist.district_name}</option>)
                                     )
                                 }
                             </select>
                         </div>
 
-                        <div className="col-sm mb-1">
-                            <select className="custom-select" name="street" onChange={this.handleStreetChange} >
-                                <option value="-1" selected>Đường/Phố</option>
-                                {
-                                    this.state.street.map((str, index) =>
-                                        <option key={index} value={str.street_id}>
-                                            {str.street_name}
-                                        </option>
-                                    )
-                                }
-                            </select>
-                        </div>
 
 						<div className="col-sm mb-1">
 							<select className="custom-select" name="category" onChange={this.handleCateChange} >
-							<option value="-1" selected>Loại</option>
+							<option value="-1" disabled selected>Loại</option>
 							{
 								this.state.cate.map((cat, index) =>
-									<option key={index} value={cat.cate_id}>
-										{cat.cate_name}
-									</option>
+                                    Number(category) == cat.cate_id ?
+									(<option key={index} value={cat.cate_id} selected>{cat.cate_name}</option>)
+                                    : (<option key={index} value={cat.cate_id}>{cat.cate_name}</option>)
 								)
 							}
 							</select>
@@ -231,12 +257,12 @@ class Search extends React.Component{
 
 					  	<div className="col-sm mb-1">
 							<select className="custom-select" name="detail" onChange={this.handleDetailChange} >
-								<option value="-1" selected>Chi tiết</option>
+								<option value="-1" disabled selected>Chi tiết</option>
 								{
 									this.state.cateDetail.map((ctd, index) =>
-						            	<option key={index} value={ctd.detail_id}>
-						                	{ctd.detail_name}
-						              	</option>
+                                        Number(detail) === ctd.detail_id ?
+                                        (<option key={index} value={ctd.detail_id} selected>{ctd.detail_name}</option>)
+                                        : (<option key={index} value={ctd.detail_id}>{ctd.detail_name}</option>)
 						            )
 								}
 							</select>

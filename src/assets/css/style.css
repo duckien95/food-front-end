@@ -20,10 +20,21 @@ select > option {
     letter-spacing: initial !important;
 }
 
-/**************************** FOOD DETAIL ****************************/
-.video-drive {
-    height: 425px;
+/**************************** ADMIN ****************************/
+
+tr.admin td:last-child{
+
+    white-space:nowrap;
 }
+.td-image-video{
+    width : 10%;
+}
+/**************************** ADMIN ****************************/
+
+/**************************** FOOD DETAIL ****************************/
+/* .video-drive {
+    height: 425px;
+} */
 
 .title {
     flex-wrap: wrap;
@@ -35,6 +46,50 @@ select > option {
     letter-spacing: 1px;
     color: #b7106a;
     text-transform: uppercase;
+}
+.login-modal{
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 2.5;
+    letter-spacing: 1px;
+    color: #fff;
+    text-transform: uppercase;
+}
+.alert-modal-text{
+    font-size: 17px;
+    /* letter-spacing: 1px; */
+    line-height: 3;
+    text-align: center;
+
+}
+.food-title {
+    flex-wrap: wrap;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: #b7106a;
+    text-transform: uppercase;
+}
+
+.table-food{
+        table-layout: fixed;
+}
+.table-food .index-column {
+    width: 15%;
+}
+
+/* .pending-table th, .pending-table td {
+    vertical-align: middle;
+} */
+
+.card-body {
+    padding-top: 15px;
+}
+
+.food-utility {
+    position: absolute;
+    bottom: 0.5em;
+    width: 100%;
 }
 
 .title-header{

@@ -40,7 +40,7 @@ class FoodLike extends React.Component{
                     <div className="col-xs-6 col-md-4 suggest px-1 py-1">
                         <a href={"/food-info/" + food.id}>
                             <div className="food-suggest">
-                                <img  src={"https://drive.google.com/uc?export=view&id=" + (food.imageUrl[0] ?  food.imageUrl[0] : "19RNB4mhAvMXI_6ohPkYyc4l9Nv_OeMGW")} alt="" className="home-image" />
+                                <img  src={"https://drive.google.com/uc?export=view&id=" + (food.imageUrl.approve[0] ?  food.imageUrl.approve[0] : "19RNB4mhAvMXI_6ohPkYyc4l9Nv_OeMGW")} alt="" className="home-image" />
 
                                 <div className="food-detail-suggest">
                                     <div  className="icon-heart-suggest">

@@ -156,7 +156,7 @@ class FoodEdit extends React.Component {
 		formData.append('addressDetail', addressDetail);
 		formData.append('category', category);
 		formData.append('detail', detail);
-		formData.append("ownner_id", this.user.id);
+		formData.append("owner_id", this.user.id);
 		formData.append('restaurant', restaurant);
 
 		for(var i=0; i < imageFile.length; i++){
