@@ -2,11 +2,14 @@ import React from 'react'
 import axios from 'axios'
 import Services from "../service/Service"
 import AuthService from '../authenticate/AuthService'
-import {Link} from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
+import Food from './FoodTemplate'
 import Lightbox from 'react-image-lightbox';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 import $ from "jquery";
 const Service = new Services();
 const Auth = new AuthService();
+
 
 class FoodDetail extends React.Component {
     constructor() {
@@ -31,9 +34,14 @@ class FoodDetail extends React.Component {
             user : JSON.parse(localStorage.getItem('user')),
             photoIndex: 0,
             isOpen: false,
-            images : []
+            images : [],
+            content : '',
+            comments : [],
+            listFileId: [],
+            message: ''
         }
 
+        this.ImageSrcLightbox = this.ImageSrcLightbox.bind(this);
         this.onApprove = this.onApprove.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.onLike = this.onLike.bind(this);
@@ -42,67 +50,319 @@ class FoodDetail extends React.Component {
         this.onChange = this.onChange.bind(this);
         this.onOpenAddFile = this.onOpenAddFile.bind(this);
         this.onAddImgVideo = this.onAddImgVideo.bind(this);
-        this.onApproveImage = this.onApproveImage.bind(this);
-        this.onDisapproveImage = this.onDisapproveImage.bind(this);
-        this.onApproveVideo = this.onApproveVideo.bind(this);
-        this.onDisapproveVideo = this.onDisapproveVideo.bind(this);
+        // this.onApproveImage = this.onApproveImage.bind(this, 'img', 'index');
+        // this.onDisapproveImage = this.onDisapproveImage.bind(this);
+        // this.onApproveVideo = this.onApproveVideo.bind(this);
+        // this.onDisapproveVideo = this.onDisapproveVideo.bind(this);
+        this.handleSubmitComment = this.handleSubmitComment.bind(this);
+        this.handleTextChange = this.handleTextChange.bind(this);
+        this.converDateTime = this.converDateTime.bind(this);
     }
 
-    onApproveImage(e){
+    ImageSrcLightbox(list, stateName){
+        var src = [];
+        for (var i = 0; i < list.length; i++) {
+            src.push('https://drive.google.com/uc?export=view&id=' + list[i]);
+        }
+        const state = this.state;
+        state[stateName] = src;
+        this.setState(state);
+    }
+
+    componentDidMount(){
+
+        Auth.setDownloadPermission();
+        $( document ).ready(function() {
+            $('.home-image').contextmenu(function() {
+                return false;
+                // alert( "Hello World!" );
+            });
+
+            console.log($(document).find('.home-image').length);
+        });
+
+        console.log('componentDidMount');
+
+
+        // console.log(localStorage.getItem('user'));
+        // console.log('compare state vs undefined ' + (this.state.user !== undefined));
+        // console.log('compare state vs null ' + (this.state.user !== null));
+
+
+        $('#approvePost')[0].style.visibility='hidden';
+        $('#editPost')[0].style.visibility='hidden';
+        $('#deletePost')[0].style.visibility='hidden';
+
+        this.checkLikeFavorite()
+        .then(
+            res => {
+                console.log(res);
+                // console.log(res);
+                // console.log(res);
+                // console.log("like" + this.state.liked);
+                // console.log("favorite" + this.state.favorited);
+            }
+        ).then(
+             res => {
+                 axios.get(Service.getServerHostName() + '/api/comments/' + this.props.match.params.foodId)
+                 .then(
+                     res =>{
+                        var comment = res.data.data;
+                        if(comment.length){
+                            this.setState({ comments : comment})
+                        } else {
+                            this.setState({ comments : []})
+                        }
+                     }
+                 )
+             }
+        ).then(
+            res => {
+
+                var foodId = this.props.match.params.foodId;
+                return axios.get(Service.getServerHostName() + '/api/food/' + foodId)
+                .then(res => {
+                    var data = res.data.data;
+                    console.log(data);
+                    console.log(data.listFileId);
+                    // console.log(res.data.data.imageUrl.approve);
+                    // console.log(res.data.data.videoUrl.approve);
+                    // var originPlace = (data.street_number + ', ' + data.street_name + ', ' + data.district_name + ', ' + data.city_name);
+                    var originPlace = '';
+                    originPlace += (data.street_number.length > 10) ? data.street_number : (data.street_number + ", " + data.street_name);
+                    originPlace += ", " + data.district_name + ", " + data.city_name;
+                    // console.log(originPlace);
+                    var nearbyRaw =  originPlace.split(',').join('');
+                    nearbyRaw = nearbyRaw.replace('/', '-');
+                    nearbyRaw = nearbyRaw.replace(/\s/g, "-");
+                    var nearbyUrl = nearbyRaw;
+                    var res_name = data.restaurant_name;
+                    var imageSrc = data.imageUrl.approve;
+                    var imageSrcPending = data.imageUrl.pending;
+                    this.ImageSrcLightbox(imageSrc, 'src');
+                    this.ImageSrcLightbox(imageSrcPending, 'srcPending');
+                    // var src = [];
+                    // for (var i = 0; i < imageSrc.length; i++) {
+                    //     src.push('https://drive.google.com/uc?export=view&id=' + imageSrc[i]);
+                    // }
+                    //
+                    // var srcPending = [];
+                    // for (var i = 0; i < imageSrcPending.length; i++) {
+                    //     srcPending.push('https://drive.google.com/uc?export=view&id=' + imageSrcPending[i]);
+                    // }
+
+                    console.log();
+
+                    this.setState({
+                        food: data,
+                        videoUrl : data.videoUrl.approve,
+                        imageUrl : data.imageUrl.approve,
+                        videoPending : data.videoUrl.pending,
+                        imagePending : data.imageUrl.pending,
+                        nearbyUrl : nearbyUrl,
+                        origin : originPlace,
+                        res_name : res_name,
+                        listFileId: data.listFileId
+                    });
+
+                    if(this.state.user !== null){
+                        if(this.state.user.type !== "normal"){
+                            $('#deletePost')[0].style.visibility='visible';
+                            $('#editPost')[0].style.visibility='visible';
+                            if(data.status === "pending"){
+                                $('#approvePost')[0].style.visibility='visible';
+                            }
+                        }
+                    }
+
+                    return data.category_id;
+                })
+            }
+        ).then(
+            res => {
+               axios.get(Service.getServerHostName() + '/api/food-category/' + res)
+               .then(res => {
+                   this.setState({ sameCateList : res.data.data })
+               })
+           }
+       )
+    }
+
+    handleTextChange(e){
+        this.setState({ content : e.target.value })
+    }
+
+    handleSubmitComment(e){
+        e.preventDefault();
+        if(this.state.user !== null){
+            const { user } = this.state;
+            var user_id =  user.id;
+            var username = user.username !== null ? user.username : ( user.first_name + ' ' + user.last_name );
+            var food_id = this.props.match.params.foodId;
+            var content = this.state.content;
+            var dateNow = new Date();
+            var date = [dateNow.getFullYear() ,dateNow.getMonth()+1,
+                  dateNow.getDate()
+                  ].join('-')+' '+
+                 [dateNow.getHours(),
+                  dateNow.getMinutes(),
+                  dateNow.getSeconds()].join(':');
+            console.log('submit');
+            var temp = this.state.comments;
+            if(content.length){
+                this.setState({ message: '' })
+                var newComments = temp.concat({
+                    user_id : user_id,
+                    username : username,
+                    content :content,
+                    food_id: food_id,
+                    date : date
+                });
+                this.setState({ comments :  newComments});
+
+                axios.post(Service.getServerHostName() + '/api/add-comment', {user_id, username, content, food_id, date})
+                .then(
+                    res => {
+                        // console.log(res);
+                        if(res.data.status === 'success'){
+                            // console.log('post comment success');
+                            this.setState({ content : '' });
+                        }
+                    }
+                )
+            }
+            else {
+                this.setState({ message: 'Nội dung bình luận không được để trống' })
+            }
+        } else {
+            $('#hiddenModal')[0].click();
+        }
+    }
+
+    converDateTime(time){
+        var date = new Date(time);
+        var day = date.getDate();
+        var month = date.getMonth() +  1;
+        var hour = date.getHours() ;
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+        return (day > 9 ? '' : '0') + day + '-' +
+            ( month > 9 ? '' : '0') + month  + '-' +
+            date.getFullYear() + ' ' +
+            hour + ':' +
+            (minute > 9 ? '' : '0') + minute + ':' +
+            (second > 9 ? '' : '0') + second ;
+    }
+
+
+    onApproveImage = (file_id) => (e) => {
+        console.log('click');
+
+        // console.log(e.target);
+        // console.log(e.target.indexfile);
         // console.log(e.target.value);
-        var file_id = e.target.value;
+        // var file_id = e.target.value;
         axios.post(Service.getServerHostName() + '/food/image/approve/' + this.state.food.id + '/' + file_id)
         .then(
             res => {
                 // console.log(res);
                 if(res.data.status === 'success'){
-                    console.log('success');
-                    window.location.reload();
+                    NotificationManager.success('Thành công', 'Ảnh được duyệt')
+                    var imagePending = this.state.imagePending;
+                    // console.log(imagePending);
+                    var index = imagePending.indexOf(file_id);
+                    imagePending.splice(index, 1);
+                    var imageApprove = this.state.imageUrl;
+                    imageApprove.push(file_id);
+
+                    this.ImageSrcLightbox(imagePending, 'srcPending');
+                    this.ImageSrcLightbox(imageApprove, 'src');
+
+                    this.setState({
+                        imageUrl: imageApprove,
+                        imagePending: imagePending
+                    })
+                }
+                else {
+                    NotificationManager.error('Ảnh chưa được duyệt', 'Có lỗi xảy ra')
                 }
             }
         )
     }
 
-    onDisapproveImage(e){
-        var file_id = e.target.value;
-        console.log(file_id);
+    onDisapproveImage = (file_id) => (e) => {
+        // var file_id = e.target.value;
+        // console.log(file_id);
+
         axios.post(Service.getServerHostName() + '/food/image/disapprove/' + this.state.food.id + '/' + file_id)
         .then(
             res => {
                 // console.log(res);
                 if(res.data.status === 'success'){
-                    console.log('success');
-                    window.location.reload();
+
+                    NotificationManager.info('Thành công', 'Xóa ảnh')
+                    var imagePending = this.state.imagePending;
+                    var index = imagePending.indexOf(file_id);
+
+                    imagePending.splice(index, 1);
+                        this.ImageSrcLightbox(imagePending, 'srcPending');
+                    this.setState({
+                        imagePending: imagePending
+                    })
+                }
+                else {
+                    NotificationManager.error('Ảnh chưa được xóa', 'Có lỗi xảy ra')
                 }
             }
         )
     }
 
-    onApproveVideo(e){
+    onApproveVideo = (file_id) => (e) =>{
         // console.log(e.target.value);
-        var file_id = e.target.value;
+        // var file_id = e.target.value;
         axios.post(Service.getServerHostName() + '/food/video/approve/' + this.state.food.id + '/' + file_id)
         .then(
             res => {
                 // console.log(res);
                 if(res.data.status === 'success'){
-                    console.log('success');
-                    window.location.reload();
+                    NotificationManager.success('Thành công', 'Video được duyệt')
+                    var videoPending = this.state.videoPending;
+                    // console.log(videoPending);
+                    var index = videoPending.indexOf(file_id);
+                    videoPending.splice(index, 1);
+                    var videoApprove = this.state.videoUrl;
+                    videoApprove.push(file_id);
+
+                    this.setState({
+                        videoUrl: videoApprove,
+                        videoPending: videoPending
+                    })
+                }
+                else {
+                    NotificationManager.error('Video chưa được duyệt', 'Có lỗi xảy ra')
                 }
             }
         )
     }
 
-    onDisapproveVideo(e){
-        var file_id = e.target.value;
-        console.log(file_id);
+    onDisapproveVideo = (file_id) => (e) => {
+
         axios.post(Service.getServerHostName() + '/food/video/disapprove/' + this.state.food.id + '/' + file_id)
         .then(
             res => {
                 // console.log(res);
                 if(res.data.status === 'success'){
-                    console.log('success');
-                    window.location.reload();
+                    NotificationManager.info('Thành công', 'Xóa video')
+
+                    var videoPending = this.state.videoPending;
+                    var index = videoPending.indexOf(file_id);
+                    videoPending.splice(index, 1);
+                    this.setState({
+                        videoPending: videoPending
+                    })
+                }
+                else {
+                    NotificationManager.error('Video chưa được xóa', 'Có lỗi xảy ra')
                 }
             }
         )
@@ -145,109 +405,6 @@ class FoodDetail extends React.Component {
                 }
             )
         }
-    }
-
-    componentDidMount(){
-
-        Auth.setDownloadPermission();
-        $( document ).ready(function() {
-            $('.home-image').contextmenu(function() {
-                return false;
-                // alert( "Hello World!" );
-            });
-
-            console.log($(document).find('.home-image').length);
-        });
-
-        console.log('componentDidMount');
-
-
-        // console.log(localStorage.getItem('user'));
-        // console.log('compare state vs undefined ' + (this.state.user !== undefined));
-        // console.log('compare state vs null ' + (this.state.user !== null));
-
-
-        $('#approvePost')[0].style.visibility='hidden';
-        $('#editPost')[0].style.visibility='hidden';
-        $('#deletePost')[0].style.visibility='hidden';
-
-        this.checkLikeFavorite()
-        .then(
-            res => {
-                console.log(res);
-                // console.log(res);
-                // console.log(res);
-                // console.log("like" + this.state.liked);
-                // console.log("favorite" + this.state.favorited);
-            }
-        ).then(
-            res => {
-
-                var foodId = this.props.match.params.foodId;
-                return axios.get(Service.getServerHostName() + '/api/food/' + foodId)
-                .then(res => {
-                    var data = res.data.data;
-                    // console.log(data);
-                    console.log(res.data.data.imageUrl.approve);
-                    console.log(res.data.data.videoUrl.approve);
-                    // var originPlace = (data.street_number + ', ' + data.street_name + ', ' + data.district_name + ', ' + data.city_name);
-                    var originPlace = '';
-                    originPlace += (data.street_number.length > 10) ? data.street_number : (data.street_number + ", " + data.street_name);
-                    originPlace += ", " + data.district_name + ", " + data.city_name;
-                    // console.log(originPlace);
-                    var nearbyRaw =  originPlace.split(',').join('');
-                    nearbyRaw = nearbyRaw.replace('/', '-');
-                    nearbyRaw = nearbyRaw.replace(/\s/g, "-");
-                    var nearbyUrl = nearbyRaw;
-                    var res_name = data.restaurant_name;
-                    var imageSrc = data.imageUrl.approve;
-                    var imageSrcPending = data.imageUrl.pending;
-                    var src = [];
-                    for (var i = 0; i < imageSrc.length; i++) {
-                        src.push('https://drive.google.com/uc?export=view&id=' + imageSrc[i]);
-                    }
-
-                    var srcPending = [];
-                    for (var i = 0; i < imageSrcPending.length; i++) {
-                        srcPending.push('https://drive.google.com/uc?export=view&id=' + imageSrcPending[i]);
-                    }
-
-
-
-                    this.setState({
-                        food: data,
-                        videoUrl : data.videoUrl.approve,
-                        imageUrl : data.imageUrl.approve,
-                        videoPending : data.videoUrl.pending,
-                        imagePending : data.imageUrl.pending,
-                        nearbyUrl : nearbyUrl,
-                        origin : originPlace,
-                        res_name : res_name,
-                        srcPending : srcPending,
-                        src : src
-                    });
-
-                    if(this.state.user !== null){
-                        if(this.state.user.type !== "normal"){
-                            $('#deletePost')[0].style.visibility='visible';
-                            $('#editPost')[0].style.visibility='visible';
-                            if(data.status === "pending"){
-                                $('#approvePost')[0].style.visibility='visible';
-                            }
-                        }
-                    }
-
-                    return data.category_id;
-                })
-            }
-        ).then(
-            res => {
-               axios.get(Service.getServerHostName() + '/api/food-category/' + res)
-               .then(res => {
-                   this.setState({ sameCateList : res.data.data })
-               })
-           }
-        )
     }
 
     onChange (e){
@@ -341,29 +498,46 @@ class FoodDetail extends React.Component {
         if(this.state.user !== null){
 
             const {imageFile, videoFile, user} = this.state;
+            if(imageFile.length | videoFile.length){
+                this.setState({
+                    message: ''
+                })
+                let formData = new FormData();
+                var foodId = this.props.match.params.foodId;
 
-            let formData = new FormData();
-            var foodId = this.props.match.params.foodId;
+                formData.append("food_id", foodId);
 
-            formData.append("food_id", foodId);
+                for(var i=0; i < imageFile.length; i++){
+                    console.log(imageFile[i]);
+                    formData.append('uploadFile', imageFile[i]);
+                }
 
-            for(var i=0; i < imageFile.length; i++){
-                console.log(imageFile[i]);
-                formData.append('uploadFile', imageFile[i]);
+                for(i=0; i < videoFile.length; i++){
+                    console.log(videoFile[i]);
+                    formData.append('uploadFile', videoFile[i]);
+                }
+                formData.append('owner_id', user.id);
+
+                // console.log(formData);
+
+                axios.post(Service.getServerHostName() + "/food/add-media-file", formData)
+                .then((result) => {
+                    if(result.data.status === 'success'){
+                        NotificationManager.success('Tệp tin đã được tải lên', 'Thành công')
+                        $('#closeModal')[0].click();
+                        // window.location.reload();
+                    }
+                    else {
+                        NotificationManager.success('Tệp tin chưa được tải lên', 'Có lỗi xảy ra')
+                    }
+
+                })
             }
-
-            for(i=0; i < videoFile.length; i++){
-                console.log(videoFile[i]);
-                formData.append('uploadFile', videoFile[i]);
+            else {
+                this.setState({
+                    message: 'Bạn phải tải tệp tin lên'
+                })
             }
-            formData.append('owner_id', user.id);
-
-            // console.log(formData);
-
-            axios.post(Service.getServerHostName() + "/food/add-media-file", formData)
-            .then((result) => {
-                    window.location.reload();
-            })
         }
         else {
             $('#hiddenModal')[0].click();
@@ -380,6 +554,7 @@ class FoodDetail extends React.Component {
                 .then(res => {
                     console.log(res);
                     if(res.status === 200){
+                        NotificationManager.error('Bạn đã bỏ thích bài viết', 'Cảnh báo');
                         this.setState({ liked : false})
                     }
                 })
@@ -389,6 +564,7 @@ class FoodDetail extends React.Component {
                 .then(res => {
                     console.log(res);
                     if(res.status === 200){
+                        NotificationManager.success('Bạn đã thích bài viết', 'Thông báo');
                         this.setState({ liked : true})
                     }
                 })
@@ -434,21 +610,41 @@ class FoodDetail extends React.Component {
     onApprove(e){
         axios.get(Service.getServerHostName() + '/food/approve/' + this.state.food.id)
         .then(res => {
-            console.log(res);
-            if(res.status === 200){
-                console.log("approve success");
+            // console.log(res);
+            if(res.data.status === 'success'){
                 window.location.reload();
-            }
+                NotificationManager.success('Thành công', 'Duyệt bài viết');
+			}
+			else {
+				NotificationManager.error('', 'Có lỗi xảy ra');
+			}
         })
     }
 
+
+
     onDelete(e){
-        axios.get(Service.getServerHostName() + '/food/delete/' + this.state.food.id)
+        var listFileId = this.state.listFileId;
+        var food_id = this.state.food.id;
+        // this.props.history.replace('/food/list', { msg : 'Thành công', title: 'Xóa bài viết', timeOut: 2000 })
+        this.props.history.replace('/')
+        axios.post(Service.getServerHostName() + '/food/delete/', { food_id, listFileId })
         .then(res => {
-            console.log(res.status);
-            console.log(res.status === 200 );
+            // console.log(res.status);
+            // console.log(res.status === 200 );
             if(res.status === 200){
-                this.props.history.replace('/');
+                // console.log(r);
+                if(res.data.status === 'success'){
+                    // this.props.history.replace('/food/list', { msg : 'Thành công', title: 'Xóa bài viết', timeOut: 2000 })
+                    this.props.history.replace('/food/list');
+                    NotificationManager.success('Thành công', 'Xóa bài viết', 3000);
+                }
+                else {
+                    NotificationManager.error('Bài viết chưa được xóa', 'Có lỗi xảy ra');
+                }
+            }
+            else {
+                NotificationManager.error('Bài viết chưa được xóa', 'Có lỗi xảy ra');
             }
         })
         console.log('delete');
@@ -456,13 +652,15 @@ class FoodDetail extends React.Component {
 
 
 
+
+
     render(){
-        const { photoIndex, isOpen, images, imageUrl, food, videoUrl, imagePending, videoPending, src, srcPending, favorited, liked, nearbyUrl, origin, res_name } = this.state;
-        // const videoApprove = videoUrl.approve;
-        // console.log(videoUrl.approve);
-        // console.log(food);
+        const { comments, sameCateList, photoIndex, isOpen, images, imageUrl, food, videoUrl, imagePending, videoPending, src, srcPending, favorited, liked, nearbyUrl, origin, res_name } = this.state;
+        var indexImg = (food.type === 'pending' ? imagePending[0] : imageUrl[0]);
+
         return(
             <div className="row">
+                <NotificationContainer/>
                 <div className="col-md-12 mb-3">
                     <div className="row">
                         <div className="col-sm">
@@ -472,12 +670,12 @@ class FoodDetail extends React.Component {
                             <button id="deletePost" className="max-width btn btn-danger"  onClick={this.onDelete}>Xóa bài</button>
                         </div>
                         <div className="col-sm">
-                            <a href={'/food/edit/' + food.id} className="max-width btn btn-primary" id="editPost"> Sửa bài</a>
+                            <Link to={'/food/edit/' + food.id} className="max-width btn btn-primary" id="editPost"> Sửa bài</Link>
                         </div>
                     </div>
                 </div>
                 <div className="col-md-7 no-padding d-inline-flex">
-                    <div className="card video-drive">
+                    <div className="card">
                         <div className="card-header text-center food-title">
                             {food.name}
                         </div>
@@ -527,22 +725,28 @@ class FoodDetail extends React.Component {
                                 </div>
                                 <div className="col-sm">
 
-                                    <button type="button" class="btn btn-success max-width" onClick={this.onOpenAddFile} data-toggle="modal" data-target="#myModal">Thêm ảnh/video</button>
+                                    <button type="button" className ="btn btn-success max-width" onClick={this.onOpenAddFile} data-toggle="modal" data-target="#myModal">Thêm ảnh/video</button>
 
 
-                                      <div class="modal fade" id="myModal" role="dialog">
-                                        <div class="modal-dialog modal-dialog-centered modal-lg" id="modalIV">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h4 class="modal-title text-center">Thêm ảnh và video</h4>
-                                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                      <div className    ="modal fade" id="myModal" role="dialog">
+                                        <div className  ="modal-dialog modal-dialog-centered modal-lg" id="modalIV">
+                                          <div className    ="modal-content">
+                                            <div className  ="modal-header">
+                                              <h4 className ="modal-title text-center">Thêm ảnh và video</h4>
+                                              <button type="button" id="closeModal" class="close" data-dismiss="modal">&times;</button>
                                             </div>
-                                            <div class="modal-body">
+                                            <div className="modal-body">
                                                 <form onSubmit={this.onAddImgVideo} encType="multipart/form-data">
-
+                                                    {
+                                                        this.state.message === '' ?
+                                                        '' :
+                                                        (<div class="alert alert-danger col-md-12 text-center">
+                                                            {this.state.message}
+                                                        </div>)
+                                                    }
                                                     <div className="col-sm-12 mb-3">
                                                         <div className="custom-file">
-                                                            <input className="custom-file-input" id="imageFile" name="imageFile"  type="file" accept="image/*" multiple='multiple' onChange={this.onChange} required/>
+                                                            <input className="custom-file-input" id="imageFile" name="imageFile"  type="file" accept="image/*" multiple='multiple' onChange={this.onChange}/>
                                                             <label className="custom-file-label" htmlFor="imageFile">Tải ảnh lên...</label>
                                                             <input className="custom-file-input" name="uploadFile" multiple='multiple' hidden/>
                                                         </div>
@@ -581,13 +785,12 @@ class FoodDetail extends React.Component {
                     </div>
                 </div>
                 <div className="col-md-5 no-padding d-inline-flex">
-
-                    <iframe key='0' className="max-width video-drive"  src={"https://drive.google.com/file/d/" + videoUrl[0] + "/preview"}></iframe>
-
+                    <img alt={indexImg} src={"https://drive.google.com/uc?export=view&id=" + indexImg } className="w-100 index-img" onClick={() => this.setState({ isOpen: true, images : src })}/>
                 </div>
 
                 <div className="col-md-7">
                 </div>
+
                 { imageUrl.length > 0 ?
                     (
                         <div className="col-md-12">
@@ -630,7 +833,7 @@ class FoodDetail extends React.Component {
                     videoUrl.length > 0 ?
                     (
                         <div className="col-md-12">
-                            <div className="title px-1 py-1">Video</div>
+                            <div className="title px-1 py-1">Video món ăn</div>
                             <div className="row">
 
                                 {
@@ -662,10 +865,10 @@ class FoodDetail extends React.Component {
                                             <img  alt={img} src={"https://drive.google.com/uc?export=view&id=" + img } className="home-image"   onClick={() => this.setState({ isOpen: true, images : srcPending })}/>
                                             <div className="row py-1">
                                                 <div className="col-sm">
-                                                    <button onClick={this.onDisapproveImage} value={img} className="btn btn-warning w-100">Không chấp nhận</button>
+                                                    <button onClick={this.onDisapproveImage(img)} className="btn btn-warning w-100">Không chấp nhận</button>
                                                 </div>
                                                 <div className="col-sm">
-                                                    <button onClick={this.onApproveImage} value={img} className="btn btn-info w-100">Duyệt</button>
+                                                    <button onClick={this.onApproveImage(img)} className="btn btn-info w-100">Duyệt</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -712,10 +915,10 @@ class FoodDetail extends React.Component {
                                             </div>
 
                                             <div className="col-sm">
-                                                <button onClick={this.onDisapproveVideo} value={video} className="btn btn-warning w-100">Không chấp nhận</button>
+                                                <button onClick={this.onDisapproveVideo(video)} className="btn btn-warning w-100">Không chấp nhận</button>
                                             </div>
                                             <div className="col-sm">
-                                                <button onClick={this.onApproveVideo} value={video} className="btn btn-info w-100">Duyệt</button>
+                                                <button onClick={this.onApproveVideo(video)} className="btn btn-info w-100">Duyệt</button>
                                             </div>
 
                                     </div>
@@ -759,13 +962,50 @@ class FoodDetail extends React.Component {
                             </div>
                         </div>
                     </div>
+
+
+                    <div className="col-md-12">
+                        <div className="title px-1 py-1">Bình luận bài viết</div>
+
+                        {
+                            comments.map( (comment,index) =>
+                                <div className="row my-2" key={index}>
+                                    <div className="col-md-1 px-1 py-1">
+                                        <img className="comment-avatar w-100" src="https://www.jennstrends.com/wp-content/uploads/2013/10/bad-profile-pic-2.jpeg" />
+                                    </div>
+                                    <div className="col-md-11 px-1 py-1">
+                                        <div className='comment-username'>{comment.username}</div>
+                                        <div>{comment.content}</div>
+                                        <div className='comment-datetime'>{this.converDateTime(comment.date)}</div>
+                                    </div>
+                                </div>
+                            )
+                        }
+                        <div className="row my-2 px-1 py-1">
+                        {
+                            this.state.message === '' ?
+                            '' :
+                            (<div class="alert alert-danger col-md-12 text-center" id="msg">
+                                {this.state.message}
+                            </div>)
+                        }
+                        <form className="w-100" onSubmit={this.handleSubmitComment}>
+                            <div class="form-group">
+                                <textarea class="form-control" placeholder="Bình luận..." rows="5" id="comment" value={this.state.content} onChange={this.handleTextChange}></textarea>
+                                <button className="btn btn-primary float-right">Bình luận</button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+
                     <div className="col-md-12">
                         <div className="title px-1 py-1">
                             {this.state.food.cate_name} tại {this.state.food.city_name}
                         </div>
+
                         <div className="row">
                         {
-                            this.state.sameCateList.map((food,index) =>
+                            sameCateList.map((food,index) =>
                                 <div className="col-xs-6 col-md-4 suggest px-1 py-1" key={index}>
                                     <a href={"/food-info/" + food.id}>
                                         <div className="food-suggest">
@@ -783,8 +1023,7 @@ class FoodDetail extends React.Component {
 
                                                     </li>
                                                     <li className="li-child-suggest"><span> {food.prices}</span></li>
-                                                    <li className="li-child-suggest">{food.street_number + ' ' + food.street_name + ', ' + food.district_name + ', ' + food.city_name }</li>
-                                                    <li className="li-child-suggest">{'Đăng bởi ' + food.first_name}</li>
+                                                    <li className="li-child-suggest">{ food.street_number + ' ' + food.street_name + ', ' + food.district_name + ', ' + food.city_name }</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -793,6 +1032,7 @@ class FoodDetail extends React.Component {
                             )
                         }
                         </div>
+
                     </div>
                 </div>
         )

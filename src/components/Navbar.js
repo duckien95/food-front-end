@@ -1,7 +1,7 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import axios from "axios"
-import Search from "./Search"
+import Search from "./SearchFood"
 import Services from "./service/Service"
 import AuthService from "./authenticate/AuthService"
 const Service = new Services();
@@ -12,17 +12,11 @@ class Navbar extends React.Component{
         super(props);
         this.state= {
             login : false,
+            numberPending: 0,
             user: [],
             cate: []
         }
         this.handleLogout = this.handleLogout.bind(this);
-        this.setUserState =  this.setUserState.bind(this);
-    }
-
-    setUserState(data) {
-        this.setState({ user : data });
-        console.log('set user state');
-        console.log(data);
     }
 
     handleLogout(e){
@@ -31,12 +25,12 @@ class Navbar extends React.Component{
         localStorage.removeItem('search');
         localStorage.removeItem('distance');
         // window.location.reload();
-        window.location.replace("http://localhost:3000");
+        window.location.replace("/");
     }
 
 
     componentDidMount(){
-        // console.log(this.state.user);
+        // console.log(JSON.parse(localStorage.getItem('user')));
         if(Auth.loggedIn()){
             this.setState({ login : true, user :JSON.parse(localStorage.getItem('user'))})
         }
@@ -47,6 +41,14 @@ class Navbar extends React.Component{
         .then(res => {
             this.setState({ cate : res.data.data })
         })
+
+        axios.get(Service.getServerHostName() + "/api/food-pending")
+        .then(res => {
+            var len = res.data.foods.length;
+            if(len > 0)
+            this.setState({ numberPending : len })
+        })
+
 
         // console.log('line 40');
         // console.log(Auth.loggedIn());
@@ -79,7 +81,10 @@ class Navbar extends React.Component{
                                         <Link to={'/admin/restaurants'} className="nav-link">Nhà hàng</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link to={'/admin/pending'} className="nav-link">Chờ duyệt</Link>
+                                        <Link to={'/admin/pending'} className="nav-link">
+                                            Chờ duyệt
+                                            <span class="badge badge-light mx-1">{this.state.numberPending > 0 ? this.state.numberPending : ''}</span>
+                                        </Link>
                                     </li>
                                     <li className="nav-item">
                                         <Link to={'/food/list'} className="nav-link">Website</Link>
@@ -113,7 +118,7 @@ class Navbar extends React.Component{
                                         <ul className="navbar-nav">
                                         <li className="nav-item active">
                                             <span className="nav-link">
-                                                {this.state.user.provider === "local" ? this.state.user.username : (this.state.user.firstName + ' ' + this.state.user.lastName)}
+                                                {this.state.user.provider === "local" ? this.state.user.username : (this.state.user.first_name + ' ' + this.state.user.last_name)}
 
                                             </span>
 

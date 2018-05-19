@@ -26,16 +26,36 @@ tr.admin td:last-child{
 
     white-space:nowrap;
 }
+
+
 .td-image-video{
     width : 10%;
 }
 /**************************** ADMIN ****************************/
 
 /**************************** FOOD DETAIL ****************************/
-/* .video-drive {
-    height: 425px;
-} */
+.video-drive {
+    height: 350px;
+}
 
+.index-img{
+    max-height: 490px;
+}
+
+.comment-avatar {
+    height: 75px;
+}
+
+.comment-username {
+    color: blue;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.comment-datetime {
+    font-style: italic;
+    font-weight: 400;
+}
 .title {
     flex-wrap: wrap;
     margin-right: -15px;
@@ -198,6 +218,22 @@ ul.food-detail-info-suggest{
     background-color: #d63e6f;
 }
 
+/*************************** NOTIFICATION ***************************/
+
+.notification-message > h4.title{
+    color: #fff;
+}
+
+.notification-container {
+    top: 120px !important;
+}
+/*************************** END NOTIFICATION ***************************/
+
+/*************************** NAVBAR ***************************/
+
+.ReactModal__Overlay {
+    z-index: 2000 !important;
+}
 .search-form{
     z-index: 1000;
 }
@@ -298,6 +334,8 @@ body{
     color: #FFF;
     font-weight: 700;
 }
+
+/*************************** END NAVBAR ***************************/
 
 footer{
     background-color: #33383c;

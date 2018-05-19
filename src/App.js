@@ -9,9 +9,7 @@ class App extends Component {
         super(props);
 
         this.state = {
-            appName: "Login with Facebook and Google using ReactJS and RESTful APIs",
-            user : JSON.parse(localStorage.getItem('user')),
-            home: false
+
         }
 
         this.handleLogout = this.handleLogout.bind(this);
@@ -21,13 +19,9 @@ class App extends Component {
         if(!Auth.loggedIn()){
             console.log("user not loggin");
         }
-
-        // console.log(this.props);
     }
     componentDidMount(){
-        console.log(this.props);
-        // var user = JSON.parse(localStorage.getItem('user'));
-        // console.log(user);
+
     }
 
 
@@ -40,7 +34,6 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-
                 <p className="App-intro">
                 </p>
                 <FoodList />

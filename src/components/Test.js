@@ -1,144 +1,129 @@
 import React from "react";
 import axios from "axios";
-import { findDOMNode } from "react-dom";
-import ReactDOM from 'react-dom';
-import Services from "./service/Service"
+import Services from "./service/Service";
 import $ from 'jquery'
 var Service = new Services();
+
+
+
+var data = [
+  {id: 1, author: "Pete Hunt", text: "This is one comment"},
+  {id: 2, author: "Jordan Walke", text: "This is *another* comment"}
+];
 
 class Test extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name:'',
-            slideIndex : 1
+            content:'',
+            comments : []
         };
-        this.onChange = this.onChange.bind(this);
-        this.plusSlides = this.plusSlides.bind(this);
-        this.currentSlide = this.currentSlide.bind(this);
-        this.showSlides = this.showSlides.bind(this);
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleTextChange = this.handleTextChange.bind(this);
+        this.converDateTime = this.converDateTime.bind(this);
+        this.notifyMe = this.notifyMe.bind(this);
     }
 
-    plusSlides(n){
-        console.log(n);
-        const state = this.state;
-        state.slideIndex += n;
-        this.showSlides(state.slideIndex);
-        this.setState(state);
-    }
-    currentSlide(n){
-        console.log(n);
-        const state = this.state;
-        state.slideIndex = n;
-        this.showSlides(state.slideIndex);
-        this.setState(state);
-    }
-
-    showSlides(n){
-        var i;
-          var slides = $('.mySlides');
-          var dots =$('.column').children();
-          console.log(slides.length);
-          console.log(dots.length);
-          var captionText = document.getElementById("caption");
-          if (n > slides.length) {this.state.slideIndex = 1}
-          if (n < 1) {this.state.slideIndex = slides.length}
-          for (i = 0; i < slides.length; i++) {
-              slides[i].style.display = "none";
-          }
-          for (i = 0; i < dots.length; i++) {
-              dots[i].className = dots[i].className.replace(" active", "");
-          }
-          slides[this.state.slideIndex-1].style.display = "block";
-          dots[this.state.slideIndex-1].className += " active";
-          captionText.innerHTML = dots[this.state.slideIndex-1].alt;
-    }
-
-
-    onChange(e){
-        const state = this.state;
-        state[e.target.name] =  e.target.value;
-        console.log("diss");
-        this.setState(state)
-
+    notifyMe(){
+        $('#div1').fadeIn();
+        $('#div1').fadeOut(3000);
     }
     componentDidMount(){
-        var slide = $('.mySlides');
-        console.log(slide.length);
-        var dots =  $('.column').children();
-        console.log(dots.length);
+
+        var food_id = 74;
+        axios.get(Service.getServerHostName() + '/api/comments/' + food_id)
+        .then(
+            res =>{
+                this.setState({ comments : res.data.data})
+            }
+        )
     }
+
+    handleTextChange(e){
+        this.setState({ content : e.target.value })
+    }
+
+    handleSubmit(e){
+        e.preventDefault();
+        var user_id =  15;
+        var username = 'hello';
+        var food_id = 74;
+        var content = this.state.content;
+        var dateNow = new Date()
+        var date = [dateNow.getFullYear() ,dateNow.getMonth()+1,
+              dateNow.getDate()
+              ].join('-')+' '+
+             [dateNow.getHours(),
+              dateNow.getMinutes(),
+              dateNow.getSeconds()].join(':');
+        console.log('submit');
+        var temp = this.state.comments;
+        var newComments = temp.concat({
+            user_id : user_id,
+            username : username,
+            content :content,
+            food_id: food_id,
+            date : date
+        });
+        this.setState({ comments :  newComments});
+
+        axios.post(Service.getServerHostName() + '/api/add-comment', {user_id, username, content, food_id, date})
+        .then(
+            res => {
+                // console.log(res);
+                if(res.data.status === 'success'){
+                    // console.log('post comment success');
+                    this.setState({ content : '' });
+                }
+            }
+        )
+    }
+
+    converDateTime(time){
+        var date = new Date(time);
+        var day = date.getDate();
+        var month = date.getMonth() +  1;
+        var hour = date.getHours() ;
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+        return (day > 9 ? '' : '0') + day + ' - ' +
+            ( month > 9 ? '' : '0') + month  + ' - ' +
+            date.getFullYear() + ' ' +
+            hour + ' : ' +
+            (minute > 9 ? '' : '0') + minute + ' : ' +
+            (second > 9 ? '' : '0') + second ;
+    }
+
+
     render(){
+        const { comments } = this.state;
         return (
-            <div class="container">
-  <div class="mySlides">
-    <div class="numbertext">1 / 6</div>
-    <img src="https://www.w3schools.com/howto/img_woods_wide.jpg" class="max-width"/>
-  </div>
+            <div>
+            <button onClick={this.notifyMe}>Notify me!</button>
+            <div className="text-success" id="div1">Hello World</div>
+            {
+                comments.map( (comment,index) =>
+                    <div key={index}>
+                    <a className="text-danger">{comment.username}</a>
+                    {comment.content + ' ' + this.converDateTime(comment.date)}
 
-  <div class="mySlides">
-    <div class="numbertext">3 / 6</div>
-    <img src="https://www.w3schools.com/howto/img_fjords_wide.jpg" class="max-width"/>
-  </div>
-
-  <div class="mySlides">
-    <div class="numbertext">4 / 6</div>
-    <img src="https://www.w3schools.com/howto/img_lights_wide.jpg" class="max-width"/>
-  </div>
-
-
-  <a class="prev" onClick={this.plusSlides(-1)}>❮</a>
-  <a class="next" onClick={this.plusSlides(1)}>❯</a>
-
-  <div class="caption-container">
-    <p id="caption"></p>
-  </div>
-
-  <div class="row">
-    <div class="column">
-      <img class="demoSlides cursor" src="https://www.w3schools.com/howto/img_woods.jpg" class="max-width" onClick={this.currentSlide(1)} alt="The Woods"/>
-    </div>
-    <div class="column">
-      <img class="demoSlides cursor" src="https://www.w3schools.com/howto/img_fjords.jpg" class="max-width" onClick={this.currentSlide(2)} alt="Trolltunga, Norway"/>
-    </div>
-    <div class="column">
-      <img class="demoSlides cursor" src="https://www.w3schools.com/howto/img_lights.jpg" class="max-width" onClick={this.currentSlide(3)} alt="Mountains and fjords"/>
-    </div>
-
-  </div>
-</div>
+                    </div>
+                )
+            }
+            <form className="commentForm" onSubmit={this.handleSubmit}>
+              <input
+                type="text"
+                name="content"
+                placeholder="Say something..."
+                value={this.state.content}
+                onChange={this.handleTextChange}
+              />
+              <input type="submit" value="Post" />
+            </form>
+            </div>
         );
     }
 }
 
-class FullDesc extends React.Component {
- constructor() {
- super();
- }
-handleToggle = () => {
- const el = findDOMNode(this.refs.slides);
-  console.log($(el));
- $(el).slideToggle();
-
- };
-render() {
- return (
- <div className="long-desc">
-  <ul className="profile-info" ref="slides" onClick={this.handleToggle}>
-   <li>
-     <span className="info-title">User Name : </span> Shuvo Habib
-   </li>
- </ul>
-<ul className="profile-info additional-profile-info-list" ref="slides">
-  <li>
-    <span className="info-email">Office Email</span> me@shuvohabib.com
-  </li>
- </ul>
-  <div className="ellipsis-click" onClick={this.handleToggle}>Click
-    <i className="fa-ellipsis-h"/>
-  </div>
- </div>
- );
- }
-}
 export default Test;

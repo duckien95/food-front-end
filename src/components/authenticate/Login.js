@@ -30,7 +30,7 @@ class Login extends Component {
     componentWillMount(){
         if(this.Auth.loggedIn()){
             this.props.history.replace('/');
-            console.log("logged");
+            // console.log("logged");
         }
     }
 
@@ -52,7 +52,7 @@ class Login extends Component {
                     this.props.history.replace('/login');
                 } else {
                     // this.props.history.replace('/');
-                    window.location.reload('/')
+                    window.location.replace('/')
                 }
 
             })
@@ -178,15 +178,15 @@ class Login extends Component {
                         <input type="password" class="form-control" name="password" placeholder="Mật khẩu" onChange={this.onChange} onInvalid={this.onInvalid} required />
                     </div>
 
-                    <div className="form-group row">
-                        <div className="form-row col-md-12">
+                    <div className="form-group">
+                        <div className="form-row">
 
                             <div className="col-md-6 mb-3">
-                                <button type="submit" class="btn btn-primary max-width">Đăng nhập</button>
+                                <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
                             </div>
 
                             <div className="col-md-6 mb-3">
-                                <button class="btn btn-danger max-width" onClick={this.localSignup}>Đăng ký</button>
+                                <button class="btn btn-danger w-100" onClick={this.localSignup}>Đăng ký</button>
                             </div>
                         </div>
                     </div>

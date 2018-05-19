@@ -1,7 +1,13 @@
 import React from 'react';
 import AuthService from './AuthService';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import axios from 'axios'
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import Services from '../service/Service.js'
 import $ from "jquery";
+
+const Service = new Services();
+
 class EditUser extends React.Component {
 
 	constructor(props) {
@@ -14,6 +20,8 @@ class EditUser extends React.Component {
 			firstname: '',
             lastname: '',
             email: '',
+			provider: '',
+			type: '',
             oldPassword: '',
             newPassword: '',
             confirmPassword: '',
@@ -29,14 +37,20 @@ class EditUser extends React.Component {
 	componentDidMount(){
 		$('#msg')[0].style.visibility='hidden';
         var data = JSON.parse(localStorage.getItem('user'));
-        this.temp = data;
-        this.setState ({
-            firstname : data.first_name,
-            lastname : data.last_name,
-            email: data.email
-        })
-
-        console.log(data);
+		axios.get(Service.getServerHostName() + '/api/user/' + this.props.match.params.userId)
+		.then(
+			res => {
+				console.log(res);
+				var user = res.data.data;
+				this.setState({
+					firstname: user.first_name,
+					lastname: user.last_name,
+					email: user.email,
+					provider: user.provider,
+					type: user.type
+				});
+			}
+		)
 	}
 
 
@@ -49,15 +63,22 @@ class EditUser extends React.Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-		const { userId, firstname, lastname, email, oldPassword, newPassword, confirmPassword} = this.state;
+		const { userId, firstname, lastname, email, oldPassword, newPassword, confirmPassword, username, provider, type} = this.state;
 
-        if(oldPassword){
-            if(confirmPassword !==  newPassword){
-                // alert('mat khau khong khop')
-                this.setState({message: "Mật khẩu mới không khớp"});
-                return;
-            }
-        }
+		if(oldPassword || newPassword || confirmPassword){
+			// alert('okkk')
+			if(oldPassword){
+	            if(confirmPassword !==  newPassword){
+	                // alert('mat khau khong khop')
+	                this.setState({message: "Mật khẩu mới không khớp"});
+	                return;
+	            }
+	        }
+			else {
+				this.setState({message: "Bạn chưa điền mật khẩu cũ"});
+				return;
+			}
+		}
 
         console.log('oldpass : ' + oldPassword);
         var editData = {
@@ -68,9 +89,6 @@ class EditUser extends React.Component {
             oldPassword : oldPassword,
             newPassword : newPassword,
             confirmPassword : confirmPassword,
-            provider : this.temp.provider,
-            username : this.temp.username,
-            type : this.temp.type
         };
 
         this.Auth.editUser(editData)
@@ -81,7 +99,8 @@ class EditUser extends React.Component {
                     this.setState({ message : res.msg})
                 }
                 else{
-                    this.props.history.push('/');
+					this.props.history.replace('/');
+					NotificationManager.success('Thành công', 'Thay đổi thông tin', 3000)
                 }
 
             }
@@ -111,6 +130,7 @@ class EditUser extends React.Component {
 		// const { description, imageFile } = this.state;
 		return (
             <div className="col-md-6 offset-md-3">
+				<NotificationContainer />
                 <div className="card">
                     <div className="card-heade title text-center mt-3">CẬP NHẬT THÔNG TIN</div>
                     <div className="card-body">

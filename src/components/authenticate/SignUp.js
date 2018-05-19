@@ -1,6 +1,7 @@
 import React from 'react';
 import AuthService from './AuthService';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 import $ from "jquery";
 class Signup extends React.Component {
 
@@ -61,7 +62,6 @@ class Signup extends React.Component {
             .then(res =>{
 
 				// console.log("res = " + JSON.stringify(res));
-				console.log('line 64');
 				console.log(res);
 				if(!res.success){
 					$('#msg')[0].style.visibility='visible';
@@ -69,8 +69,11 @@ class Signup extends React.Component {
 					this.props.history.replace('/signup');
 				}
 				else {
-					// window.location.reload('/')
-					window.location.replace('/');
+
+					// this.props.history.push('/');
+					window.location.replace('/')
+					NotificationManager.success('Thành công', 'Đăng ký tài khoản', 3000)
+
 				}
 
 
@@ -97,6 +100,7 @@ class Signup extends React.Component {
 		// const { description, imageFile } = this.state;
 		return (
             <div className="col-md-6 offset-md-3">
+				<NotificationContainer />
                 <div className="card">
                     <div className="card-heade title text-center">ĐĂNG KÝ TÀI KHOẢN</div>
                     <div className="card-body">

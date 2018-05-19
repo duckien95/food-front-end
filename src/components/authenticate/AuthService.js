@@ -1,4 +1,5 @@
 import decode from 'jwt-decode';
+import axios from 'axios'
 export default class AuthService {
 
     constructor(domain) {
@@ -90,7 +91,7 @@ export default class AuthService {
             method: 'POST',
             body: JSON.stringify({ username, password })
         }).then(res => {
-            console.log(JSON.stringify(res));
+            // console.log(JSON.stringify(res));
             if(res.token !== null){
                 this.setToken(res)
             }
@@ -121,7 +122,14 @@ export default class AuthService {
     setToken(res) {
         // Saves user token to localStorage
         localStorage.setItem('id_token', res.token);
-        localStorage.setItem('user', JSON.stringify(res.user));
+        axios.get(`${this.domain}/api/user/${res.user_id}`)
+        .then(
+            res => {
+                console.log(res);
+                localStorage.setItem('user', JSON.stringify(res.data.data));
+            }
+        )
+        // localStorage.setItem('user', JSON.stringify(res.user));
     }
 
     getToken() {

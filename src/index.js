@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import './assets/css/bootstrap.min.css';
+import 'react-notifications/lib/notifications.css';
 import './assets/css/style.css';
 
 import { Route, BrowserRouter as Router } from 'react-router-dom';
@@ -14,9 +15,9 @@ import SignUp from './components/authenticate/SignUp';
 import EditUser from './components/authenticate/EditUser';
 
 import FoodList from './components/food/FoodList';
-import FoodCreate from './components/food/FoodCreate';
+import FoodCreate from './components/food/Create';
 import FoodDetail from './components/food/FoodDetail';
-import FoodEdit from './components/food/FoodEdit';
+import FoodEdit from './components/food/Edit';
 import FoodFavorite from './components/food/FoodFavorite';
 import FoodLike from './components/food/FoodLike';
 import FoodPost from './components/food/FoodPost';
@@ -33,7 +34,7 @@ import ListRestaurant from './components/admin/ListRestaurant';
 import ListFoodPending from './components/admin/ListFoodPending';
 
 import Test from './components/Test';
-import LightboxExample from './components/Lightbox';
+import LightboxExample from './components/Notify';
 
 ReactDOM.render(
     <Router>
