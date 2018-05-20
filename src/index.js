@@ -34,7 +34,7 @@ import ListRestaurant from './components/admin/ListRestaurant';
 import ListFoodPending from './components/admin/ListFoodPending';
 
 import Test from './components/Test';
-import LightboxExample from './components/Notify';
+import LightboxExample from './components/Lightbox';
 
 ReactDOM.render(
     <Router>

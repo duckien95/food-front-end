@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
-
 import AuthService from './AuthService';
-import NavbarComponent from '.././Navbar';
 import $ from 'jquery';
 class Login extends Component {
     constructor(props) {
@@ -23,7 +21,6 @@ class Login extends Component {
         this.onInvalid = this.onInvalid.bind(this);
 
         this.Auth = new AuthService();
-        this.Navbar = new NavbarComponent();
     }
 
 
@@ -52,7 +49,7 @@ class Login extends Component {
                     this.props.history.replace('/login');
                 } else {
                     // this.props.history.replace('/');
-                    window.location.replace('/')
+                    window.location.reload('/')
                 }
 
             })

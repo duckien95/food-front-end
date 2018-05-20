@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 class FoodList extends React.Component{
+    constructor(props) {
+        super(props);
+    }
 
     render(){
         return(
-
             <div className="row">
             {
                 this.props.foods.map((food,index) =>
@@ -28,6 +30,9 @@ class FoodList extends React.Component{
                                         </li>
                                         <li className="li-child-suggest"><span> {food.prices}</span></li>
                                         <li className="li-child-suggest">{ food.street_number + ' ' + food.street_name + ', ' + food.district_name + ', ' + food.city_name }</li>
+                                        {
+                                            food.distance !== undefined ? (<li className="li-child-suggest">Khoảng cách {food.distance}</li>) : ''
+                                        }
                                     </ul>
                                 </div>
                             </div>

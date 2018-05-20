@@ -11,6 +11,8 @@ export default class AuthService {
         this.getProfile = this.getProfile.bind(this);
         this.googleFaceLogin= this.googleFaceLogin.bind(this);
         this.setDownloadPermission = this.setDownloadPermission.bind(this);
+        this.setToken = this.setToken.bind(this);
+        this.getToken = this.getToken.bind(this);
     }
 
     setDownloadPermission(){
@@ -122,14 +124,7 @@ export default class AuthService {
     setToken(res) {
         // Saves user token to localStorage
         localStorage.setItem('id_token', res.token);
-        axios.get(`${this.domain}/api/user/${res.user_id}`)
-        .then(
-            res => {
-                console.log(res);
-                localStorage.setItem('user', JSON.stringify(res.data.data));
-            }
-        )
-        // localStorage.setItem('user', JSON.stringify(res.user));
+        localStorage.setItem('user', JSON.stringify(res.user));
     }
 
     getToken() {

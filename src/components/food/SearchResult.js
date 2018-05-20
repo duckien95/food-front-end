@@ -46,10 +46,10 @@ class SearchResult extends React.Component{
                 this.setState({ foodCategoryList : res.data.data})
             }
         )
-        console.log(Service.getListDistance());
+        // console.log(Service.getListDistance());
         var maxDistance = localStorage.getItem('distance');
-        console.log(maxDistance === undefined);
-        console.log(maxDistance !== undefined);
+        // console.log(maxDistance === undefined);
+        // console.log(maxDistance !== undefined);
         this.setState({
             distance: Service.getListDistance(),
             maxDistance: maxDistance !== undefined ? maxDistance : -1

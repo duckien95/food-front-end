@@ -77,8 +77,6 @@ class Search extends React.Component{
     }
 
     onSearch(e){
-        console.log("start search");
-
         e.preventDefault();
         localStorage.removeItem('distance');
         localStorage.removeItem('search-info');
@@ -89,9 +87,7 @@ class Search extends React.Component{
         var distanceSelected = this.state.distanceSelected ;
         var detail = (this.state.detail ? this.state.detail : -1);
         var category = (this.state.category ? this.state.category : -1);
-        console.log(this.state.distanceSelected);
-
-
+        // alert(category);
 
         localStorage.setItem('search-info',
             JSON.stringify({
@@ -105,24 +101,28 @@ class Search extends React.Component{
         var data = { districtSelected, streetSelected, distanceSelected,  category, detail, content, latitude, longitude };
         axios.post(Service.getServerHostName() + '/api/food-search', data)
         .then(res => {
-            console.log(res);
+            // console.log(res);
             if(res.status === 200){
                 // localStorage.setItem('search', JSON.stringify(res.data.data));
-                console.log(res.data.data);
+                console.log(res.data);
                 this.setState({
-                    foodList : res.data.data
+                    foodList : res.data.foods
                 });
                 localStorage.setItem('distance', distanceSelected);
+                localStorage.setItem('search', JSON.stringify(res.data.foods));
 
-                if(window.location.pathname !== "/search"){
-                    localStorage.setItem('search', JSON.stringify(res.data.data));
-                    $('#link-to-search')[0].click();
+                if(content.length){
+                    this.setState({
+                        category: -1,
+                        districtSelected: -1,
+                        distanceSelected: -1
+                    })
                 }
 
+                if(window.location.pathname !== "/search"){
+                    $('#link-to-search')[0].click();
+                }
                 else {
-                    console.log("in search page");
-                    // localStorage.removeItem('search');
-                    localStorage.setItem('search', JSON.stringify(res.data.data));
                     window.location.reload();
                 }
 
@@ -186,10 +186,11 @@ class Search extends React.Component{
 
     handleCateChange(e) {
         var cate_id = e.target.value;
-        if(cate_id < 0){
-            this.setState({ cateDetail : []});
-            return;
-        }
+        // console.log('cate_id = ' + cate_id);
+        // if(cate_id < 0){
+        //     this.setState({ cateDetail : []});
+        //     return;
+        // }
 
         this.setState({ category : cate_id });
 
@@ -212,7 +213,7 @@ class Search extends React.Component{
 					<div className="form-row">
                         <div className="col-sm mb-1">
                             <select className="custom-select" name="district" onChange={this.handleDistrictChange} onInvalid={this.onInvalid}>
-                                <option value="-1" disabled selected>Quận/Huyện</option>
+                                <option value="-1" selected>Quận/Huyện</option>
                                 {
                                     this.state.district.map((dist, index) =>
                                         Number(districtSelected) === dist.district_id ?
@@ -226,7 +227,7 @@ class Search extends React.Component{
 
 						<div className="col-sm mb-1">
 							<select className="custom-select" name="category" onChange={this.handleCateChange} >
-							<option value="-1" disabled selected>Loại món ăn</option>
+							<option value="-1" selected>Loại món ăn</option>
 							{
 								this.state.cate.map((cat, index) =>
                                     Number(category) == cat.cate_id ?

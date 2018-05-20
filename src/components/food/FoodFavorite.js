@@ -17,7 +17,7 @@ class FoodList extends React.Component{
         axios.get(Service.getServerHostName() + "/api/food-favorite/" + this.props.match.params.userId)
         .then(res => {
             // console.log(res.data);
-            var data = res.data.data;
+            var data = res.data.foods;
             if(data.length){
                 this.setState({foodList : data});
             }

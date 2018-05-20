@@ -20,17 +20,18 @@ class FoodList extends React.Component{
     }
     componentWillMount(){
         // Auth.logout();
-        // console.log(JSON.parse(localStorage.getItem('user')));
+        console.log(JSON.parse(localStorage.getItem('user')));
+
+    }
+
+    componentDidMount(){
+        // console.log(this.props);
         if(Auth.loggedIn() && this.state.user.type === "admin"){
             if(window.location.path === '/'){
                 window.location.replace('/admin/foods');
             }
             // this.props.history.replace('/admin/foods');
         }
-    }
-
-    componentDidMount(){
-        // console.log(this.props);
         if(this.props.location !== undefined){
             var state = this.props.location.state;
             if(state !== undefined){

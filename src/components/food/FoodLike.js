@@ -16,8 +16,8 @@ class FoodLike extends React.Component{
         console.log(Service.getServerHostName());
         axios.get(Service.getServerHostName() + "/api/food-like/" + this.props.match.params.userId)
         .then(res => {
-            // console.log(res.data);
-            var data = res.data.data;
+            console.log(res.data);
+            var data = res.data.foods;
             if(data.length){
                 this.setState({foodList : data});
             }

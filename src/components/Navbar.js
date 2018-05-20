@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import axios from "axios"
-import Search from "./SearchFood"
+import SearchFood from "./SearchFood"
 import Services from "./service/Service"
 import AuthService from "./authenticate/AuthService"
 const Service = new Services();
@@ -158,7 +158,7 @@ class Navbar extends React.Component{
                         </div>
                         </div>
                     </nav>
-                    {  Auth.loggedIn()  && this.state.user.type === "admin" ? '' : <Search /> }
+                    {  Auth.loggedIn()  && this.state.user.type === "admin" ? '' : <SearchFood /> }
 
                 </div>
 

@@ -26,7 +26,7 @@ class Nearby extends React.Component{
         axios.get(Service.getServerHostName() + "/api/food-nearby/" + originUrl + '/' + locationData.food_id)
         .then(res => {
             console.log(res.data);
-            this.setState({foodList : res.data.data, origin : originUrl, info: locationData })
+            this.setState({foodList : res.data.foods, origin : originUrl, info: locationData })
         }).catch(err => {
             console.log(err);
         })
