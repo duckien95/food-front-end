@@ -57,7 +57,25 @@ class Search extends React.Component{
     }
 
     componentDidMount(){
+        console.log("URL : " + window.location.pathname);
         // console.log(this.props);
+        if(window.location.pathname !== "/search"){
+            // localStorage.removeItem('search-info');
+            // localStorage.setItem('search-info',
+            //     JSON.stringify({
+            //         districtSelected : -1,
+            //         streetSelected: -1,
+            //         distanceSelected : -1,
+            //         category : -1,
+            //         detail : -1
+            //     })
+            // );
+            this.setState({
+                districtSelected : -1,
+                distanceSelected : -1,
+                category : -1
+            })
+        }
         $('#link-to-search')[0].style.visibility = "hidden";
 
         axios.get(Service.getServerHostName() + "/api/category")
@@ -82,7 +100,7 @@ class Search extends React.Component{
         localStorage.removeItem('search-info');
 
         const { content, latitude, longitude } = this.state;
-        var districtSelected = (this.state.districtSelected ? this.state.districtSelected : -1);
+        var districtSelected = this.state.districtSelected;
         var streetSelected = (this.state.streetSelected ? this.state.streetSelected : -1);
         var distanceSelected = this.state.distanceSelected ;
         var detail = (this.state.detail ? this.state.detail : -1);
@@ -95,7 +113,7 @@ class Search extends React.Component{
                 streetSelected: -1,
                 distanceSelected : distanceSelected,
                 category : category,
-                detail : detail
+                detail : -1
             })
         );
         var data = { districtSelected, streetSelected, distanceSelected,  category, detail, content, latitude, longitude };
@@ -108,6 +126,7 @@ class Search extends React.Component{
                 this.setState({
                     foodList : res.data.foods
                 });
+
                 localStorage.setItem('distance', distanceSelected);
                 localStorage.setItem('search', JSON.stringify(res.data.foods));
 
@@ -159,24 +178,25 @@ class Search extends React.Component{
 
     }
 
-    handleDistrictChange(evt){
-        var districtID =  evt.target.value
+    handleDistrictChange(e){
+        var districtID =  e.target.value
         console.log("district_id = " + districtID);
-        if(districtID < 0){
-            this.setState({street :[]});
-            return;
-        }
-
         this.setState({districtSelected : districtID});
-        axios.get(Service.getServerHostName() + "/api/street/list").then(res => {
-            // console.log(res.data.streetList);
-            var data = res.data.data[1][districtID];
-            if (Object.keys(data).length) {
-                this.setState({ street: data});
-                return;
-            }
-            this.setState({street :[]});
-        })
+
+        // if(districtID < 0){
+        //     this.setState({street :[]});
+        //     return;
+        // }
+
+        // axios.get(Service.getServerHostName() + "/api/street/list").then(res => {
+        //     // console.log(res.data.streetList);
+        //     var data = res.data.data[1][districtID];
+        //     if (Object.keys(data).length) {
+        //         this.setState({ street: data});
+        //         return;
+        //     }
+        //     this.setState({street :[]});
+        // })
     }
 
     handleStreetChange(evt){
@@ -185,14 +205,8 @@ class Search extends React.Component{
     }
 
     handleCateChange(e) {
-        var cate_id = e.target.value;
-        // console.log('cate_id = ' + cate_id);
-        // if(cate_id < 0){
-        //     this.setState({ cateDetail : []});
-        //     return;
-        // }
-
-        this.setState({ category : cate_id });
+        // var cate_id = e.target.value;
+        this.setState({ category : e.target.value });
 
     }
 
@@ -207,7 +221,7 @@ class Search extends React.Component{
         var { districtSelected, category, detail } = this.state;
         return (
             <div className="main-color">
-            <div className="container">
+            <div className="container px-0">
                 <div className="text-center" id="msg">{this.state.msg}</div>
                 <form onSubmit={this.onSearch} className="search-form main-color">
 					<div className="form-row">

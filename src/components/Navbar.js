@@ -63,7 +63,7 @@ class Navbar extends React.Component{
                 <div className="fixed-top">
 
                     <nav className="navbar navbar-expand-lg navbar-light main-color">
-                    <div className="container">
+                    <div className="container px-0">
 
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             {  Auth.loggedIn()  && this.state.user.type === "admin" ? (

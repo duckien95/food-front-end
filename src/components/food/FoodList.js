@@ -57,7 +57,7 @@ class FoodList extends React.Component{
 
     render(){
         return(
-            <div className="col-md-12">
+            <div>
                 <NotificationContainer />
                 <Food foods={this.state.foodList} />
             </div>

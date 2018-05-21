@@ -34,14 +34,14 @@ class Nearby extends React.Component{
 
     render(){
         return(
-            <div className="col-md-12">
-            <div className="text-center mb-3">
-                <div className="nearby-title">Địa điểm ở gần</div>
-                <div className="nearby-header">{this.state.info.res_name}</div>
-                <div>{this.state.info.origin}</div>
-            </div>
+            <div>
+                <div className="text-center mb-3">
+                    <div className="nearby-title">Địa điểm ở gần</div>
+                    <div className="nearby-header">{this.state.info.res_name}</div>
+                    <div>{this.state.info.origin}</div>
+                </div>
 
-            <Food foods={this.state.foodList} />
+                <Food foods={this.state.foodList} />
 
             </div>
 

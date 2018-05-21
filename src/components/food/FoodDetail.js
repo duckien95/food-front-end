@@ -27,6 +27,7 @@ class FoodDetail extends React.Component {
             sameCateList:[],
             liked: '',
             favorited:'',
+            avatar: '',
             imageFile: [],
             videoFile: [],
             imageMsg: 'Chọn ảnh',
@@ -162,7 +163,8 @@ class FoodDetail extends React.Component {
                         nearbyUrl : nearbyUrl,
                         origin : originPlace,
                         res_name : res_name,
-                        listFileId: data.listFileId
+                        listFileId: data.listFileId,
+                        avatar: data.avatar
                     });
 
                     if(this.state.user !== null){
@@ -182,7 +184,7 @@ class FoodDetail extends React.Component {
             res => {
                axios.get(Service.getServerHostName() + '/api/food-category/' + res)
                .then(res => {
-                   this.setState({ sameCateList : res.data.data })
+                   this.setState({ sameCateList : res.data.foods })
                })
            }
        )
@@ -254,9 +256,72 @@ class FoodDetail extends React.Component {
             (second > 9 ? '' : '0') + second ;
     }
 
+    onDeleteVideo = (file_id) => (e) => {
+        axios.post(Service.getServerHostName() + '/food/video/disapprove/' + this.state.food.id + '/' + file_id)
+        .then(
+            res => {
+                // console.log(res);
+                if(res.data.status === 'success'){
+                    NotificationManager.info('Thành công', 'Xóa video');
+                    var videoUrl = this.state.videoUrl;
+                    var index = videoUrl.indexOf(file_id);
+                    videoUrl.splice(index, 1);
+                    this.setState({
+                        videoUrl: videoUrl
+                    })
+                }
+                else {
+                    NotificationManager.error('Video chưa được xóa', 'Có lỗi xảy ra')
+                }
+            }
+        )
+    }
+
+    onDeleteImage = (file_id) => (e) => {
+        axios.post(Service.getServerHostName() + '/food/image/disapprove/' + this.state.food.id + '/' + file_id)
+        .then(
+            res => {
+                console.log(res);
+                if(res.data.status === 'success'){
+                    NotificationManager.success('Thành công', 'Xóa ảnh')
+                    var imageUrl = this.state.imageUrl;
+                    // console.log(imageUrl);
+                    var index = imageUrl.indexOf(file_id);
+                    imageUrl.splice(index, 1);
+
+                    this.ImageSrcLightbox(imageUrl, 'src');
+
+                    this.setState({
+                        imageUrl: imageUrl,
+                    })
+                }
+                else {
+                    NotificationManager.error('Ảnh chưa được xóa', 'Có lỗi xảy ra')
+                }
+            }
+        )
+    }
+
+    onSetAvatar = (file_id) => (e) => {
+        var food_id = this.state.food.id;
+        axios.post(Service.getServerHostName() + '/food/set-avatar', { food_id, file_id })
+        .then(
+            res => {
+                if(res.data.status === 'success'){
+                    NotificationManager.success('Thành công', 'Đặt ảnh đại diện')
+                    this.setState({
+                        avatar: file_id
+                    })
+                }
+                else {
+                    NotificationManager.error('', 'Có lỗi xảy ra')
+                }
+            }
+        )
+    }
 
     onApproveImage = (file_id) => (e) => {
-        console.log('click');
+        // console.log('click');
 
         // console.log(e.target);
         // console.log(e.target.indexfile);
@@ -305,7 +370,7 @@ class FoodDetail extends React.Component {
                     var index = imagePending.indexOf(file_id);
 
                     imagePending.splice(index, 1);
-                        this.ImageSrcLightbox(imagePending, 'srcPending');
+                    this.ImageSrcLightbox(imagePending, 'srcPending');
                     this.setState({
                         imagePending: imagePending
                     })
@@ -655,8 +720,7 @@ class FoodDetail extends React.Component {
 
 
     render(){
-        const { comments, sameCateList, photoIndex, isOpen, images, imageUrl, food, videoUrl, imagePending, videoPending, src, srcPending, favorited, liked, nearbyUrl, origin, res_name } = this.state;
-        var indexImg = (food.type === 'pending' ? imagePending[0] : imageUrl[0]);
+        const { comments, sameCateList, photoIndex, isOpen, images, avatar, imageUrl, food, videoUrl, imagePending, videoPending, src, srcPending, favorited, liked, nearbyUrl, origin, res_name } = this.state;
 
         return(
             <div className="row">
@@ -785,12 +849,14 @@ class FoodDetail extends React.Component {
                     </div>
                 </div>
                 <div className="col-md-5 no-padding d-inline-flex">
-                    <img alt={indexImg} src={"https://drive.google.com/uc?export=view&id=" + indexImg } className="w-100 index-img" onClick={() => this.setState({ isOpen: true, images : src })}/>
+                    <img alt={avatar} src={"https://drive.google.com/uc?export=view&id=" + avatar } className="w-100 index-img" onClick={() => this.setState({ isOpen: true, images : src })}/>
                 </div>
 
                 <div className="col-md-7">
                 </div>
 
+
+                <div className="">
                 { imageUrl.length > 0 ?
                     (
                         <div className="col-md-12">
@@ -799,10 +865,17 @@ class FoodDetail extends React.Component {
                                 {
                                     imageUrl.map((img, index) =>
 
-                                        <div className="col-md-4  px-1 py-1" key={index}  >
+                                        <div className="col-md-4 px-1 py-1" key={index}>
                                             <img  alt={img} src={"https://drive.google.com/uc?export=view&id=" + img } className="home-image" onClick={() => this.setState({ isOpen: true, images : src })}/>
+                                            <div className="row py-1">
+                                                <div className="col-sm">
+                                                    <button onClick={this.onDeleteImage(img)} className="btn btn-danger w-100">Xóa ảnh</button>
+                                                </div>
+                                                <div className="col-sm">
+                                                    <button onClick={this.onSetAvatar(img)} className="btn btn-success w-100">Đặt làm đại diện</button>
+                                                </div>
+                                            </div>
                                         </div>
-
 
                                     )
                                 }
@@ -841,6 +914,14 @@ class FoodDetail extends React.Component {
                                     <div className="col-md-6 px-1 py-1 d-inline-flex row">
                                         <div className="col-md-12">
                                             <iframe key={index} className="w-100 video-drive" title={index} src={"https://drive.google.com/file/d/" + video + "/preview"}></iframe>
+                                            <div className="row py-1">
+                                                <div className="col-sm">
+                                                    <button onClick={this.onDeleteVideo(video)} className="btn btn-danger w-100">Xóa video</button>
+                                                </div>
+                                                <div className="col-sm">
+
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     )
@@ -997,19 +1078,18 @@ class FoodDetail extends React.Component {
                         </form>
                         </div>
                     </div>
-
                     <div className="col-md-12">
+
                         <div className="title px-1 py-1">
                             {this.state.food.cate_name} tại {this.state.food.city_name}
                         </div>
-
                         <div className="row">
                         {
                             sameCateList.map((food,index) =>
                                 <div className="col-xs-6 col-md-4 suggest px-1 py-1" key={index}>
                                     <a href={"/food-info/" + food.id}>
                                         <div className="food-suggest">
-                                            <img  src={"https://drive.google.com/uc?export=view&id=" + (food.imageUrl.approve[0] ?  food.imageUrl.approve[0] : "19RNB4mhAvMXI_6ohPkYyc4l9Nv_OeMGW")} alt="" className="home-image" />
+                                            <img  src={"https://drive.google.com/uc?export=view&id=" + (food.imageUrl.approve[0] ?  food.imageUrl.approve[0] : "1obNJRB2U3ytGosbM-ADswthgaRMzDZNw")} alt="" className="home-image" />
 
                                             <div className="food-detail-suggest">
                                                 <div  className="icon-heart-suggest">
@@ -1024,6 +1104,9 @@ class FoodDetail extends React.Component {
                                                     </li>
                                                     <li className="li-child-suggest"><span> {food.prices}</span></li>
                                                     <li className="li-child-suggest">{ food.street_number + ' ' + food.street_name + ', ' + food.district_name + ', ' + food.city_name }</li>
+                                                    {
+                                                        food.distance !== undefined ? (<li className="li-child-suggest">Khoảng cách {food.distance}</li>) : ''
+                                                    }
                                                 </ul>
                                             </div>
                                         </div>
@@ -1033,7 +1116,11 @@ class FoodDetail extends React.Component {
                         }
                         </div>
 
-                    </div>
+                </div>
+
+
+
+                </div>
                 </div>
         )
     }

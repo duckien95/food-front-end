@@ -112,11 +112,11 @@ class SearchResult extends React.Component{
 
     render(){
         return(
-            <div className="">
+            <div className="margin-15">
 
-            <div className="text-center search-not-found alert alert-warning">{this.state.msg}</div>
+            <div className="text-center search-not-found alert alert-warning w-100">{this.state.msg}</div>
             <div className="card" id="search-found">
-                <div className="card-header">
+                <div className="card-heade">
                     <div className="float-left col-md-6 number-result-search text-danger">
                         {this.state.numberResult > 0 ? ('Tìm thấy ' + this.state.numberResult + ' địa điểm ') : 'Không có địa điểm nào '}
                         { Number(this.state.distanceLevel) > 0 ? (' dưới ' + this.state.distanceLevel + ' km') : ''}
@@ -143,6 +143,7 @@ class SearchResult extends React.Component{
                     <Food foods={this.state.foodList} />
                 </div>
             </div>
+
         </div>
 
         )
