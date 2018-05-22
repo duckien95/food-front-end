@@ -9,7 +9,7 @@ class FoodList extends React.Component{
 
     render(){
         return(
-            <div className="margin-1">
+            <div className="mrg-1">
                 <div className="text-center title-header">{this.props.title}</div>
                 <div className="row">
                 {

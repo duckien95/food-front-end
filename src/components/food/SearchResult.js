@@ -112,7 +112,7 @@ class SearchResult extends React.Component{
 
     render(){
         return(
-            <div className="margin-15">
+            <div className="mrg-15">
 
             <div className="text-center search-not-found alert alert-warning w-100">{this.state.msg}</div>
             <div className="card" id="search-found">

@@ -856,7 +856,7 @@ class FoodDetail extends React.Component {
                 </div>
 
 
-                <div className="">
+                <div className="mrg-1">
                 { imageUrl.length > 0 ?
                     (
                         <div className="col-md-12">
@@ -867,6 +867,8 @@ class FoodDetail extends React.Component {
 
                                         <div className="col-md-4 px-1 py-1" key={index}>
                                             <img  alt={img} src={"https://drive.google.com/uc?export=view&id=" + img } className="home-image" onClick={() => this.setState({ isOpen: true, images : src })}/>
+
+                                            {  Auth.loggedIn()  && this.state.user.type === "admin" ? (
                                             <div className="row py-1">
                                                 <div className="col-sm">
                                                     <button onClick={this.onDeleteImage(img)} className="btn btn-danger w-100">Xóa ảnh</button>
@@ -874,7 +876,7 @@ class FoodDetail extends React.Component {
                                                 <div className="col-sm">
                                                     <button onClick={this.onSetAvatar(img)} className="btn btn-success w-100">Đặt làm đại diện</button>
                                                 </div>
-                                            </div>
+                                            </div> ) : '' }
                                         </div>
 
                                     )
@@ -1089,7 +1091,7 @@ class FoodDetail extends React.Component {
                                 <div className="col-xs-6 col-md-4 suggest px-1 py-1" key={index}>
                                     <a href={"/food-info/" + food.id}>
                                         <div className="food-suggest">
-                                            <img  src={"https://drive.google.com/uc?export=view&id=" + (food.imageUrl.approve[0] ?  food.imageUrl.approve[0] : "1obNJRB2U3ytGosbM-ADswthgaRMzDZNw")} alt="" className="home-image" />
+                                            <img  src={"https://drive.google.com/uc?export=view&id=" + food.avatar} alt="" className="home-image" />
 
                                             <div className="food-detail-suggest">
                                                 <div  className="icon-heart-suggest">

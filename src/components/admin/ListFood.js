@@ -9,7 +9,6 @@ class ListFood extends React.Component{
         this.state  = {
             foods : [],
         }
-
     }
 
     componentDidMount(){
@@ -26,7 +25,7 @@ class ListFood extends React.Component{
     render(){
         const { foods } = this.state;
         return(
-            <div className="col-md-12">
+            <div className="row">
                 <table class="table table-bordered table-light table-hover">
                     <thead>
                         <tr className="table-success admin">
