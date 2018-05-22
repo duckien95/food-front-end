@@ -221,7 +221,7 @@ class Search extends React.Component{
         var { districtSelected, category, detail } = this.state;
         return (
             <div className="main-color">
-            <div className="container px-0">
+            <div className="container px-1">
                 <div className="text-center" id="msg">{this.state.msg}</div>
                 <form onSubmit={this.onSearch} className="search-form main-color">
 					<div className="form-row">

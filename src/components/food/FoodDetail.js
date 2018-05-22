@@ -738,7 +738,7 @@ class FoodDetail extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-7 no-padding d-inline-flex">
+                <div className="col-md-7 px-1 d-inline-flex">
                     <div className="card">
                         <div className="card-header text-center food-title">
                             {food.name}
@@ -848,7 +848,7 @@ class FoodDetail extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-5 no-padding d-inline-flex">
+                <div className="col-md-5 px-1 d-inline-flex">
                     <img alt={avatar} src={"https://drive.google.com/uc?export=view&id=" + avatar } className="w-100 index-img" onClick={() => this.setState({ isOpen: true, images : src })}/>
                 </div>
 
@@ -856,7 +856,7 @@ class FoodDetail extends React.Component {
                 </div>
 
 
-                <div className="mrg-1">
+
                 { imageUrl.length > 0 ?
                     (
                         <div className="col-md-12">
@@ -1122,7 +1122,7 @@ class FoodDetail extends React.Component {
 
 
 
-                </div>
+
                 </div>
         )
     }
