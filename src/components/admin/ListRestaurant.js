@@ -27,7 +27,7 @@ class ListRestaurant extends React.Component{
         const { restaurants } = this.state;
         return(
             <div className="row">
-                <table class="table table-bordered table-light table-hover">
+                <table className="table table-bordered table-light table-hover">
                     <thead>
                         <tr className="table-success admin">
                             <th scope="col">STT</th>

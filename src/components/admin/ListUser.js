@@ -61,7 +61,7 @@ class ListUser extends React.Component{
         const { users } = this.state;
         return(
             <div className="row">
-                <table class="table table-bordered table-light table-hover">
+                <table className="table table-bordered table-light table-hover">
                     <thead>
                         <tr className="table-success">
                             <th scope="col">STT</th>
@@ -83,30 +83,30 @@ class ListUser extends React.Component{
                             <td>
                                 {user.type === 'technician' ? 'Kĩ thuật viên' : (user.type === 'normal' ? 'Người dùng' : 'Admin')}
                                 <div>
-                                <button type="button" class="btn btn-success max-width" data-toggle="modal" data-target="#myModal" value={user.id} onClick={this.onClickButton}>Cấp quyền</button>
+                                <button type="button" className="btn btn-success max-width" data-toggle="modal" data-target="#myModal" value={user.id} onClick={this.onClickButton}>Cấp quyền</button>
 
 
-                                  <div class="modal fade" id="myModal" role="dialog">
-                                    <div class="modal-dialog modal-dialog-centered modal-md" id="modalIV">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h4 class="modal-title text-center">Chỉnh sửa quyền truy cập</h4>
-                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  <div className="modal fade" id="myModal" role="dialog">
+                                    <div className="modal-dialog modal-dialog-centered modal-md" id="modalIV">
+                                      <div className="modal-content">
+                                        <div className="modal-header">
+                                          <h4 className="modal-title text-center">Chỉnh sửa quyền truy cập</h4>
+                                          <button type="button" className="close" data-dismiss="modal">&times;</button>
                                         </div>
-                                        <div class="modal-body">
+                                        <div className="modal-body">
                                             <form onSubmit={this.onAddPermission} >
 
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="Radios" id="Radios1" value='/admin' onChange={this.onChange}/>
-                                                    <label class="form-check-label" for="Radios1">Admin</label>
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="radio" name="Radios" id="Radios1" value='/admin' onChange={this.onChange}/>
+                                                    <label className="form-check-label" htmlFor="Radios1">Admin</label>
                                                     </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="Radios" id="Radios2" value='/technician' onChange={this.onChange}/>
-                                                    <label class="form-check-label" for="Radios2">Kĩ thuật viên</label>
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="radio" name="Radios" id="Radios2" value='/technician' onChange={this.onChange}/>
+                                                    <label className="form-check-label" htmlFor="Radios2">Kĩ thuật viên</label>
                                                 </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="Radios" id="Radios3" value='/normal' onChange={this.onChange} />
-                                                    <label class="form-check-label" for="Radios3">Người dùng</label>
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="radio" name="Radios" id="Radios3" value='/normal' onChange={this.onChange} />
+                                                    <label className="form-check-label" htmlFor="Radios3">Người dùng</label>
                                                 </div>
                                                 <div className="form-group float-right">
                                                     <button type="submit" className="btn btn-info">Cấp quyền</button>
@@ -122,37 +122,49 @@ class ListUser extends React.Component{
                                   </div>
                             </td>
                             <td>
-                            <ul className="list-unstyled">
-                            {
-                                user.like.map( (like, index) =>
-                                    <li key={index}>
-                                        <a href={'/food-info/' +  like.id }>{index+1 +  '. ' + like.name}</a>
-                                    </li>
-                                )
-                            }
-                            </ul>
+                                <div class="dropdown">
+
+                                    <div class="dropdown-toggle" data-toggle="dropdown">
+                                        <span className="text-primary">{user.like.length} bài viết</span>
+                                    </div>
+                                    <div class="dropdown-menu">
+                                        {
+                                            user.like.map( (like, index) =>
+                                                <a key={index} href={'/food-info/' +  like.id }  class="dropdown-item">{index+1 +  '. ' + like.name}</a>
+                                            )
+                                        }
+                                    </div>
+                                </div>
                             </td>
                             <td>
-                            <ul className="list-unstyled">
-                            {
-                                user.favorite.map( (like, index) =>
-                                    <li key={index}>
-                                        <a href={'/food-info/' +  like.id }>{index+1 +  '. ' + like.name}</a>
-                                    </li>
-                                )
-                            }
-                            </ul>
+                                <div class="dropdown">
+
+                                    <div class="dropdown-toggle" data-toggle="dropdown">
+                                        <span className="text-primary">{user.favorite.length} bài viết</span>
+                                    </div>
+                                    <div class="dropdown-menu">
+                                        {
+                                            user.favorite.map( (fav, index) =>
+                                                <a key={index} href={'/food-info/' +  fav.id }  class="dropdown-item">{index+1 +  '. ' + fav.name}</a>
+                                            )
+                                        }
+                                    </div>
+                                </div>
                             </td>
                             <td>
-                            <ul className="list-unstyled">
-                            {
-                                user.post.map( (like, index) =>
-                                    <li key={index}>
-                                        <a href={'/food-info/' +  like.id }>{index+1 +  '. ' + like.name}</a>
-                                    </li>
-                                )
-                            }
-                            </ul>
+                                <div class="dropdown">
+
+                                    <div class="dropdown-toggle" data-toggle="dropdown">
+                                        <span className="text-primary">{user.post.length} bài viết</span>
+                                    </div>
+                                    <div class="dropdown-menu">
+                                        {
+                                            user.post.map( (pst, index) =>
+                                                <a key={index} href={'/food-info/' +  pst.id }  class="dropdown-item">{index+1 +  '. ' + pst.name}</a>
+                                            )
+                                        }
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         )

@@ -63,36 +63,59 @@ class Navbar extends React.Component{
                 <div className="fixed-top">
 
                     <nav className="navbar navbar-expand-lg navbar-light main-color">
-                    <div className="container px-1">
 
-                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                            {  Auth.loggedIn()  && this.state.user.type === "admin" ? (
+                    {  Auth.loggedIn()  && this.state.user.type === "admin" ? (
+                        <div  className="container-fluid">
+                            <ul className="navbar-nav mr-auto">
+
+
+                                <li className="nav-item">
+                                    <a href='/admin' className="nav-link">QUẢN TRỊ HỆ THỐNG CHIA SẺ HÌNH ẢNH/VIDEO ẨM THỰC</a>
+                                </li >
+
+                                <li className="nav-item">
+                                    <a href='/food/list' className="nav-link">HOME</a>
+                                </li>
+
+
+                            </ul>
+                            <ul className="navbar-nav">
+                                <li className="nav-item">
+                                    <span className="nav-link">
+                                        {this.state.user.provider === "local" ? this.state.user.username : (this.state.user.first_name + ' ' + this.state.user.last_name)}
+
+                                    </span>
+
+                                </li>
+                                <li className="nav-item">
+                                    <Link to={'/'} className="nav-link" onClick={this.handleLogout}></Link>
+                                </li>
+                                <li className="nav-item dropdown">
+                                    <a className="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i className="fa fa-cog"></i>
+                                    </a>
+                                    <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                            {
+                                                this.state.user.type !== "normal" ? <a href='/admin/pending' className="dropdown-item" >Duyệt bài</a> : ''
+                                            }
+                                            <a href={'/food/create'} className="dropdown-item" >Đăng bài</a>
+                                            <a href={'/food-favorite/' + this.state.user.id } className="dropdown-item" >Bài viết đã lưu lại</a>
+                                            <a href={'/food-like/' + this.state.user.id } className="dropdown-item" >Bài viết đã thích</a>
+                                            <a href={'/food-post/' + this.state.user.id } className="dropdown-item" >Bài viết đã đăng</a>
+                                            <a href={'/edit/' + this.state.user.id } className="dropdown-item" >Chỉnh sửa thông tin</a>
+                                            <a className="dropdown-item" onClick={this.handleLogout} >Đăng xuất</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    ) :
+                    ( Auth.loggedIn()  && this.state.user.type === "normal" ? (
+                        <div className="container px-1">
+
+                            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+
                                 <ul className="navbar-nav mr-auto">
-                                    <li className="nav-item active">
-                                        <Link to={'/'} className="nav-link">Quản lý</Link>
-                                    </li >
                                     <li className="nav-item">
-                                        <Link to={'/admin/foods'} className="nav-link">Món ăn</Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link to={'/admin/users'} className="nav-link">User</Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link to={'/admin/restaurants'} className="nav-link">Nhà hàng</Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link to={'/admin/pending'} className="nav-link">
-                                            Chờ duyệt
-                                            <span class="badge badge-light mx-1">{this.state.numberPending > 0 ? this.state.numberPending : ''}</span>
-                                        </Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link to={'/food/list'} className="nav-link">Website</Link>
-                                    </li>
-                                </ul>
-                            ) : (
-                                <ul className="navbar-nav mr-auto">
-                                    <li className="nav-item active">
                                         <Link to={'/'} className="nav-link">VIETFOOD</Link>
                                     </li >
 
@@ -109,57 +132,76 @@ class Navbar extends React.Component{
                                         }
                                         </div>
                                     </li>
+
                                 </ul>
-                            ) }
+                                <ul className="navbar-nav">
+                                <li className="nav-item">
+                                    <span className="nav-link">
+                                        {this.state.user.provider === "local" ? this.state.user.username : (this.state.user.first_name + ' ' + this.state.user.last_name)}
 
+                                    </span>
 
-                                { Auth.loggedIn()  ?
-                                    (
-                                        <ul className="navbar-nav">
-                                        <li className="nav-item active">
-                                            <span className="nav-link">
-                                                {this.state.user.provider === "local" ? this.state.user.username : (this.state.user.first_name + ' ' + this.state.user.last_name)}
+                                </li>
+                                <li className="nav-item">
+                                    <Link to={'/'} className="nav-link" onClick={this.handleLogout}></Link>
+                                </li>
+                                <li className="nav-item dropdown">
+                                    <a className="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i className="fa fa-cog"></i>
+                                    </a>
+                                    <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                            {
+                                                this.state.user.type !== "normal" ? <a href='/admin/pending' className="dropdown-item" >Duyệt bài</a> : ''
+                                            }
+                                            <a href={'/food/create'} className="dropdown-item" >Đăng bài</a>
+                                            <a href={'/food-favorite/' + this.state.user.id } className="dropdown-item" >Bài viết đã lưu lại</a>
+                                            <a href={'/food-like/' + this.state.user.id } className="dropdown-item" >Bài viết đã thích</a>
+                                            <a href={'/food-post/' + this.state.user.id } className="dropdown-item" >Bài viết đã đăng</a>
+                                            <a href={'/edit/' + this.state.user.id } className="dropdown-item" >Chỉnh sửa thông tin</a>
+                                            <a className="dropdown-item" onClick={this.handleLogout} >Đăng xuất</a>
+                                    </div>
+                                </li>
 
-                                            </span>
-
-                                        </li>
-                                        <li className="nav-item active">
-                                            <Link to={'/'} className="nav-link" onClick={this.handleLogout}></Link>
-                                        </li>
-                                        <li className="nav-item dropdown">
-                                            <a className="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i className="fa fa-cog"></i>
-                                            </a>
-                                            <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                                    {
-                                                        this.state.user.type !== "normal" ? <a href='/admin/pending' className="dropdown-item" >Duyệt bài</a> : ''
-                                                    }
-                                                    <a href={'/food/create'} className="dropdown-item" >Đăng bài</a>
-                                                    <a href={'/food-favorite/' + this.state.user.id } className="dropdown-item" >Bài viết đã lưu lại</a>
-                                                    <a href={'/food-like/' + this.state.user.id } className="dropdown-item" >Bài viết đã thích</a>
-                                                    <a href={'/food-post/' + this.state.user.id } className="dropdown-item" >Bài viết đã đăng</a>
-                                                    <a href={'/edit/' + this.state.user.id } className="dropdown-item" >Chỉnh sửa thông tin</a>
-                                                    <a className="dropdown-item" onClick={this.handleLogout} >Đăng xuất</a>
-                                            </div>
-                                        </li>
-
-                                        </ul>
-                                    )
-                                    : (
-                                        <ul className="navbar-nav">
-                                            <li className="nav-item">
-                                                <Link to={'/login'} className="nav-link">Đăng nhập</Link>
-                                            </li>
-                                        </ul>
-                                    )
-                                }
-
-
+                                </ul>
+                            </div>
                         </div>
+                    ) : (
+                        <div className="container px-1">
+
+                            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+
+                                <ul className="navbar-nav mr-auto">
+                                    <li className="nav-item">
+                                        <Link to={'/'} className="nav-link">VIETFOOD</Link>
+                                    </li >
+
+                                    <li className="nav-item dropdown">
+                                        <a className="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Thực đơn
+                                        </a>
+                                        <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        {
+                                            this.state.cate.map((cate, index) =>
+                                                <a key={index} href={'/food-category/' + cate.cate_id } className="dropdown-item" >{cate.cate_name}</a>
+
+                                            )
+                                        }
+                                        </div>
+                                    </li>
+
+                                </ul>
+                                <ul className="navbar-nav">
+                                    <li className="nav-item">
+                                        <Link to={'/login'} className="nav-link">Đăng nhập</Link>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
+                    ))
+                    }
+
                     </nav>
                     {  Auth.loggedIn()  && this.state.user.type === "admin" ? '' : <SearchFood /> }
-
                 </div>
 
             </div>

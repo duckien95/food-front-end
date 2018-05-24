@@ -30,7 +30,7 @@ class FoodList extends React.Component{
         const {foodList} = this.state;
         return(
             <div className="row">
-                <table class="table table-bordered table-light table-hover">
+                <table className="table table-bordered table-light table-hover">
                     <thead>
                         <tr className="table-success">
                             <th scope="col">STT</th>

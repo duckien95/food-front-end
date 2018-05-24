@@ -26,7 +26,16 @@ class Login extends Component {
 
     componentWillMount(){
         if(this.Auth.loggedIn()){
-            this.props.history.replace('/');
+            var user = JSON.parse(localStorage.getItem('user'));
+            // console.log(user);
+            if(user.type === 'admin'){
+                this.props.history.replace('/admin');
+            }
+            else {
+                this.props.history.replace('/');
+            }
+
+            // if(this)
             // console.log("logged");
         }
     }

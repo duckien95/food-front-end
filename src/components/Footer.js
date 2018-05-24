@@ -28,7 +28,7 @@ class Footer extends React.Component {
 
     render(){
         return(
-
+            <div>
             <footer className="main-color">
                 <div className="row">
 
@@ -78,6 +78,7 @@ class Footer extends React.Component {
                     </div>
                 </div>
             </footer>
+            </div>
 
 
         )

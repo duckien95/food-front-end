@@ -25,31 +25,31 @@ class ListFood extends React.Component{
     render(){
         const { foods } = this.state;
         return(
-            <div className="row">
-                <table class="table table-bordered table-light table-hover">
+            <div className="">
+                <table className="table table-bordered table-light table-hover">
                     <thead>
                         <tr className="table-success admin">
-                            <th scope="col">STT</th>
-                            <th scope="col">Tên</th>
-                            <th scope="col">Nhà Hàng</th>
-                            <th scope="col">Địa điểm</th>
-                            <th scope="col">Đăng bởi</th>
-                            <th scope="col">Ảnh & Video</th>
-                            <th scope="col">Lượt thích</th>
-                            <th scope="col">Lượt lưu</th>
-                            <th scope="col">Trạng thái</th>
+                            <th className="" scope="col">STT</th>
+                            <th className="" scope="col">Tên</th>
+                            <th className="" scope="col">Nhà Hàng</th>
+                            <th className="" scope="col">Địa điểm</th>
+                            <th className="" scope="col">Đăng bởi</th>
+                            <th className="" scope="col">Ảnh & Video</th>
+                            <th className="" scope="col">Lượt thích</th>
+                            <th className="" scope="col">Lượt lưu</th>
+                            <th className="" scope="col">Trạng thái</th>
                         </tr>
                     </thead>
                     <tbody>
                     {
                         foods.map((food,index) =>
                         <tr key={index} className='admin'>
-                            <th scope="row">{index + 1}</th>
-                            <td><a href={'/food-info/' +  food.id }>{food.name}</a></td>
-                            <td>{food.restaurant_name}</td>
-                            <td>{food.address}</td>
-                            <td>{food.owner_name}</td>
-                            <td className="td-image-video">
+                            <td className="" scope="row">{index + 1}</td>
+                            <td className=""><a href={'/food-info/' +  food.id }>{food.name}</a></td>
+                            <td className="">{food.restaurant_name}</td>
+                            <td className="">{food.address}</td>
+                            <td className="">{food.owner_name}</td>
+                            <td className="td-image-video" className="">
                                 {food.imageUrl.approve.length && food.videoUrl.approve.length ?
                                     (<ul className="list-unstyled text-success">Đã duyệt
                                         {food.imageUrl.approve.length > 0 ? (<li key='1' className="text-success">{food.imageUrl.approve.length } ảnh</li>) : ''}
@@ -65,7 +65,7 @@ class ListFood extends React.Component{
                                     </ul>) : ''
                                 }
                             </td>
-                            <td>
+                            <td className="">
                             <ul className="list-unstyled">
                             {
                                 food.like.map( (fod, index) =>
@@ -76,7 +76,7 @@ class ListFood extends React.Component{
                             }
                             </ul>
                             </td>
-                            <td>
+                            <td className="">
                             <ul className="list-unstyled">
                             {
                                 food.favorite.map( (fod, index) =>
@@ -87,7 +87,7 @@ class ListFood extends React.Component{
                             }
                             </ul>
                             </td>
-                            <td>{
+                            <td className="">{
                                 food.status === 'approve' ? (<span className="text-success">Đã duyệt</span>) : (<span className="text-danger">Chờ duyệt</span>)
                             }</td>
                         </tr>

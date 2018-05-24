@@ -20,18 +20,125 @@ select > option {
     letter-spacing: initial !important;
 }
 
-/**************************** ADMIN ****************************/
+/**************************** ADMIN VIEW****************************/
+.admin-home-page {
+    margin: 54px  0 15px;
+    /* position: fixed; */
+}
 
 tr.admin td:last-child{
 
     white-space:nowrap;
 }
 
-
-.td-image-video{
-    width : 10%;
+.table-fixed thead {
+  width: 97%;
 }
-/**************************** ADMIN ****************************/
+.table-fixed tbody {
+  height: 230px;
+  overflow-y: auto;
+  width: 100%;
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 0;
+}
+
+.table-wrapper{
+    display: block;
+    max-height: 720px;
+    overflow-y: auto;
+    /* -ms-overflow-style: -ms-autohiding-scrollbar; */
+}
+.dropdown-menu {
+    height: auto;
+    max-height: 350px;
+    overflow-x: scroll;
+}
+
+#sidebar {
+    /* background: #7386D5; */
+    color: #d63e6f;
+    transition: all 0.3s;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+    padding: 15px;
+    font-weight: 500;
+    font-size: 25px;
+    text-transform: uppercase;
+    color: #fff
+    /* background: #6d7fcc; */
+}
+
+#sidebar ul.components {
+    padding:  0 20px 0;
+    /* border-bottom: 1px solid #47748b; */
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+    color: #fff;
+}
+#sidebar ul li a:hover {
+    color: #7386D5;
+    background: #fff;
+}
+
+
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+    /* color: #d63e6f; */
+    /* background: blue; */
+    background: #2f4977;
+}
+
+.active {
+    background: #2f4977;
+}
+
+/*
+a.nav-active[data-toggle="collapse"] {
+    position: relative;
+}
+
+a.nav-active[aria-expanded="false"]::before, a.nav-active[aria-expanded="true"]::before {
+    content: '\e259';
+    display: inline-block;
+    position: absolute;
+    right: 20px;
+    font-family: 'Glyphicons Halflings';
+    font-size: 0.6em;
+}
+a.nav-active[aria-expanded="true"]::before {
+    content: '\e260';
+} */
+/*
+a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
+    content: '\e259';
+    display: block;
+    position: absolute;
+    right: 20px;
+    font-family: 'Glyphicons Halflings';
+    font-size: 0.6em;
+}
+a[aria-expanded="true"]::before {
+    content: '\e260';
+} */
+/****************************END ADMIN ****************************/
 
 /**************************** FOOD DETAIL ****************************/
 .video-drive {
@@ -259,7 +366,7 @@ ul.food-detail-info-suggest{
 
 .main-content {
     margin-top: 120px;
-    padding-bottom: 50px;
+    /* padding-bottom: 50px; */
     /* padding-top: 50px; */
 }
 
@@ -350,10 +457,10 @@ body{
 footer{
     background-color: #33383c;
     padding:30px 0px;
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin-top: 50px;
+    /* position: absolute; */
+    /* left: 0; */
+    /* right: 0; */
+    /* margin-top: 50px; */
 }
 
 .logo{

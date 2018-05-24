@@ -11,6 +11,7 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
@@ -30,10 +31,18 @@
         <noscript>
           You need to enable JavaScript to run this app.
         </noscript>
-        <div class="container px-0">
+        <div>
+            <div id="navbar">
+            </div>
+            <div id="admin">
+
+            </div>
         	<div class="main-content" id="root">
 
         	</div>
+
+            <div id="footer">
+            </div>
         </div>
 
 
@@ -51,4 +60,10 @@
 
 
   </body>
+  <script>
+        $(".components .nav-active").on("click", function(){
+            $(".components").find(".active").removeClass("active");
+            $(this).addClass("active");
+        });
+  </script>
 </html>

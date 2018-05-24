@@ -32,14 +32,23 @@ import ListUser from './components/admin/ListUser';
 import ListFood from './components/admin/ListFood';
 import ListRestaurant from './components/admin/ListRestaurant';
 import ListFoodPending from './components/admin/ListFoodPending';
+import AdminHome from './components/admin/AdminHome';
 
 import Test from './components/Test';
 import LightboxExample from './components/Lightbox';
 
 ReactDOM.render(
     <Router>
+        <Footer />
+    </Router>
+    , document.getElementById('footer')
+);
+
+ReactDOM.render(
+    <Router>
+    <div>
+        <Navbar />
         <div className="container">
-            <Navbar />
             <Route exact path="/" component={App} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={SignUp} />
@@ -52,20 +61,30 @@ ReactDOM.render(
             <Route path="/food-favorite/:userId" component={FoodFavorite} />
             <Route path="/food-like/:userId" component={FoodLike} />
             <Route path="/food-post/:userId" component={FoodPost} />
-
-            <Route path="/test" component={Test} />
             <Route path="/lightbox" component={LightboxExample} />
             <Route path="/search" component={SearchResult} />
             <Route path="/nearby/:place" component={Nearby} />
-            <Route path="/admin/users" component={ListUser} />
-            <Route path="/admin/foods" component={ListFood} />
-            <Route path="/admin/restaurants" component={ListRestaurant} />
-            <Route path="/admin/pending" component={ListFoodPending} />
-            <Footer />
+            <Route path="/test" component={Test} />
         </div>
+
+    </div>
     </Router>
     , document.getElementById('root')
 );
 
+ReactDOM.render(
+    <Router>
+        <div className="admin-home-page">
+            <Route path="/test" component={Test} />
+            <Route path="/admin" component={AdminHome} />
+            <Route path="/admin/users" component={ListUser} />
+            <Route path="/admin/foods" component={ListFood} />
+            <Route path="/admin/restaurants" component={ListRestaurant} />
+            <Route path="/admin/pending" component={ListFoodPending} />
+
+        </div>
+    </Router>
+    , document.getElementById('admin')
+);
 // ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
