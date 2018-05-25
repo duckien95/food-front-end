@@ -14,7 +14,7 @@ class ListFood extends React.Component{
             districtSelected: -1,
             category: -1,
             content: '',
-            status: ''
+            status: 'approve'
         }
         this.handleDistrictChange = this.handleDistrictChange.bind(this);
         this.handleCateChange = this.handleCateChange.bind(this);
@@ -24,7 +24,7 @@ class ListFood extends React.Component{
 
     componentDidMount(){
 
-        axios.get(Service.getServerHostName() + "/api/food-list")
+        axios.get(Service.getServerHostName() + "/api/admin/food-approve")
         .then(res => {
             // console.log(res.data);
             this.setState({foods : res.data.foods})
@@ -67,8 +67,7 @@ class ListFood extends React.Component{
         e.preventDefault();
 
         const { districtSelected, category, content, status } = this.state;
-
-        var data = { districtSelected, category, content, status };
+        var data = { districtSelected, category, content, status};
         axios.post(Service.getServerHostName() + '/api/admin/food-search', data)
         .then(res => {
             // console.log(res);
@@ -130,7 +129,7 @@ class ListFood extends React.Component{
                             <input className="search" name="content" onChange={this.onChange} placeholder="Nhập tên món ăn" aria-label="Search" />
                         </div>
                         <div className="col-sm mb-1">
-                            <button className="search btn btn-primary" type="submit">Tìm kiếm</button>
+                            <button className="search btn btn-info" type="submit">Tìm kiếm</button>
                         </div>
 
                     </div>
@@ -142,7 +141,6 @@ class ListFood extends React.Component{
                         <tr className="table-success admin">
                             <th className="" scope="col">STT</th>
                             <th className="" scope="col">Tên</th>
-                            <th className="" scope="col">Loại</th>
                             <th className="" scope="col">Nhà Hàng</th>
                             <th className="" scope="col">Đường</th>
                             <th className="" scope="col">Quận</th>
@@ -160,13 +158,12 @@ class ListFood extends React.Component{
                         <tr key={index} className='admin'>
                             <th className="text-center" scope="row">{index + 1}</th>
                             <td className="food_name"><a href={'/food-info/' +  food.id }>{food.name}</a></td>
-                            <td className="food_cate">{food.cate_name}</td>
                             <td className="food_restaurant">{food.restaurant_name}</td>
                             <td className="food_street">{food.street_number + ', ' + food.street_name}</td>
                             <td className="food_district">{food.district_name}</td>
                             <td className="food_city">{food.city_name}</td>
                             <td className="food_owner">{food.owner_name}</td>
-                            <td className="like-fav">
+                            <td className="">
 
                                 { food.like.length ?
                                     (
@@ -186,7 +183,7 @@ class ListFood extends React.Component{
                                 }
 
                             </td>
-                            <td className="like-fav">
+                            <td className="">
 
                                 { food.favorite.length ?
                                     (

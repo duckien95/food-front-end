@@ -180,7 +180,7 @@ class Search extends React.Component{
 
     handleDistrictChange(e){
         var districtID =  e.target.value
-        console.log("district_id = " + districtID);
+        // console.log("district_id = " + districtID);
         this.setState({districtSelected : districtID});
 
         // if(districtID < 0){

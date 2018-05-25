@@ -70,11 +70,11 @@ class Navbar extends React.Component{
 
 
                                 <li className="nav-item">
-                                    <a href='/admin' className="nav-link">QUẢN TRỊ HỆ THỐNG CHIA SẺ HÌNH ẢNH/VIDEO ẨM THỰC</a>
+                                    <a href='/admin' className="nav-link">QUẢN LÝ HỆ THỐNG</a>
                                 </li >
 
                                 <li className="nav-item">
-                                    <a href='/food/list' className="nav-link">HOME</a>
+                                    <a href='/food/list' className="nav-link"></a>
                                 </li>
 
 

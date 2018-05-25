@@ -4,6 +4,7 @@ import Services from "../service/Service.js"
 import ListFood from "./ListFood"
 import ListUser from "./ListUser"
 import ListFoodPending from "./ListFoodPending"
+import ListFoodApprove from './ListFoodApprove'
 import ListRestaurant from "./ListRestaurant"
 const Service = new Services();
 
@@ -40,15 +41,11 @@ class AdminHome extends React.Component{
                       <ul className="list-unstyled components">
                         <li className="border-top border-light active">
                             <a href="#foodlist" data-toggle="collapse" aria-expanded="false" className="nav-active">Quản lý bài viết</a>
-                            <ul className="collapse list-unstyled" id="foodlist">
+                            <ul className="collapse list-unstyled pl-4" id="foodlist">
                                 <li><a onClick={this.chooseType('food-list')} className="nav-active">Tất cả các bài viết</a></li>
                                 <li><a onClick={this.chooseType('food-approve')} className="nav-active">Bài viết đã duyệt</a></li>
-                                <li>
-                                    <a onClick={this.chooseType('food-pending')} className="nav-active">
-                                        Bài viết chờ duyệt
-                                        <span className="badge badge-light mx-1">{this.state.numberPending > 0 ? this.state.numberPending : ''}</span>
-                                    </a>
-                                </li>
+                                <li><a onClick={this.chooseType('food-pending')} className="nav-active">Bài viết chờ duyệt</a></li>
+                                <li><a href={'/food/create'} className="nav-active">Thêm bài viết</a></li>
                             </ul>
                         </li>
                         <li className="border-top border-light">
@@ -61,7 +58,7 @@ class AdminHome extends React.Component{
                             <a onClick={this.chooseType('user')} className="nav-active">Quản lý người dùng</a>
                         </li>
                         <li className="border-top border-light">
-                            <a href="#" className="nav-active">Contact</a>
+                            <a href="/food/list" className="nav-active">TRANG CHỦ</a>
                         </li>
                       </ul>
 
@@ -77,7 +74,7 @@ class AdminHome extends React.Component{
                             type === 'food-list' ? <ListFood /> :
                             (type === 'user' ? <ListUser /> :
                             ( type === 'restaurant' ? <ListRestaurant /> :
-                            ( type === "food-pending" ? <ListFoodPending /> : '')))
+                            ( type === "food-pending" ? <ListFoodPending /> : <ListFoodApprove />)))
                         }
                         </div>
                     </div>

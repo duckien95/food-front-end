@@ -66,27 +66,30 @@ class ListUser extends React.Component{
                         <tr className="table-success">
                             <th scope="col">STT</th>
                             <th scope="col">Loại</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Quyền truy cập</th>
+                            <th scope="col">Tên đăng nhập</th>
+                            <th scope="col">Họ và tên</th>
+                            <th scope="col">Quyền hạn</th>
                             <th scope="col">Thích</th>
                             <th scope="col">Lưu</th>
                             <th scope="col">Bài đăng</th>
+                            <th scope="col">Cập nhật</th>
                         </tr>
                     </thead>
                     <tbody>
                     {
                         users.map((user,index) =>
                         <tr key={index} className='pending-table'>
-                            <th scope="row">{index + 1}</th>
+                            <th scope="row" className="text-center">{index + 1}</th>
                             <td>{user.provider}</td>
-                            <td>{user.email}</td>
+                            <td>{user.username ? user.username : user.email}</td>
+                            <td> { user.last_name + ' ' + user.first_name }</td>
                             <td>
-                                {user.type === 'technician' ? 'Kĩ thuật viên' : (user.type === 'normal' ? 'Người dùng' : 'Admin')}
+                                { user.type === 'normal' ? (<span>Người dùng</span>) : (<span className="text-danger">Quản trị viên</span>)}
                                 <div>
-                                <button type="button" className="btn btn-success max-width" data-toggle="modal" data-target="#myModal" value={user.id} onClick={this.onClickButton}>Cấp quyền</button>
 
 
-                                  <div className="modal fade" id="myModal" role="dialog">
+
+                                  <div className="modal fade" id="changePermission" role="dialog">
                                     <div className="modal-dialog modal-dialog-centered modal-md" id="modalIV">
                                       <div className="modal-content">
                                         <div className="modal-header">
@@ -122,49 +125,62 @@ class ListUser extends React.Component{
                                   </div>
                             </td>
                             <td>
-                                <div class="dropdown">
-
-                                    <div class="dropdown-toggle" data-toggle="dropdown">
-                                        <span className="text-primary">{user.like.length} bài viết</span>
+                            { user.like.length ?
+                                (
+                                    <div className="dropdown">
+                                        <div className="dropdown-toggle" data-toggle="dropdown">
+                                            <span className="text-danger">{user.like.length} bài viết</span>
+                                        </div>
+                                        <div className="dropdown-menu">
+                                            {
+                                                user.like.map( (like, index) =>
+                                                    <a key={index} href={'/food-info/' +  like.id }  className="dropdown-item">{index+1 +  '. ' + like.name}</a>
+                                                )
+                                            }
+                                        </div>
                                     </div>
-                                    <div class="dropdown-menu">
-                                        {
-                                            user.like.map( (like, index) =>
-                                                <a key={index} href={'/food-info/' +  like.id }  class="dropdown-item">{index+1 +  '. ' + like.name}</a>
-                                            )
-                                        }
-                                    </div>
-                                </div>
+                                ) : (<span className="text-primary">Chưa có</span>)
+                            }
                             </td>
                             <td>
-                                <div class="dropdown">
-
-                                    <div class="dropdown-toggle" data-toggle="dropdown">
-                                        <span className="text-primary">{user.favorite.length} bài viết</span>
+                            { user.favorite.length ?
+                                (
+                                <div className="dropdown">
+                                    <div className="dropdown-toggle" data-toggle="dropdown">
+                                        <span className="text-danger">{user.favorite.length} bài viết</span>
                                     </div>
-                                    <div class="dropdown-menu">
+                                    <div className="dropdown-menu">
                                         {
                                             user.favorite.map( (fav, index) =>
-                                                <a key={index} href={'/food-info/' +  fav.id }  class="dropdown-item">{index+1 +  '. ' + fav.name}</a>
+                                                <a key={index} href={'/food-info/' +  fav.id }  className="dropdown-item">{index+1 +  '. ' + fav.name}</a>
                                             )
                                         }
                                     </div>
-                                </div>
+                                </div>) : (<span className="text-primary">Chưa có</span>)}
                             </td>
                             <td>
-                                <div class="dropdown">
+                            { user.favorite.length ?
+                                (
+                                <div className="dropdown">
 
-                                    <div class="dropdown-toggle" data-toggle="dropdown">
-                                        <span className="text-primary">{user.post.length} bài viết</span>
+                                    <div className="dropdown-toggle" data-toggle="dropdown">
+                                        <span className="text-danger">{user.post.length} bài viết</span>
                                     </div>
-                                    <div class="dropdown-menu">
+                                    <div className="dropdown-menu">
                                         {
                                             user.post.map( (pst, index) =>
-                                                <a key={index} href={'/food-info/' +  pst.id }  class="dropdown-item">{index+1 +  '. ' + pst.name}</a>
+                                                <a key={index} href={'/food-info/' +  pst.id }  className="dropdown-item">{index+1 +  '. ' + pst.name}</a>
                                             )
                                         }
                                     </div>
-                                </div>
+                                </div>) : (<span className="text-primary">Chưa có</span>)}
+                            </td>
+                            <td className="text-center">
+                                <button className="btn btn-primary"><i className="fa fa-edit"></i></button>
+                                <button type="button" className="btn btn-success mx-2" data-toggle="modal" data-target="#changePermission" value={user.id} onClick={this.onClickButton}>
+                                    <i className="fa fa-address-book"></i>
+                                </button>
+                                <button className="btn btn-danger"><i className="far fa-trash-alt"></i></button>
                             </td>
                         </tr>
                         )

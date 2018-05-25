@@ -75,13 +75,7 @@ ReactDOM.render(
 ReactDOM.render(
     <Router>
         <div className="admin-home-page">
-            <Route path="/test" component={Test} />
             <Route path="/admin" component={AdminHome} />
-            <Route path="/admin/users" component={ListUser} />
-            <Route path="/admin/foods" component={ListFood} />
-            <Route path="/admin/restaurants" component={ListRestaurant} />
-            <Route path="/admin/pending" component={ListFoodPending} />
-
         </div>
     </Router>
     , document.getElementById('admin')

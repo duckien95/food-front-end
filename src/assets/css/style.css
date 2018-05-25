@@ -30,25 +30,13 @@ tr.admin td:last-child{
 
     white-space:nowrap;
 }
-
-.table-fixed thead {
-  width: 97%;
-}
-.table-fixed tbody {
-  height: 230px;
-  overflow-y: auto;
-  width: 100%;
-}
-.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
-  display: block;
-}
-.table-fixed tbody td, .table-fixed thead > tr> th {
-  float: left;
-  border-bottom-width: 0;
+.a-admin-page {
+    color: #fff;
 }
 
 .table-wrapper{
     display: block;
+    min-height: 720px;
     max-height: 720px;
     overflow-y: auto;
     /* -ms-overflow-style: -ms-autohiding-scrollbar; */
@@ -57,6 +45,39 @@ tr.admin td:last-child{
     height: auto;
     max-height: 350px;
     overflow-x: scroll;
+}
+
+.food_name, .food_street, .food_restaurant {
+    table-layout: auto;
+    width: 11%;
+}
+
+.food_status, .food_city {
+    table-layout: auto;
+    width: 7%;
+}
+ .food_owner,  .food_district {
+    table-layout: auto;
+    width: 11%;
+}
+.res-street, .res-district, .res-city, .res-food-name {
+    table-layout: auto;
+}
+.res-street, .res-food-name {
+    width: 10%;
+}
+
+.res-district, .res-city {
+    width: 8%;
+}
+
+.table th {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.table td {
+    vertical-align: middle !important;
 }
 
 #sidebar {
@@ -103,11 +124,11 @@ tr.admin td:last-child{
 #sidebar ul li.active > a, a[aria-expanded="true"] {
     /* color: #d63e6f; */
     /* background: blue; */
-    background: #2f4977;
+    background: #e6adc2;
 }
 
 .active {
-    background: #2f4977;
+    background: #e6adc2;
 }
 
 /*
@@ -392,7 +413,7 @@ ul.food-detail-info-suggest{
     height: calc(2.25rem + 2px);
     padding: .375rem 1.75rem .375rem .75rem;
     line-height: 1.5;
-    color: #495057;
+    color: #fff;
     vertical-align: middle;
     background-size: 8px 10px;
     border: 1px solid #ced4da;
