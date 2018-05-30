@@ -689,30 +689,30 @@ class FoodDetail extends React.Component {
 
 
     onDelete(e){
+
         var listFileId = this.state.listFileId;
         var food_id = this.state.food.id;
+
         // this.props.history.replace('/food/list', { msg : 'Thành công', title: 'Xóa bài viết', timeOut: 2000 })
-        this.props.history.replace('/')
         axios.post(Service.getServerHostName() + '/food/delete/', { food_id, listFileId })
         .then(res => {
             // console.log(res.status);
             // console.log(res.status === 200 );
-            if(res.status === 200){
                 // console.log(r);
-                if(res.data.status === 'success'){
-                    // this.props.history.replace('/food/list', { msg : 'Thành công', title: 'Xóa bài viết', timeOut: 2000 })
-                    this.props.history.replace('/food/list');
-                    NotificationManager.success('Thành công', 'Xóa bài viết', 3000);
-                }
-                else {
-                    NotificationManager.error('Bài viết chưa được xóa', 'Có lỗi xảy ra');
-                }
+            if(res.data.status === 'success'){
+                // this.props.history.replace('/food/list', { msg : 'Thành công', title: 'Xóa bài viết', timeOut: 2000 })
+                // $('.closeDeleteModal').click();
+                this.props.history.replace('/');
+                $('.redirect')[0].click();
+                NotificationManager.success('Thành công', 'Xóa bài viết', 3000);
+
             }
             else {
                 NotificationManager.error('Bài viết chưa được xóa', 'Có lỗi xảy ra');
             }
+
         })
-        console.log('delete');
+        // console.log('delete');
     }
 
 
@@ -725,16 +725,39 @@ class FoodDetail extends React.Component {
         return(
             <div className="row">
                 <NotificationContainer/>
-                <div className="col-md-12 mb-3">
+                <a href='/admin' className="btn redirect d-none">Redirect</a>
+                <div className="col-md-12 px-1 mb-3">
                     <div className="row">
                         <div className="col-sm">
-                            <button id="approvePost" className="max-width btn btn-info" onClick={this.onApprove}>Duyệt bài</button>
+                            <button id="approvePost" className="max-width btn btn-info" onClick={this.onApprove}>Duyệt bài<i className="fas fa-thumbs-up mx-2"></i></button>
                         </div>
                         <div className="col-sm">
-                            <button id="deletePost" className="max-width btn btn-danger"  onClick={this.onDelete}>Xóa bài</button>
+
+                            <button id="deletePost" className="max-width btn btn-danger" data-toggle="modal" data-target="#deleteFood">Xóa bài<i className="far fa-trash-alt mx-2 "></i></button>
+                            <div>
+                                <div className="modal fade" id="deleteFood" role="dialog">
+                                    <div className="modal-dialog modal-dialog-centered modal-md">
+                                      <div className="modal-content">
+                                        <div className="modal-header">
+                                          <h4 className="modal-title text-center">Bạn có chắc chắn muốn xóa bài viết ?</h4>
+                                          <button type="button" className="close closeDeleteModal" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div className="modal-body">
+                                            <form onSubmit={this.onDelete} >
+                                                <div className="form-group float-right">
+                                                    <button type="button" className="btn btn-info mx-2" data-dismiss="modal">Không</button>
+                                                    <button type="submit" className="btn btn-danger ">Có</button>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div className="col-sm">
-                            <Link to={'/food/edit/' + food.id} className="max-width btn btn-primary" id="editPost"> Sửa bài</Link>
+                            <Link to={'/food/edit/' + food.id} className="max-width btn btn-primary" id="editPost"> Sửa bài <i className="fa fa-edit mx-2"></i></Link>
                         </div>
                     </div>
                 </div>
@@ -778,7 +801,7 @@ class FoodDetail extends React.Component {
                                 <div className="col-sm">
                                     <button className={liked ? 'btn btn-warning max-width' : 'btn btn-success max-width'} id="likeBtn" onClick={this.onLike}>
                                         {liked ? 'Bỏ thích' : 'Thích'}
-                                        <span className="fa fa-thumbs-o-up pl-2"></span>
+                                        <span className="far fa-heart pl-2"></span>
                                     </button>
                                 </div>
                                 <div className="col-sm">

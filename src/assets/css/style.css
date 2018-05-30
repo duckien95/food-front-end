@@ -167,7 +167,8 @@ a[aria-expanded="true"]::before {
 }
 
 .index-img{
-    max-height: 490px;
+    min-height: 350px;
+    max-height: 550px;
 }
 
 .comment-avatar {

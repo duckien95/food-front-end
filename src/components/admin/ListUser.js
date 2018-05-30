@@ -1,7 +1,10 @@
 import React from 'react'
 import axios from "axios"
 import Services from "../service/Service.js"
+import $ from 'jquery';
+import {NotificationContainer, NotificationManager} from 'react-notifications'
 const Service = new Services();
+
 
 class ListUser extends React.Component{
     constructor() {
@@ -12,12 +15,12 @@ class ListUser extends React.Component{
             userid: ''
         }
 
-        this.onAddPermission = this.onAddPermission.bind(this);
         this.onChange = this.onChange.bind(this);
         this.onClickButton = this.onClickButton.bind(this);
     }
 
     onChange(e) {
+        console.log(e.target.value);
         this.setState({ permission : e.target.value });
     }
 
@@ -25,26 +28,53 @@ class ListUser extends React.Component{
         this.setState({ userid : e.target.value });
     }
 
-    onAddPermission(e){
-        e.preventDefault();
-        console.log(this.state.permission);
-        // console.log(e.target);
-        // var userid = 2;
-        const {userid, permission } = this.state;
-
-        axios.post(Service.getServerHostName() + '/api/change-permission/' + userid + permission)
+    onDeleteUser = (user_id) => (e) => {
+        console.log(user_id);
+        axios.post(Service.getServerHostName() + '/auth/delete/' + user_id)
         .then(
             res => {
                 if(res.data.status === 'success'){
-                    window.location.reload('/admin/users');
+                    NotificationManager.success('Thành công', 'Xóa người dùng');
+                    axios.get(Service.getServerHostName() + "/api/user-list")
+                    .then(res => {
+                        // console.log(res.data.data);
+                        this.setState({users : res.data.data})
+                    })
                 }
-                console.log(res);
+                else {
+                    NotificationManager.error('Có lỗi xảy ra', 'Xóa người dùng');
+                }
             }
         )
     }
-    componentWillMount(){
 
+    onAddPermission = (user_id) => (e) => {
+        e.preventDefault();
+        // console.log(user_id);
+        // console.log(e.target);
+        // var userid = 2;
+        const { permission } = this.state;
+
+        axios.post(Service.getServerHostName() + '/api/change-permission/' + user_id + permission)
+        .then(
+            res => {
+                if(res.data.status === 'success'){
+                    NotificationManager.success('Thành công', 'Cấp quyền người dùng');
+                    $('.close').click();
+                    axios.get(Service.getServerHostName() + "/api/user-list")
+                    .then(res => {
+                        // console.log(res.data.data);
+                        this.setState({users : res.data.data})
+                    })
+
+                }
+                else {
+                    NotificationManager.error('Có lỗi xảy ra', 'Cấp quyền người dùng');
+                }
+            }
+        )
     }
+
 
     componentDidMount(){
         // console.log(Service.getServerHostName());
@@ -61,6 +91,7 @@ class ListUser extends React.Component{
         const { users } = this.state;
         return(
             <div className="row">
+                <NotificationContainer/>
                 <table className="table table-bordered table-light table-hover">
                     <thead>
                         <tr className="table-success">
@@ -80,16 +111,13 @@ class ListUser extends React.Component{
                         users.map((user,index) =>
                         <tr key={index} className='pending-table'>
                             <th scope="row" className="text-center">{index + 1}</th>
-                            <td>{user.provider}</td>
+                            <td>{user.provider + ' ' + user.id}</td>
                             <td>{user.username ? user.username : user.email}</td>
                             <td> { user.last_name + ' ' + user.first_name }</td>
                             <td>
                                 { user.type === 'normal' ? (<span>Người dùng</span>) : (<span className="text-danger">Quản trị viên</span>)}
                                 <div>
-
-
-
-                                  <div className="modal fade" id="changePermission" role="dialog">
+                                  <div className="modal fade" id={"changePermission" + index} role="dialog">
                                     <div className="modal-dialog modal-dialog-centered modal-md" id="modalIV">
                                       <div className="modal-content">
                                         <div className="modal-header">
@@ -97,18 +125,21 @@ class ListUser extends React.Component{
                                           <button type="button" className="close" data-dismiss="modal">&times;</button>
                                         </div>
                                         <div className="modal-body">
-                                            <form onSubmit={this.onAddPermission} >
+                                            <form onSubmit={this.onAddPermission(user.id)} >
 
                                                 <div className="form-check">
-                                                    <input className="form-check-input" type="radio" name="Radios" id="Radios1" value='/admin' onChange={this.onChange}/>
+                                                    { user.type === 'admin' ?
+                                                        (<input className="form-check-input" type="radio" name="Radios" id="Radios1" value='/admin' onChange={this.onChange} checked/>)
+                                                        : (<input className="form-check-input" type="radio" name="Radios" id="Radios1" value='/admin' onChange={this.onChange}/>)}
+
                                                     <label className="form-check-label" htmlFor="Radios1">Admin</label>
-                                                    </div>
-                                                <div className="form-check">
-                                                    <input className="form-check-input" type="radio" name="Radios" id="Radios2" value='/technician' onChange={this.onChange}/>
-                                                    <label className="form-check-label" htmlFor="Radios2">Kĩ thuật viên</label>
                                                 </div>
+
                                                 <div className="form-check">
-                                                    <input className="form-check-input" type="radio" name="Radios" id="Radios3" value='/normal' onChange={this.onChange} />
+                                                    { user.type === 'normal' ?
+                                                        (<input className="form-check-input" type="radio" name="Radios" id="Radios2" value='/normal' onChange={this.onChange} checked/>) 
+                                                        : (<input className="form-check-input" type="radio" name="Radios" id="Radios2" value='/normal' onChange={this.onChange} />) }
+
                                                     <label className="form-check-label" htmlFor="Radios3">Người dùng</label>
                                                 </div>
                                                 <div className="form-group float-right">
@@ -159,7 +190,7 @@ class ListUser extends React.Component{
                                 </div>) : (<span className="text-primary">Chưa có</span>)}
                             </td>
                             <td>
-                            { user.favorite.length ?
+                            { user.post.length ?
                                 (
                                 <div className="dropdown">
 
@@ -176,17 +207,19 @@ class ListUser extends React.Component{
                                 </div>) : (<span className="text-primary">Chưa có</span>)}
                             </td>
                             <td className="text-center">
-                                <button className="btn btn-primary"><i className="fa fa-edit"></i></button>
-                                <button type="button" className="btn btn-success mx-2" data-toggle="modal" data-target="#changePermission" value={user.id} onClick={this.onClickButton}>
+                                <a href={'/edit/' + user.id} className="btn btn-primary"><i className="fa fa-edit"></i></a>
+                                <button type="button" className="btn btn-success mx-2" data-toggle="modal" data-target={"#changePermission" +  index} value={user.id} onClick={this.onClickButton}>
                                     <i className="fa fa-address-book"></i>
                                 </button>
-                                <button className="btn btn-danger"><i className="far fa-trash-alt"></i></button>
+                                <button onClick={this.onDeleteUser(user.id)} className="btn btn-danger"><i className="far fa-trash-alt"></i></button>
                             </td>
                         </tr>
                         )
                     }
                     </tbody>
                 </table>
+
+
             </div>
 
         )

@@ -2,6 +2,8 @@ import React from 'react'
 import axios from "axios"
 import { Link } from 'react-router-dom'
 import Services from "../service/Service.js"
+import $ from 'jquery'
+import {NotificationContainer, NotificationManager} from 'react-notifications'
 const Service = new Services();
 
 class ListFood extends React.Component{
@@ -43,6 +45,35 @@ class ListFood extends React.Component{
         });
 
 
+    }
+
+    onDeletePost = (food_id) => (e) => {
+        e.preventDefault();
+        console.log(food_id);
+        axios.get(Service.getServerHostName() + '/api/food/' + food_id)
+        .then(
+            res => {
+                var listFileId = res.data.data.listFileId;
+                axios.post(Service.getServerHostName() + '/food/delete/', { food_id, listFileId })
+                .then(res => {
+
+                    if(res.data.status === 'success'){
+                        // this.props.history.replace('/food/list', { msg : 'Thành công', title: 'Xóa bài viết', timeOut: 2000 })
+                        NotificationManager.success('Thành công', 'Xóa bài viết', 3000);
+                        $('.close').click();
+                        axios.get(Service.getServerHostName() + "/api/admin/food-approve")
+                        .then(res => {
+                            // console.log(res.data);
+                            this.setState({foods : res.data.foods})
+                        })
+                    }
+                    else {
+                        NotificationManager.error('Bài viết chưa được xóa', 'Có lỗi xảy ra');
+                    }
+
+                })
+            }
+        )
     }
 
     handleDistrictChange(e){
@@ -94,6 +125,7 @@ class ListFood extends React.Component{
         var { districtSelected, category, foods } = this.state;
         return(
             <div className="">
+            <NotificationContainer/>
             <div className="">
                 <div className="text-center" id="msg">{this.state.msg}</div>
                 <form onSubmit={this.onSearch} className="search-form">
@@ -212,7 +244,28 @@ class ListFood extends React.Component{
                             <td>
                                 <a href={'/food/edit/' + food.id} className="btn btn-primary a-admin-page"><i className="fa fa-edit"></i></a>
                                 <a href={'/food-info/' + food.id} className="btn btn-info a-admin-page mx-2"><i className="far fa-file-code"></i></a>
-                                <button className="btn btn-danger"><i className="far fa-trash-alt"></i></button>
+                                <button className="btn btn-danger" data-toggle="modal" data-target={"#deletePost" +  index}><i className="far fa-trash-alt"></i></button>
+                                <div>
+                                    <div className="modal fade" id={"deletePost" + index} role="dialog">
+                                        <div className="modal-dialog modal-dialog-centered modal-md">
+                                          <div className="modal-content">
+                                            <div className="modal-header">
+                                              <h4 className="modal-title text-center">Bạn có chắc chắn muốn xóa bài viết ?</h4>
+                                              <button type="button" className="close" data-dismiss="modal">&times;</button>
+                                            </div>
+                                            <div className="modal-body">
+                                                <form onSubmit={this.onDeletePost(food.id)} >
+                                                    <div className="form-group float-right">
+                                                        <button type="button" className="btn btn-info mx-2" data-dismiss="modal">Không</button>
+                                                        <button type="submit" className="btn btn-danger ">Có</button>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         )
