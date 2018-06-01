@@ -9,10 +9,10 @@ class Search extends React.Component{
     constructor() {
         super();
         this.state= {
-            category: '',
-            detail: '',
-            districtSelected: '',
-            streetSelected: '',
+            category: -1,
+            detail: -1,
+            districtSelected: -1,
+            streetSelected: -1,
             distanceSelected: -1,
             content: '',
             district: [],
@@ -100,23 +100,26 @@ class Search extends React.Component{
         localStorage.removeItem('distance');
         localStorage.removeItem('search-info');
 
-        const { content, latitude, longitude } = this.state;
-        var districtSelected = this.state.districtSelected;
-        var streetSelected = (this.state.streetSelected ? this.state.streetSelected : -1);
-        var distanceSelected = this.state.distanceSelected ;
-        var detail = (this.state.detail ? this.state.detail : -1);
-        var category = (this.state.category ? this.state.category : -1);
+        const { content, latitude, longitude, districtSelected, category, distanceSelected } = this.state;
+        var streetSelected = -1, detail = -1;
+        // var districtSelected = this.state.districtSelected;
+        // var streetSelected = (this.state.streetSelected ? this.state.streetSelected : -1);
+        // var distanceSelected = this.state.distanceSelected ;
+        // var detail = (this.state.detail ? this.state.detail : -1);
+        // var category = (this.state.category ? this.state.category : -1);
         // alert(category);
+        if(!content.length){
+            localStorage.setItem('search-info',
+                JSON.stringify({
+                    districtSelected : districtSelected,
+                    streetSelected: -1,
+                    distanceSelected : distanceSelected,
+                    category : category,
+                    detail : -1
+                })
+            );
+        }
 
-        localStorage.setItem('search-info',
-            JSON.stringify({
-                districtSelected : districtSelected,
-                streetSelected: -1,
-                distanceSelected : distanceSelected,
-                category : category,
-                detail : -1
-            })
-        );
         var data = { districtSelected, streetSelected, distanceSelected,  category, detail, content, latitude, longitude };
         axios.post(Service.getServerHostName() + '/api/food-search', data)
         .then(res => {

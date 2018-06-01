@@ -30,7 +30,7 @@ class SearchResult extends React.Component{
     setSearchState(){
         this.setState({
             foodList : [],
-            msg : "Không tìm thấy kết quả nào"
+            msg : "Không tìm thấy món ăn nào"
         });
         $('#search-found')[0].style.visibility = 'hidden';
         $('.search-not-found')[0].style.visibility = 'visible';
@@ -58,29 +58,29 @@ class SearchResult extends React.Component{
 
         let para = this.props.location.query;
         // console.log(para);
-        // console.log((this.props.location.query === undefined ));
-        // if(window.location.path)
-        if(para.food !== undefined ){
-            // console.log(para.food);
-            if(para.food.length){
-                this.setState({ foodList : para.food, totalList : para.food, numberResult : para.food.length })
-            }
-            else{
-                this.setSearchState();
+        if(para !== undefined){
+            if(para.food !== undefined ){
+                // console.log(para.food);
+                if(para.food.length){
+                    this.setState({ foodList : para.food, totalList : para.food, numberResult : para.food.length })
+                }
+                else{
+                    this.setSearchState();
+                }
             }
         }
+
         else {
             var search = localStorage.getItem('search');
-            // console.log(search !== undefined);
-            // console.log(search !== 'undefined');
-            // console.log(search.length);
             if(search !== 'undefined'){
                 var data =   JSON.parse(search);
                 if(data !== undefined){
-                // if(data.length){
-                    // let data = JSON.parse(localData);
-                    console.log(data);
-                    this.setState({ foodList : data, totalList : data, numberResult: data.length });
+                    if(data.length){
+                        this.setState({ foodList : data, totalList : data, numberResult: data.length });
+                    }
+                    else {
+                        this.setSearchState()
+                    }
                 }
             }
 
@@ -88,13 +88,6 @@ class SearchResult extends React.Component{
                 this.setSearchState();
             }
         }
-
-        // $('#search-found')[0].style.visibility = this.state.msg === '' ? 'visible' :'hidden' ;
-
-
-
-
-        // console.log(this.props.location.query);
     }
 
     handleDistanceChange(e){
@@ -122,8 +115,9 @@ class SearchResult extends React.Component{
     render(){
         return(
             <div className="mrg-15">
-
-            <div className="text-center search-not-found alert alert-warning w-100">{this.state.msg}</div>
+            <div className="">
+                <div className="text-center text-danger search-not-found alert alert-light w-100">{this.state.msg}</div>
+            </div>
             <div className="card" id="search-found">
                 <div className="card-heade">
                     <div className="float-left col-md-6 number-result-search text-danger">
