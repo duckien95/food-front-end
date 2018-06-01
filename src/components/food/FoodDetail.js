@@ -79,7 +79,7 @@ class FoodDetail extends React.Component {
                 // alert( "Hello World!" );
             });
 
-            console.log($(document).find('.home-image').length);
+            // console.log($(document).find('.home-image').length);
         });
 
         console.log('componentDidMount');

@@ -6,8 +6,10 @@ import ListUser from "./ListUser"
 import ListFoodPending from "./ListFoodPending"
 import ListFoodApprove from './ListFoodApprove'
 import ListRestaurant from "./ListRestaurant"
+import ListImage from "./ListImage"
+import ListVideo from "./ListVideo"
+import $ from 'jquery'
 const Service = new Services();
-
 
 class AdminHome extends React.Component{
     constructor() {
@@ -24,7 +26,7 @@ class AdminHome extends React.Component{
     }
 
     componentDidMount(){
-
+        $('#root').addClass('remove-padding-bottom')
     }
 
     render(){
@@ -45,11 +47,15 @@ class AdminHome extends React.Component{
                                 <li><a onClick={this.chooseType('food-list')} className="nav-active">Tất cả các bài viết</a></li>
                                 <li><a onClick={this.chooseType('food-approve')} className="nav-active">Bài viết đã duyệt</a></li>
                                 <li><a onClick={this.chooseType('food-pending')} className="nav-active">Bài viết chờ duyệt</a></li>
-                                <li><a href={'/food/create'} className="nav-active">Thêm bài viết</a></li>
+                                <li><a target='_blank'  href={'/food/create'} className="nav-active">Thêm bài viết</a></li>
                             </ul>
                         </li>
                         <li className="border-top border-light">
-                            <a href="/amdin/img-video" className="nav-active">Quản lý hình ảnh/video</a>
+                            <a href="#media" data-toggle="collapse" aria-expanded="false" className="nav-active">Quản lý hình ảnh - video</a>
+                            <ul className="collapse list-unstyled pl-4" id="media">
+                                <li><a onClick={this.chooseType('image')} className="nav-active">Hình ảnh</a></li>
+                                <li><a onClick={this.chooseType('video')} className="nav-active">Video</a></li>
+                            </ul>
                         </li>
                         <li className="border-top border-light">
                             <a onClick={this.chooseType('restaurant')} className="nav-active">Quản lý nhà hàng</a>
@@ -58,23 +64,25 @@ class AdminHome extends React.Component{
                             <a onClick={this.chooseType('user')} className="nav-active">Quản lý người dùng</a>
                         </li>
                         <li className="border-top border-light">
-                            <a href="/food/list" className="nav-active">TRANG CHỦ</a>
+                            <a target="_blank" href="/food/list" className="nav-active">TRANG CHỦ</a>
                         </li>
                       </ul>
 
                     </nav>
                 </div>
 
-                <div id="content" className="col-md-10 border border-left-0 border-light px-2">
+                <div id="content" className="col-md-10 border border-left-0 border-light">
 
 
-                    <div className="table-wrapper px-1">
+                    <div className="table-wrapper">
                         <div>
                         {
                             type === 'food-list' ? <ListFood /> :
-                            (type === 'user' ? <ListUser /> :
+                            ( type === 'user' ? <ListUser /> :
                             ( type === 'restaurant' ? <ListRestaurant /> :
-                            ( type === "food-pending" ? <ListFoodPending /> : <ListFoodApprove />)))
+                            ( type === "food-pending" ? <ListFoodPending /> :
+                            ( type === 'image' ? <ListImage /> :
+                            ( type === 'video' ? <ListVideo /> : <ListFoodApprove />)))))
                         }
                         </div>
                     </div>

@@ -137,7 +137,7 @@ class ListUser extends React.Component{
 
                                                 <div className="form-check">
                                                     { user.type === 'normal' ?
-                                                        (<input className="form-check-input" type="radio" name="Radios" id="Radios2" value='/normal' onChange={this.onChange} checked/>) 
+                                                        (<input className="form-check-input" type="radio" name="Radios" id="Radios2" value='/normal' onChange={this.onChange} checked/>)
                                                         : (<input className="form-check-input" type="radio" name="Radios" id="Radios2" value='/normal' onChange={this.onChange} />) }
 
                                                     <label className="form-check-label" htmlFor="Radios3">Người dùng</label>
@@ -165,7 +165,7 @@ class ListUser extends React.Component{
                                         <div className="dropdown-menu">
                                             {
                                                 user.like.map( (like, index) =>
-                                                    <a key={index} href={'/food-info/' +  like.id }  className="dropdown-item">{index+1 +  '. ' + like.name}</a>
+                                                    <a target="_blank" key={index} href={'/food-info/' +  like.id }  className="dropdown-item">{index+1 +  '. ' + like.name}</a>
                                                 )
                                             }
                                         </div>
@@ -183,7 +183,7 @@ class ListUser extends React.Component{
                                     <div className="dropdown-menu">
                                         {
                                             user.favorite.map( (fav, index) =>
-                                                <a key={index} href={'/food-info/' +  fav.id }  className="dropdown-item">{index+1 +  '. ' + fav.name}</a>
+                                                <a target="_blank" key={index} href={'/food-info/' +  fav.id }  className="dropdown-item">{index+1 +  '. ' + fav.name}</a>
                                             )
                                         }
                                     </div>
@@ -200,14 +200,14 @@ class ListUser extends React.Component{
                                     <div className="dropdown-menu">
                                         {
                                             user.post.map( (pst, index) =>
-                                                <a key={index} href={'/food-info/' +  pst.id }  className="dropdown-item">{index+1 +  '. ' + pst.name}</a>
+                                                <a target="_blank" key={index} href={'/food-info/' +  pst.id }  className="dropdown-item">{index+1 +  '. ' + pst.name}</a>
                                             )
                                         }
                                     </div>
                                 </div>) : (<span className="text-primary">Chưa có</span>)}
                             </td>
                             <td className="text-center">
-                                <a href={'/edit/' + user.id} className="btn btn-primary"><i className="fa fa-edit"></i></a>
+                                <a target='_blank' href={'/edit/' + user.id} className="btn btn-primary"><i className="fa fa-edit"></i></a>
                                 <button type="button" className="btn btn-success mx-2" data-toggle="modal" data-target={"#changePermission" +  index} value={user.id} onClick={this.onClickButton}>
                                     <i className="fa fa-address-book"></i>
                                 </button>

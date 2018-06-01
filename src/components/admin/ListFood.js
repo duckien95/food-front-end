@@ -18,8 +18,7 @@ class ListFood extends React.Component{
             content: '',
             status: ''
         }
-        this.handleDistrictChange = this.handleDistrictChange.bind(this);
-        this.handleCateChange = this.handleCateChange.bind(this);
+
         this.onChange = this.onChange.bind(this);
         this.onSearch = this.onSearch.bind(this);
     }
@@ -76,16 +75,16 @@ class ListFood extends React.Component{
         )
     }
 
-    handleDistrictChange(e){
-        var districtID =  e.target.value
-        this.setState({districtSelected : districtID});
-    }
-
-    handleCateChange(e) {
-        // var cate_id = e.target.value;
-        this.setState({ category : e.target.value });
-
-    }
+    // handleDistrictChange(e){
+    //     var districtID =  e.target.value
+    //     this.setState({districtSelected : districtID});
+    // }
+    //
+    // handleCateChange(e) {
+    //     // var cate_id = e.target.value;
+    //     this.setState({ category : e.target.value });
+    //
+    // }
 
     onChange (e){
         const state = this.state;
@@ -132,7 +131,7 @@ class ListFood extends React.Component{
                 <form onSubmit={this.onSearch} className="search-form">
                     <div className="form-row">
                         <div className="col-sm mb-1">
-                            <select className="custom-select" name="district" onChange={this.handleDistrictChange} onInvalid={this.onInvalid}>
+                            <select className="custom-select" name="districtSelected" onChange={this.onChange} onInvalid={this.onInvalid}>
                                 <option value="-1" selected>Quận/Huyện</option>
                                 {
                                     this.state.district.map((dist, index) =>
@@ -146,7 +145,7 @@ class ListFood extends React.Component{
 
 
                         <div className="col-sm mb-1">
-                            <select className="custom-select" name="category" onChange={this.handleCateChange} >
+                            <select className="custom-select" name="category" onChange={this.onChange} >
                             <option value="-1" selected>Loại món ăn</option>
                             {
                                 this.state.cate.map((cat, index) =>
@@ -209,7 +208,7 @@ class ListFood extends React.Component{
                                             <div className="dropdown-menu">
                                                 {
                                                     food.like.map( (like, index) =>
-                                                        <a key={index} href=''  className="dropdown-item">{index + 1 +  '. ' + like.username}</a>
+                                                        <a target="_blank" key={index} href=''  className="dropdown-item">{index + 1 +  '. ' + like.username}</a>
                                                     )
                                                 }
                                             </div>
@@ -229,7 +228,7 @@ class ListFood extends React.Component{
                                             <div className="dropdown-menu">
                                                 {
                                                     food.favorite.map( (fav, index) =>
-                                                        <a key={index} href=''  className="dropdown-item">{index + 1 +  '. ' + fav.username}</a>
+                                                        <a target="_blank" key={index} href=''  className="dropdown-item">{index + 1 +  '. ' + fav.username}</a>
                                                     )
                                                 }
                                             </div>
@@ -245,8 +244,8 @@ class ListFood extends React.Component{
                             </td>
 
                             <td>
-                                <a href={'/food/edit/' + food.id} className="btn btn-primary a-admin-page"><i className="fa fa-edit"></i></a>
-                                <a href={'/food-info/' + food.id} className="btn btn-info a-admin-page mx-2"><i className="far fa-file-code"></i></a>
+                                <a target='_blank' href={'/food/edit/' + food.id} className="btn btn-primary a-admin-page"><i className="fa fa-edit"></i></a>
+                                <a target='_blank' href={'/food-info/' + food.id} className="btn btn-info a-admin-page mx-2"><i className="fas fa-desktop"></i></a>
                                 <button className="btn btn-danger" data-toggle="modal" data-target={"#deletePost" +  index}><i className="far fa-trash-alt"></i></button>
                                 <div>
                                     <div className="modal fade" id={"deletePost" + index} role="dialog">

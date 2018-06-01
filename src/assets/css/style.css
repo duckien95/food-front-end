@@ -21,9 +21,20 @@ select > option {
 }
 
 /**************************** ADMIN VIEW****************************/
+.d-inline-block{
+    display: inline-block;
+}
+.remove-padding-bottom{
+        margin-top: 0 !important;
+}
+
 .admin-home-page {
-    margin: 54px  0 15px;
+    margin: 54px  0 0;
     /* position: fixed; */
+}
+.manage-img {
+    height: 150px;
+    width: 180px;
 }
 
 tr.admin td:last-child{
@@ -36,9 +47,9 @@ tr.admin td:last-child{
 
 .table-wrapper{
     display: block;
-    min-height: 720px;
-    max-height: 720px;
-    overflow-y: auto;
+    min-height: 640px;
+    max-height: 640px;
+    overflow-x: auto;
     /* -ms-overflow-style: -ms-autohiding-scrollbar; */
 }
 .dropdown-menu {
@@ -47,16 +58,16 @@ tr.admin td:last-child{
     overflow-x: scroll;
 }
 
-.food_name, .food_street, .food_restaurant {
+.food_name, .food_street, .food_restaurant, .media-food-name, .media-street {
     table-layout: auto;
     width: 11%;
 }
 
-.food_status, .food_city {
+.food_status, .food_city, .media-city, .media-status {
     table-layout: auto;
     width: 7%;
 }
- .food_owner,  .food_district {
+ .food_owner,  .food_district, .media-district, .media {
     table-layout: auto;
     width: 11%;
 }
@@ -388,6 +399,7 @@ ul.food-detail-info-suggest{
 
 .main-content {
     margin-top: 120px;
+    min-height: 630px;
     /* padding-bottom: 50px; */
     /* padding-top: 50px; */
 }
@@ -478,7 +490,7 @@ body{
 
 footer{
     background-color: #33383c;
-    padding:30px 0px;
+    padding: 0px;
     /* position: absolute; */
     /* left: 0; */
     /* right: 0; */

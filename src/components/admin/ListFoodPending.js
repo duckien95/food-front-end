@@ -121,6 +121,28 @@ class ListFood extends React.Component{
 
     }
 
+    onAprrovePost = (food_id) => (e) => {
+        console.log(food_id);
+        e.preventDefault();
+        axios.get(Service.getServerHostName() + '/food/approve/' +  food_id)
+        .then(
+            res => {
+                if(res.data.status === 'success'){
+                    NotificationManager.success('Thành công', 'Duyệt bài viết', 3000);
+                    // $('.close').click();
+                    axios.get(Service.getServerHostName() + "/api/admin/food-pending")
+                    .then(res => {
+                        this.setState({foods : res.data.foods})
+                    })
+                }
+                else {
+                    NotificationManager.error('Có lỗi xảy ra', 'Bài viết chưa được duyệt');
+                }
+            }
+        )
+    }
+
+
     render(){
         var { districtSelected, category, foods } = this.state;
         return(
@@ -166,9 +188,10 @@ class ListFood extends React.Component{
                             </td>
 
                             <td className="text-center">
-                                <a href={'/food/edit/' + food.id} className="btn btn-primary a-admin-page"><i className="fa fa-edit"></i></a>
-                                <a href={'/food-info/' + food.id} className="btn btn-info a-admin-page mx-2"><i className="far fa-file-code"></i></a>
-                                <button className="btn btn-danger" data-toggle="modal" data-target={"#deletePost" +  index}><i className="far fa-trash-alt"></i></button>
+                                <a target='_blank' href={'/food/edit/' + food.id} className="btn btn-primary a-admin-page"><i className="fa fa-edit"></i></a>
+                                <a target='_blank' href={'/food-info/' + food.id} className="btn btn-info a-admin-page mx-2"><i className="fas fa-desktop"></i></a>
+                                <button className="btn btn-danger mx-2" data-toggle="modal" data-target={"#deletePost" +  index}><i className="far fa-trash-alt"></i></button>
+                                <button className="btn btn-success" onClick={this.onAprrovePost(food.id)}><i className="fas fa-plus"></i></button>
                                 <div>
                                     <div className="modal fade" id={"deletePost" + index} role="dialog">
                                         <div className="modal-dialog modal-dialog-centered modal-md">
@@ -190,6 +213,7 @@ class ListFood extends React.Component{
                                         </div>
                                     </div>
                                 </div>
+
                             </td>
                         </tr>
                         )

@@ -57,10 +57,11 @@ class SearchResult extends React.Component{
 
 
         let para = this.props.location.query;
-        console.log((this.props.location.query === undefined ));
+        // console.log(para);
+        // console.log((this.props.location.query === undefined ));
         // if(window.location.path)
-        if(para !== undefined ){
-            console.log(para.food);
+        if(para.food !== undefined ){
+            // console.log(para.food);
             if(para.food.length){
                 this.setState({ foodList : para.food, totalList : para.food, numberResult : para.food.length })
             }
@@ -69,12 +70,20 @@ class SearchResult extends React.Component{
             }
         }
         else {
-            var data =   JSON.parse(localStorage.getItem('search'));
-            if(data.length){
-                // let data = JSON.parse(localData);
-                console.log(data);
-                this.setState({ foodList : data, totalList : data, numberResult: data.length });
+            var search = localStorage.getItem('search');
+            // console.log(search !== undefined);
+            // console.log(search !== 'undefined');
+            // console.log(search.length);
+            if(search !== 'undefined'){
+                var data =   JSON.parse(search);
+                if(data !== undefined){
+                // if(data.length){
+                    // let data = JSON.parse(localData);
+                    console.log(data);
+                    this.setState({ foodList : data, totalList : data, numberResult: data.length });
+                }
             }
+
             else {
                 this.setSearchState();
             }

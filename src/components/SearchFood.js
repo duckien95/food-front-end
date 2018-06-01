@@ -39,10 +39,15 @@ class Search extends React.Component{
 
 
     componentWillMount(){
+
+    }
+
+    componentDidMount(){
         this.getMyLocation();
+        // console.log("URL : " + window.location.pathname);
         this.setState({ distance: Service.getListDistance() });
         var localSeach = localStorage.getItem('search-info');
-        console.log(localSeach !== null);
+        // console.log(localSeach !== null);
         if(localSeach !== null){
             var searchInfo = JSON.parse(localSeach);
             console.log(searchInfo);
@@ -54,10 +59,6 @@ class Search extends React.Component{
                 distanceSelected: searchInfo.distanceSelected
             })
         }
-    }
-
-    componentDidMount(){
-        console.log("URL : " + window.location.pathname);
         // console.log(this.props);
         if(window.location.pathname !== "/search"){
             // localStorage.removeItem('search-info');
@@ -268,7 +269,7 @@ class Search extends React.Component{
                             <input className="search" name="content" onChange={this.onChange} placeholder="Nhập tên món ăn" aria-label="Search" />
                         </div>
                         <div className="col-sm mb-1">
-                            <button className="search" type="submit">Tìm kiếm</button>
+                            <button className="search btn-info" type="submit">Tìm kiếm</button>
                         </div>
 
                         <Link to={{  pathname: '/search', query: { food: this.state.foodList }}}  id="link-to-search"/>

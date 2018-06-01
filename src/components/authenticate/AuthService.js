@@ -39,8 +39,8 @@ export default class AuthService {
     }
 
     googleFaceLogin(postData){
-        console.log('in googleFaceLogin fucntion');
-        console.log(postData);
+        // console.log('in googleFaceLogin fucntion');
+        // console.log(postData);
         return this.fetch(`${this.domain}/auth/login-google-facebook`, {
             method: 'POST',
             body: JSON.stringify(postData)

@@ -89,26 +89,28 @@ class Login extends Component {
     }
 
     signup(res, type) {
-        console.log(res);
+        // console.log(res);
         var postData;
         if (type === 'facebook' && res.email) {
+            // console.log('facebook login');
             postData = {
-                name: res.name,
-                provider: type,
+                firstname: ' ',
+                lastname: res.name,
                 email: res.email,
-                provider_id: res.id,
-                token: res.accessToken,
-                provider_pic: res.picture.data.url
+                token: res.userID,
+                provider_pic: res.picture.data.url,
+                provider: type
             };
+            // console.log(postData);
         }
 
         if (type === 'google') {
             var data = res.profileObj;
             postData = {
-                firstName: data.givenName,
-                lastName: data.familyName,
+                firstname: data.givenName,
+                lastname: data.familyName,
                 email: data.email,
-                token: res.tokenObj.access_token,
+                token: res.googleId,
                 provider_pic: data.imageUrl,
                 provider: type
             };
@@ -118,48 +120,52 @@ class Login extends Component {
             this.Auth.googleFaceLogin(postData)
                 .then((result) => {
                     // console.log(result);
-                    // this.Navbar.setUserState(result.user);
                     window.location.reload('/')
-
                 })
                 .catch((err)=> {
                     console.log("error");
-                    alert(err);
                 });
-        } else {
-            console.log("postdata null");
         }
+        // else {
+        //     console.log("postdata null");
+        // }
+        // 352847025224177
     }
 
     render(){
 
         const responseFacebook = (response) => {
-            console.log("facebook console");
-            console.log(JSON.stringify(response));
+            // console.log("facebook console");
+            // console.log(JSON.stringify(response));
             this.signup(response, 'facebook');
         }
 
         const responseGoogle = (response) => {
-            console.log("google console");
+            // console.log("google console");
             // console.log(response);
             this.signup(response, 'google');
         }
 
         return (
-            <div class="jumbotron col-md-6 offset-md-3">
+            <div className="jumbotron col-md-6 offset-md-3">
                 <div className="col-sm-12 mb-3">
                     <FacebookLogin
                         appId="352847025224177"
-                        autoLoad
+                        autoLoad={false}
+                        fields="name,email,picture"
                         callback={responseFacebook}
-                        render={renderProps => (
-                        <button onClick={renderProps.onClick}>This is my custom FB button</button>)}
+                        render={
+                            renderProps => (
+                                <button onClick={renderProps.onClick}>This is my custom FB button</button>
+                            )
+                        }
                     />
                 </div>
                 <div className="col-sm-12 mb-3">
                     <GoogleLogin
                         clientId="52426440954-iimhn8npr2o0hg0gro4qgas3ps01qk25.apps.googleusercontent.com"
                         buttonText="Đăng nhập bằng Google"
+                        autoLoad={false}
                         onSuccess={responseGoogle}
                         className="login-google-button btn-danger"
                         onFailure={responseGoogle}
@@ -168,31 +174,31 @@ class Login extends Component {
                 <form onSubmit ={this.onSubmit} className="col-sm-12">
                     {
                         this.state.message === '' ?
-                        (<div class="alert alert-danger" id="msg" hidden >
+                        (<div className="alert alert-danger" id="msg" hidden >
                             {this.state.message}
                         </div>) :
-                        (<div class="alert alert-danger" id="msg"  >
+                        (<div className="alert alert-danger" id="msg"  >
                             {this.state.message}
                         </div>)
                     }
 
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="username" aria-describedby="emailHelp" placeholder="Tên đăng nhập" onChange={this.onChange} onInvalid={this.onInvalid} required/>
+                    <div className="form-group">
+                        <input type="text" className="form-control" name="username" aria-describedby="emailHelp" placeholder="Tên đăng nhập" onChange={this.onChange} onInvalid={this.onInvalid} required/>
                     </div>
 
-                    <div class="form-group">
-                        <input type="password" class="form-control" name="password" placeholder="Mật khẩu" onChange={this.onChange} onInvalid={this.onInvalid} required />
+                    <div className="form-group">
+                        <input type="password" className="form-control" name="password" placeholder="Mật khẩu" onChange={this.onChange} onInvalid={this.onInvalid} required />
                     </div>
 
                     <div className="form-group">
                         <div className="form-row">
 
                             <div className="col-md-6 mb-3">
-                                <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+                                <button type="submit" className="btn btn-primary w-100">Đăng nhập</button>
                             </div>
 
                             <div className="col-md-6 mb-3">
-                                <button class="btn btn-danger w-100" onClick={this.localSignup}>Đăng ký</button>
+                                <button className="btn btn-danger w-100" onClick={this.localSignup}>Đăng ký</button>
                             </div>
                         </div>
                     </div>
