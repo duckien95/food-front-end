@@ -47,15 +47,23 @@ tr.admin td:last-child{
 
 .table-wrapper{
     display: block;
-    min-height: 640px;
-    max-height: 640px;
-    overflow-x: auto;
+    min-height: 712px;
+    max-height: 712px;
+    /* min-height: 600px;
+    max-height: 600px; */
+    overflow-y: scroll;
     /* -ms-overflow-style: -ms-autohiding-scrollbar; */
 }
 .dropdown-menu {
     height: auto;
     max-height: 350px;
     overflow-x: scroll;
+}
+
+.row-footer {
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto !important;
 }
 
 .food_name, .food_street, .food_restaurant, .media-food-name, .media-street {
@@ -67,7 +75,7 @@ tr.admin td:last-child{
     table-layout: auto;
     width: 7%;
 }
- .food_owner,  .food_district, .media-district, .media {
+ .food_owner, .media {
     table-layout: auto;
     width: 11%;
 }
@@ -78,12 +86,15 @@ tr.admin td:last-child{
     width: 10%;
 }
 
-.res-district, .res-city {
+.res-district, .res-city,  .food_district, .media-district {
     width: 8%;
 }
 
+.media-index {
+    width: 5%;
+}
 .table th {
-    vertical-align: middle;
+    vertical-align: middle !important;
     text-align: center;
 }
 
@@ -337,6 +348,7 @@ ul.food-detail-info-suggest{
 .max-width {
     width: 100%;
 }
+
 .login-google-button {
     font-family: Helvetica,sans-serif;
     font-weight: 700;
@@ -351,6 +363,7 @@ ul.food-detail-info-suggest{
     border: calc(.06887vw + .67769px) solid #dc3545;
     padding: calc(.34435vw + 13.38843px) calc(.34435vw + 18.38843px);
 }
+
 .kep-login-facebook, .login-google-button {
     width: 100% !important;
 }
@@ -398,10 +411,12 @@ ul.food-detail-info-suggest{
 }
 
 .main-content {
-    margin-top: 120px;
-    min-height: 630px;
+    margin-top: 70px;
     /* padding-bottom: 50px; */
     /* padding-top: 50px; */
+}
+.user-view{
+    min-height: 648px;
 }
 
 .nearby-header {
@@ -494,10 +509,11 @@ body{
 
 footer{
     background-color: #33383c;
-    padding: 0px;
-    /* position: absolute; */
-    /* left: 0; */
-    /* right: 0; */
+    /* padding: 0px; */
+    /* position: absolute;
+    left: 0;
+    right: 0; */
+    /* bottom: 0 */
     /* margin-top: 50px; */
 }
 

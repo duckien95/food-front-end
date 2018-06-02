@@ -29,10 +29,10 @@ class Footer extends React.Component {
     render(){
         return(
             <div>
-            <footer className="main-color">
-                <div className="row">
+            <footer className="main-color mx-auto">
+                <div className="row row-footer">
 
-                    <div className="col-md-4 col-sm-6 col-xs-12">
+                    <div className="col-sm col-xs-12">
                         <ul className="menu">
                             <span>Menu</span>
                             <li>
@@ -48,7 +48,7 @@ class Footer extends React.Component {
                         </ul>
                     </div>
 
-                    <div className="col-md-4 col-sm-6 col-xs-12">
+                    <div className="col-sm col-xs-12">
                         <ul className="menu">
                             <span className="logo">Ẩm thực Việt Nam</span>
                             {
@@ -62,7 +62,7 @@ class Footer extends React.Component {
                         </ul>
                     </div>
 
-                    <div className="col-md-4 col-sm-6 col-xs-12">
+                    <div className="col-sm col-xs-12">
                         <ul className="address">
                             <span>Liên hệ</span>
                             <li>

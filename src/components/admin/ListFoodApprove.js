@@ -241,7 +241,7 @@ class ListFood extends React.Component{
                                 }
                             </td>
 
-                            <td>
+                            <td className="text-center">
                                 <a target='_blank' href={'/food/edit/' + food.id} className="btn btn-primary a-admin-page"><i className="fa fa-edit"></i></a>
                                 <a target='_blank' href={'/food-info/' + food.id} className="btn btn-info a-admin-page mx-2"><i className="far fas fa-desktop"></i></a>
                                 <button className="btn btn-danger" data-toggle="modal" data-target={"#deletePost" +  index}><i className="far fa-trash-alt"></i></button>

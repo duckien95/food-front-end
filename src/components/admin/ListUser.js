@@ -110,8 +110,8 @@ class ListUser extends React.Component{
                     {
                         users.map((user,index) =>
                         <tr key={index} className='pending-table'>
-                            <th scope="row" className="text-center">{index + 1}</th>
-                            <td>{user.provider + ' ' + user.id}</td>
+                            <th className="text-center" scope="row">{index + 1}</th>
+                            <td>{user.provider}</td>
                             <td>{user.username ? user.username : user.email}</td>
                             <td> { user.last_name + ' ' + user.first_name }</td>
                             <td>

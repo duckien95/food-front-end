@@ -132,7 +132,7 @@ class ListImage extends React.Component{
                 <table className="table table-bordered table-light table-hover">
                     <thead>
                         <tr className="table-success admin">
-                            <th className="text-center" scope="col">STT</th>
+                            <th scope="col">STT</th>
                             <th className="media-food-name" scope="col">Món</th>
                             <th className="media-street" scope="col">Đường</th>
                             <th className="media-district" scope="col">Quận</th>
@@ -147,7 +147,7 @@ class ListImage extends React.Component{
                             videos.map( (video, index) =>
                                 <tr key={index}>
 
-                                    <td>{index + 1}</td>
+                                    <th className="text-center media-index" scope="row">{index + 1}</th>
                                     <td>{ video.name }</td>
                                     <td>{ video.street_number + ', ' + video.street_name }</td>
                                     <td>{ video.district_name }</td>

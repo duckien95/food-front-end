@@ -129,7 +129,7 @@ class ListRestaurant extends React.Component{
         return(
             <div className="row">
                 <NotificationContainer/>
-                <div className="w-100">
+                <div className="w-100 col-md-12">
                     <div className="text-center" id="msg">{this.state.msg}</div>
                     <form onSubmit={this.onSearch} className="search-form">
                         <div className="form-row">

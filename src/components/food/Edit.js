@@ -14,6 +14,7 @@ class FoodEdit extends React.Component {
 			description: '',
 			price : '',
 			restaurant : '',
+			restaurant_id: '',
 			category: '',
 			detail: 0,
 			citySelected: '',
@@ -53,6 +54,7 @@ class FoodEdit extends React.Component {
                     description : this.food.description,
                     price : this.food.prices,
                     restaurant: this.food.restaurant_name,
+					restaurant_id: this.food.restaurant_id,
                     addressDetail: this.food.street_number,
                     citySelected : this.food.city_id,
                     districtSelected: this.food.district_id,
@@ -132,7 +134,7 @@ class FoodEdit extends React.Component {
 
 		e.preventDefault();
 
-		const { name, description, price, category, detail, restaurant, citySelected, districtSelected, streetSelected, addressDetail, imageFile, videoFile} = this.state;
+		const { name, description, price, category, detail, restaurant, restaurant_id, citySelected, districtSelected, streetSelected, addressDetail, imageFile, videoFile} = this.state;
 
 		let formData = new FormData();
 
@@ -142,11 +144,12 @@ class FoodEdit extends React.Component {
 		formData.append('city', citySelected);
 		formData.append('district', districtSelected);
 		formData.append('street', streetSelected);
-		formData.append('addressDetail', addressDetail);
+		formData.append('street_number', addressDetail);
 		formData.append('category', category);
 		formData.append('detail', detail);
 		formData.append("owner_id", this.user.id);
-		formData.append('restaurant', restaurant);
+		formData.append('restaurant_name', restaurant);
+		formData.append('restaurant_id', restaurant_id);
 
 		for(var i=0; i < imageFile.length; i++){
 			console.log(imageFile[i]);

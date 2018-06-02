@@ -48,7 +48,7 @@ ReactDOM.render(
     <Router>
     <div>
         <Navbar />
-        <div className="container">
+        <div className="container user-view">
             <Route exact path="/" component={App} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={SignUp} />
@@ -66,7 +66,6 @@ ReactDOM.render(
             <Route path="/nearby/:place" component={Nearby} />
             <Route path="/test" component={Test} />
         </div>
-
     </div>
     </Router>
     , document.getElementById('root')

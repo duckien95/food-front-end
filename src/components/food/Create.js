@@ -152,11 +152,11 @@ class FoodCreate extends React.Component {
 		formData.append('city', citySelected);
 		formData.append('district', districtSelected);
 		formData.append('street', streetSelected);
-		formData.append('addressDetail', addressDetail);
+		formData.append('street_number', addressDetail);
 		formData.append('category', category);
 		formData.append('detail', detail);
 		formData.append("owner_id", this.user.id);
-		formData.append('restaurant', restaurant);
+		formData.append('restaurant_name', restaurant);
 
 		for(var i=0; i < imageFile.length; i++){
 			console.log(imageFile[i]);

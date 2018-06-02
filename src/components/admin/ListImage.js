@@ -147,7 +147,7 @@ class ListImage extends React.Component{
                             images.map( (img, index) =>
                                 <tr key={index}>
 
-                                    <td className="text-center">{index + 1}</td>
+                                    <th className="text-center" scope="row">{index + 1}</th>
                                     <td>{ img.name }</td>
                                     <td>{ img.street_number + ', ' + img.street_name }</td>
                                     <td>{ img.district_name }</td>

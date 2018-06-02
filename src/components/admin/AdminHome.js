@@ -26,15 +26,16 @@ class AdminHome extends React.Component{
     }
 
     componentDidMount(){
-        $('#root').addClass('remove-padding-bottom')
+        $('#root').addClass('remove-padding-bottom');
+        $('.user-view').addClass('d-none');
     }
 
     render(){
         var { type } = this.state;
         return(
-            <div className="row">
+            <div className="d-flex flex-row border border-light border-left-0 border-right-0">
 
-                <div className="col-md-2 main-color border border-light px-0">
+                <div className="col-md-2 main-color px-0">
                     <nav id="sidebar">
                       <div className="sidebar-header text-center">
                           Danh mục quản lý
@@ -71,7 +72,7 @@ class AdminHome extends React.Component{
                     </nav>
                 </div>
 
-                <div id="content" className="col-md-10 border border-left-0 border-light">
+                <div id="content" className="col-md-10 pr-0">
 
 
                     <div className="table-wrapper">

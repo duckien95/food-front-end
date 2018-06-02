@@ -114,7 +114,7 @@ class SearchResult extends React.Component{
 
     render(){
         return(
-            <div className="mrg-15">
+            <div className="mrg-15 px-1">
             <div className="">
                 <div className="text-center text-danger search-not-found alert alert-light w-100">{this.state.msg}</div>
             </div>
