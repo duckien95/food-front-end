@@ -689,20 +689,19 @@ class FoodDetail extends React.Component {
 
 
     onDelete(e){
+        e.preventDefault();
 
         var listFileId = this.state.listFileId;
         var food_id = this.state.food.id;
 
         // this.props.history.replace('/food/list', { msg : 'Thành công', title: 'Xóa bài viết', timeOut: 2000 })
-        axios.post(Service.getServerHostName() + '/food/delete/', { food_id, listFileId })
+        axios.post(Service.getServerHostName() + '/food/delete', { food_id, listFileId })
         .then(res => {
-            // console.log(res.status);
-            // console.log(res.status === 200 );
+
                 // console.log(r);
             if(res.data.status === 'success'){
-                // this.props.history.replace('/food/list', { msg : 'Thành công', title: 'Xóa bài viết', timeOut: 2000 })
-                // $('.closeDeleteModal').click();
-                this.props.history.replace('/');
+;
+                // this.props.history.replace('/admin');
                 $('.redirect')[0].click();
                 NotificationManager.success('Thành công', 'Xóa bài viết', 3000);
 

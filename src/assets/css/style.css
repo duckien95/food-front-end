@@ -411,7 +411,7 @@ ul.food-detail-info-suggest{
 }
 
 .main-content {
-    margin-top: 70px;
+    margin-top: 120px;
     /* padding-bottom: 50px; */
     /* padding-top: 50px; */
 }
@@ -441,7 +441,7 @@ ul.food-detail-info-suggest{
     height: calc(2.25rem + 2px);
     padding: .375rem 1.75rem .375rem .75rem;
     line-height: 1.5;
-    color: #fff;
+    color: #000;
     vertical-align: middle;
     background-size: 8px 10px;
     border: 1px solid #ced4da;

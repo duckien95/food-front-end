@@ -222,7 +222,7 @@ class Search extends React.Component{
     }
 
     render() {
-        var { districtSelected, category, detail } = this.state;
+        var { districtSelected, distanceSelected, category, detail } = this.state;
         return (
             <div className="main-color">
             <div className="container px-1">
@@ -261,9 +261,9 @@ class Search extends React.Component{
                                 <option value="-1" selected>Khoảng cách</option>
                                 {
                                     this.state.distance.map((dist, index) =>
-                                        <option key={index} value={dist.value}>
-                                            Dưới {dist.name}
-                                        </option>
+                                        Number(distanceSelected) == dist.value ?
+                                        (<option key={index} value={dist.value} selected> Dưới {dist.name}</option>)
+                                        :(<option key={index} value={dist.value}> Dưới {dist.name}</option>)
                                     )
                                 }
                             </select>
