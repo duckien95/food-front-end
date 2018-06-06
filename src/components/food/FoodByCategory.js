@@ -39,7 +39,7 @@ class FoodByCategory extends React.Component{
         const {foodList, category_name} = this.state;
         return(
             <div>
-                <Food foods={this.state.foodList} title={'Các bài viết thuộc loại ' + category_name}/>
+                <Food foods={this.state.foodList} title={'' + category_name}/>
             </div>
         )
     }

@@ -58,6 +58,7 @@ class ListUser extends React.Component{
         axios.post(Service.getServerHostName() + '/api/change-permission/' + user_id + permission)
         .then(
             res => {
+                console.log(res);
                 if(res.data.status === 'success'){
                     NotificationManager.success('Thành công', 'Cấp quyền người dùng');
                     $('.close').click();

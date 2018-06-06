@@ -43,19 +43,21 @@ class AdminHome extends React.Component{
 
                       <ul className="list-unstyled components">
                         <li className="border-top border-light active">
-                            <a href="#foodlist" data-toggle="collapse" aria-expanded="false" className="nav-active">Quản lý bài viết</a>
+                            <a href="#foodlist" data-toggle="collapse" aria-expanded="false" className="nav-active">Quản lý thông tin ẩm thực</a>
                             <ul className="collapse list-unstyled pl-4" id="foodlist">
-                                <li><a onClick={this.chooseType('food-list')} className="nav-active">Tất cả các bài viết</a></li>
-                                <li><a onClick={this.chooseType('food-approve')} className="nav-active">Bài viết đã duyệt</a></li>
-                                <li><a onClick={this.chooseType('food-pending')} className="nav-active">Bài viết chờ duyệt</a></li>
-                                <li><a target='_blank'  href={'/food/create'} className="nav-active">Thêm bài viết</a></li>
+                                <li><a onClick={this.chooseType('food-list')} className="nav-active">Tất cả các món ăn</a></li>
+                                <li><a onClick={this.chooseType('food-approve')} className="nav-active">Món ăn đã duyệt</a></li>
+                                <li><a onClick={this.chooseType('food-pending')} className="nav-active">Món ăn mới đăng</a></li>
+                                <li><a onClick={this.chooseType('food-interactive')} className="nav-active">Thống kê tương tác</a></li>
+                                <li><a target='_blank'  href={'/food/create'} className="nav-active">Thêm món ăn</a></li>
                             </ul>
                         </li>
                         <li className="border-top border-light">
-                            <a href="#media" data-toggle="collapse" aria-expanded="false" className="nav-active">Quản lý hình ảnh - video</a>
+                            <a href="#media" data-toggle="collapse" aria-expanded="false" className="nav-active">Ảnh - video ẩm thực</a>
                             <ul className="collapse list-unstyled pl-4" id="media">
                                 <li><a onClick={this.chooseType('image')} className="nav-active">Hình ảnh</a></li>
                                 <li><a onClick={this.chooseType('video')} className="nav-active">Video</a></li>
+                                <li><a onClick={this.chooseType('')} className="nav-active">Hình ảnh - video mới chia sẻ</a></li>
                             </ul>
                         </li>
                         <li className="border-top border-light">

@@ -36,13 +36,10 @@ class Footer extends React.Component {
                         <ul className="menu">
                             <span>Menu</span>
                             <li>
-                               <Link to={'/'}>Trang chủ</Link>
+                               <a href='/'>Trang chủ</a>
                             </li>
                             <li>
-                               <Link to={'/'}>Trang chủ</Link>
-                            </li>
-                            <li>
-                               <Link to={'/'}>Trang chủ</Link>
+                               <a target="_blank" href='/food/create'>Đăng bài</a>
                             </li>
 
                         </ul>

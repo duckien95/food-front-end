@@ -618,10 +618,16 @@ class FoodDetail extends React.Component {
             if(this.state.liked){
                 axios.post(Service.getServerHostName() + '/food/dislike', {user_id, food_id})
                 .then(res => {
-                    console.log(res);
-                    if(res.status === 200){
-                        NotificationManager.error('Bạn đã bỏ thích bài viết', 'Cảnh báo');
-                        this.setState({ liked : false})
+                    // console.log(res);
+                    if(res.data.status === 'success'){
+                        // NotificationManager.error('Bạn đã bỏ thích bài viết', 'Cảnh báo');
+                        this.setState({ liked : false});
+                        axios.get(Service.getServerHostName() + '/api/food/' + this.props.match.params.foodId)
+                        .then(res => {
+                            var data = res.data.data;
+                            // console.log(data);
+                            this.setState({ food: data  })
+                        })
                     }
                 })
             }
@@ -629,12 +635,19 @@ class FoodDetail extends React.Component {
                 axios.post(Service.getServerHostName() + '/food/like', {user_id, food_id})
                 .then(res => {
                     console.log(res);
-                    if(res.status === 200){
+                    if(res.data.status === 'success'){
                         NotificationManager.success('Bạn đã thích bài viết', 'Thông báo');
-                        this.setState({ liked : true})
+                        this.setState({ liked : true});
+                        axios.get(Service.getServerHostName() + '/api/food/' + this.props.match.params.foodId)
+                        .then(res => {
+                            var data = res.data.data;
+                            // console.log(data);
+                            this.setState({ food: data  })
+                        })
                     }
                 })
             }
+
         }
         else {
             $('#hiddenModal')[0].click();
@@ -794,6 +807,10 @@ class FoodDetail extends React.Component {
                                     <td>Chi tiết</td>
                                     <td>{food.description}</td>
                                 </tr>
+                                <tr>
+                                    <td>Thích</td>
+                                    <td className="index-color">{food.likes} lượt <i className="fas fa-heart"></i></td>
+                                </tr>
                             </tbody>
                             </table>
                             <div className="row">
@@ -801,12 +818,12 @@ class FoodDetail extends React.Component {
                                 <div className="col-sm">
                                     <button className={liked ? 'btn btn-warning max-width' : 'btn btn-success max-width'} id="likeBtn" onClick={this.onLike}>
                                         {liked ? 'Bỏ thích' : 'Thích'}
-                                        <span className="far fa-heart pl-2"></span>
+                                        <span className="fas fa-heart pl-2"></span>
                                     </button>
                                 </div>
                                 <div className="col-sm">
                                     <button className={favorited ? 'btn btn-warning max-width' : 'btn btn-success max-width'} id="favoriteBtn" onClick={this.onFavoriteList}>
-                                        {favorited ? 'Bỏ lưu bài viết' : 'Lưu lại bài viết'}
+                                        {favorited ? 'Bỏ lưu món ăn' : 'Lưu lại món ăn'}
                                         <span className="fa fa-bell pl-2"></span>
                                     </button>
                                 </div>
@@ -889,7 +906,7 @@ class FoodDetail extends React.Component {
                                     imageUrl.map((img, index) =>
 
                                         <div className="col-md-4 px-1 py-1" key={index}>
-                                            <img  alt={img} src={"https://drive.google.com/uc?export=view&id=" + img } className="home-image" onClick={() => this.setState({ isOpen: true, images : src })}/>
+                                            <img  alt={img} src={"https://drive.google.com/uc?export=view&id=" + img } className="home-image" onClick={() => this.setState({ isOpen: true, images : src, photoIndex: index })}/>
 
                                             {  Auth.loggedIn()  && this.state.user.type === "admin" ? (
                                             <div className="row py-1">
@@ -968,7 +985,7 @@ class FoodDetail extends React.Component {
                                     imagePending.map((img, index) =>
 
                                         <div className="col-md-4  px-1 py-1" key={index}>
-                                            <img  alt={img} src={"https://drive.google.com/uc?export=view&id=" + img } className="home-image"   onClick={() => this.setState({ isOpen: true, images : srcPending })}/>
+                                            <img  alt={img} src={"https://drive.google.com/uc?export=view&id=" + img } className="home-image"   onClick={() => this.setState({ isOpen: true, images : srcPending, photoIndex: index  })}/>
                                             <div className="row py-1">
                                                 <div className="col-sm">
                                                     <button onClick={this.onDisapproveImage(img)} className="btn btn-warning w-100">Không chấp nhận</button>
@@ -1113,31 +1130,25 @@ class FoodDetail extends React.Component {
                             sameCateList.map((food,index) =>
                                 <div className="col-xs-6 col-md-4 suggest px-1 py-1" key={index}>
                                     <a href={"/food-info/" + food.id}>
-                                        <div className="food-suggest">
-                                            <img  src={"https://drive.google.com/uc?export=view&id=" + food.avatar} alt="" className="home-image" />
+                                        <div>
+                                            <img  src={Service.getServerHostName() + "/images/index.jpg"} className="home-image" />
+                                        </div>
+                                        <div className="food-detail-info px-2">
+                                                <div className="food-title-name">
+                                                    <span> {food.name} </span>
 
-                                            <div className="food-detail-suggest">
-                                                <div  className="icon-heart-suggest">
-                                                    <span   className="glyphicon glyphicon-heart"></span>
-                                                    <span  className="glyphicon glyphicon-heart"></span>
                                                 </div>
-                                                <ul className="food-detail-info-suggest">
-                                                    <li className="li-price-suggest"></li>
-                                                    <li className="li-child-suggest">
-                                                        <span> {food.name} </span>
+                                                <div className="">
+                                                    <span>
+                                                        { Service.formatMoney(`${food.min_price}`) + (Number(food.max_price) > 0 ? (' - ' + Service.formatMoney(`${food.max_price}`)) : '') } VND
+                                                    </span>
+                                                </div>
+                                                <div className="">{ food.street_number + ' ' + food.street_name + ', ' + food.district_name + ', ' + food.city_name }</div>
+                                                {
+                                                    food.distance !== undefined ? (<div className="li-child-suggest">Khoảng cách {food.distance}</div>) : ''
+                                                }
+                                                <div className="index-color"> {food.likes} lượt thích <i className="fas fa-heart"></i></div>
 
-                                                    </li>
-                                                    <li className="li-child-suggest">
-                                                        <span>
-                                                            { Service.formatMoney(`${food.min_price}`) + (Number(food.max_price) > 0 ? (' - ' + Service.formatMoney(`${food.max_price}`)) : '') } VND
-                                                        </span>
-                                                    </li>
-                                                    <li className="li-child-suggest">{ food.street_number + ' ' + food.street_name + ', ' + food.district_name + ', ' + food.city_name }</li>
-                                                    {
-                                                        food.distance !== undefined ? (<li className="li-child-suggest">Khoảng cách {food.distance}</li>) : ''
-                                                    }
-                                                </ul>
-                                            </div>
                                         </div>
                                     </a>
                                 </div>

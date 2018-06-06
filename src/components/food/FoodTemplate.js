@@ -7,6 +7,9 @@ const Service = new Services();
 class FoodList extends React.Component{
     constructor(props) {
         super(props);
+        // https://drive.google.com/open?id=10s_fMmg2sdEocCqCC2oYOS6Y4g57bwxw
+        // https://drive.google.com/open?id=17fYtPP2UBZ57cYhMKEOEl-OkF3hoEb-d
+        // https://drive.google.com/open?id=1xh9vD6Ne6wHM5g8_bxO-tCuwDqvOXwhq
     }
 
     render(){
@@ -16,33 +19,27 @@ class FoodList extends React.Component{
                 <div className="row">
                 {
                     this.props.foods.map((food,index) =>
-                        <div className="col-xs-6 col-md-4 suggest px-1 py-1" key={index}>
-                            <Link to={"/food-info/" + food.id}>
-                                <div className="food-suggest">
-                                    <img  src={"https://drive.google.com/uc?export=view&id=" + (food.avatar ?  food.avatar : "1obNJRB2U3ytGosbM-ADswthgaRMzDZNw")} alt="" className="home-image" />
+                        <div className="col-xs-6 col-md-4 px-1 py-1" key={index}>
+                            <Link to={"/food-info/" + food.id} className="food-suggest">
+                                <div>
+                                    <img  src={Service.getServerHostName() + "/images/index.jpg"} className="home-image" />
+                                </div>
+                                <div className="food-detail-info px-2">
+                                        <div className="food-title-name">
+                                            <span> {food.name} </span>
 
-                                    <div className="food-detail-suggest">
-                                        <div  className="icon-heart-suggest">
-                                            <span   className="glyphicon glyphicon-heart"></span>
-                                            <span  className="glyphicon glyphicon-heart"></span>
                                         </div>
-                                        <ul className="food-detail-info-suggest">
-                                            <li className="li-price-suggest"></li>
-                                            <li className="li-child-suggest">
-                                                <span> {food.name} </span>
+                                        <div className="">
+                                            <span>
+                                                { Service.formatMoney(`${food.min_price}`) + (Number(food.max_price) > 0 ? (' - ' + Service.formatMoney(`${food.max_price}`)) : '') } VND
+                                            </span>
+                                        </div>
+                                        <div className="">{ food.street_number + ' ' + food.street_name + ', ' + food.district_name + ', ' + food.city_name }</div>
+                                        {
+                                            food.distance !== undefined ? (<div className="li-child-suggest">Khoảng cách {food.distance}</div>) : ''
+                                        }
+                                        <div className="index-color"> {food.likes} lượt thích <i className="fas fa-heart"></i></div>
 
-                                            </li>
-                                            <li className="li-child-suggest">
-                                                <span>
-                                                    { Service.formatMoney(`${food.min_price}`) + (Number(food.max_price) > 0 ? (' - ' + Service.formatMoney(`${food.max_price}`)) : '') } VND
-                                                </span>
-                                            </li>
-                                            <li className="li-child-suggest">{ food.street_number + ' ' + food.street_name + ', ' + food.district_name + ', ' + food.city_name }</li>
-                                            {
-                                                food.distance !== undefined ? (<li className="li-child-suggest">Khoảng cách {food.distance}</li>) : ''
-                                            }
-                                        </ul>
-                                    </div>
                                 </div>
                             </Link>
                         </div>

@@ -116,7 +116,7 @@ class Navbar extends React.Component{
 
                                 <ul className="navbar-nav mr-auto">
                                     <li className="nav-item">
-                                        <Link to={'/'} className="nav-link">VIETFOOD</Link>
+                                        <Link to={'/'} className="nav-link">Trang chủ</Link>
                                     </li >
 
                                     <li className="nav-item dropdown">
@@ -177,7 +177,7 @@ class Navbar extends React.Component{
 
                                     <li className="nav-item dropdown">
                                         <a className="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Thực đơn
+                                            Loại món ăn
                                         </a>
                                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                         {
