@@ -10,6 +10,7 @@ class FoodByCategory extends React.Component{
         super();
         this.state  = {
             foodList : [],
+            category_name: ''
         }
 
     }
@@ -21,19 +22,24 @@ class FoodByCategory extends React.Component{
         console.log(categoryId);
         axios.get(Service.getServerHostName() + "/api/food-category/" + categoryId)
         .then(res => {
-            // console.log("res of food category");
-            // console.log(res.data);
             this.setState({foodList : res.data.foods})
-        }).catch(err => {
-            console.log(err);
         })
+
+        axios.get(Service.getServerHostName() + "/api/category")
+        .then(res => {
+            // console.log("res of food category");
+            console.log(res.data);
+
+            this.setState({category_name : res.data.data[categoryId -1].cate_name})
+        })
+
     }
 
     render(){
-        const {foodList} = this.state;
+        const {foodList, category_name} = this.state;
         return(
             <div>
-                <Food foods={this.state.foodList} />
+                <Food foods={this.state.foodList} title={'Các bài viết thuộc loại ' + category_name}/>
             </div>
         )
     }

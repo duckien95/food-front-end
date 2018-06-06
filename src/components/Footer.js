@@ -66,13 +66,13 @@ class Footer extends React.Component {
                         <ul className="address">
                             <span>Liên hệ</span>
                             <li>
-                              <i className="fa fa-phone" aria-hidden="true"></i> <a href="">Điện thoại : 0123 456 789</a>
+                              <i className="fa fa-phone" aria-hidden="true"></i> <a href="">Điện thoại : 098 127 3379</a>
                             </li>
                             <li>
-                              <i className="fa fa-map-marker" aria-hidden="true"></i> <a href="">Địa chỉ : Tòa nhà A1, Minh Khai, Hà Nội</a>
+                              <i className="fa fa-map-marker" aria-hidden="true"></i> <a href="">Địa chỉ : Ngõ Gốc Đề, Minh Khai, Hà Nội</a>
                             </li>
                             <li>
-                              <i className="fa fa-envelope" aria-hidden="true"></i> <a href="">Email : vietfood@gmail.com</a>
+                              <i className="fa fa-envelope" aria-hidden="true"></i> <a href="">Email : kiennguyenduc95@gmail.com</a>
                             </li>
                         </ul>
                     </div>

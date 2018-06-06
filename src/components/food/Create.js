@@ -13,6 +13,8 @@ class FoodCreate extends React.Component {
 			name: '',
 			description: '',
 			price : '',
+			min_price: '',
+			max_price: 0,
 			restaurant : '',
 			category: '',
 			detail: 0,
@@ -142,13 +144,14 @@ class FoodCreate extends React.Component {
 		e.preventDefault();
 
 
-		const { name, description, price, category, detail, restaurant, citySelected, districtSelected, streetSelected, addressDetail, imageFile, videoFile} = this.state;
+		const { name, description, min_price, max_price, category, detail, restaurant, citySelected, districtSelected, streetSelected, addressDetail, imageFile, videoFile} = this.state;
 
 		let formData = new FormData();
 
 		formData.append('name', name);
 		formData.append('description', description);
-		formData.append('price', price);
+		formData.append('min_price', min_price);
+		formData.append('max_price', max_price);
 		formData.append('city', citySelected);
 		formData.append('district', districtSelected);
 		formData.append('street', streetSelected);
@@ -294,9 +297,16 @@ class FoodCreate extends React.Component {
 				</div>
 
 				<div className="form-group row">
-					<label  htmlFor="price" className="col-sm-2 form-control-label">Giá</label>
+					<label  htmlFor="address" className="col-sm-2 form-control-label mb-3">Giá</label>
 					<div className="col-sm-10">
-						<input type="text" className="form-control" name="price" id="price" placeholder="Giá thành" onChange={this.onChange} onInvalid={this.onInvalid} required/>
+						<div className="form-row">
+						<div className="col-sm">
+							<input type="number" className="form-control" name="min_price" placeholder="Giá tối thiểu" onChange={this.onChange} onInvalid={this.onInvalid} required/>
+						</div>
+						<div className="col-sm">
+							<input type="number" className="form-control" name="max_price" placeholder="Giá tối đa" onChange={this.onChange} onInvalid={this.onInvalid} required/>
+						</div>
+						</div>
 					</div>
 				</div>
 

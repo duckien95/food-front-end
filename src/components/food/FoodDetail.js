@@ -58,6 +58,7 @@ class FoodDetail extends React.Component {
         this.handleSubmitComment = this.handleSubmitComment.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
         this.converDateTime = this.converDateTime.bind(this);
+        this.Service = new Services();
     }
 
     ImageSrcLightbox(list, stateName){
@@ -775,7 +776,7 @@ class FoodDetail extends React.Component {
                                 </tr>
                                 <tr>
                                     <td>Giá</td>
-                                    <td>{food.prices} VND</td>
+                                    <td>{ Service.formatMoney(`${food.min_price}`) + (Number(food.max_price) > 0 ? (' - ' + Service.formatMoney(`${food.max_price}`)) : '') } VND</td>
                                 </tr>
                                 <tr>
                                     <td>Địa chỉ</td>
@@ -1126,7 +1127,11 @@ class FoodDetail extends React.Component {
                                                         <span> {food.name} </span>
 
                                                     </li>
-                                                    <li className="li-child-suggest"><span> {food.prices}</span></li>
+                                                    <li className="li-child-suggest">
+                                                        <span>
+                                                            { Service.formatMoney(`${food.min_price}`) + (Number(food.max_price) > 0 ? (' - ' + Service.formatMoney(`${food.max_price}`)) : '') } VND
+                                                        </span>
+                                                    </li>
                                                     <li className="li-child-suggest">{ food.street_number + ' ' + food.street_name + ', ' + food.district_name + ', ' + food.city_name }</li>
                                                     {
                                                         food.distance !== undefined ? (<li className="li-child-suggest">Khoảng cách {food.distance}</li>) : ''

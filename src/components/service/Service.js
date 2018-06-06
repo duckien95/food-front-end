@@ -5,6 +5,7 @@ class Service extends React.Component{
         super();
         this.getServerHostName = this.getServerHostName.bind(this);
         this.getListDistance = this.getListDistance.bind(this);
+        this.formatMoney = this.formatMoney.bind(this);
     }
 
     getServerHostName() {
@@ -25,6 +26,11 @@ class Service extends React.Component{
             {value : '5.0', name : '5 km'},
         ]
     }
+
+    formatMoney(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
 }
 
 export default Service;

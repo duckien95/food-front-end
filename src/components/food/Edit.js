@@ -12,7 +12,8 @@ class FoodEdit extends React.Component {
 		this.state = {
 			name: '',
 			description: '',
-			price : '',
+			min_price : '',
+			max_price: 0,
 			restaurant : '',
 			restaurant_id: '',
 			category: '',
@@ -52,7 +53,8 @@ class FoodEdit extends React.Component {
                 this.setState({
                     name: this.food.name,
                     description : this.food.description,
-                    price : this.food.prices,
+                    min_price : this.food.min_price,
+					max_price: this.food.max_price,
                     restaurant: this.food.restaurant_name,
 					restaurant_id: this.food.restaurant_id,
                     addressDetail: this.food.street_number,
@@ -134,13 +136,14 @@ class FoodEdit extends React.Component {
 
 		e.preventDefault();
 
-		const { name, description, price, category, detail, restaurant, restaurant_id, citySelected, districtSelected, streetSelected, addressDetail, imageFile, videoFile} = this.state;
+		const { name, description, min_price, max_price, category, detail, restaurant, restaurant_id, citySelected, districtSelected, streetSelected, addressDetail, imageFile, videoFile} = this.state;
 
 		let formData = new FormData();
 
 		formData.append('name', name);
 		formData.append('description', description);
-		formData.append('price', price);
+		formData.append('min_price', min_price);
+		formData.append('max_price', max_price);
 		formData.append('city', citySelected);
 		formData.append('district', districtSelected);
 		formData.append('street', streetSelected);
@@ -243,6 +246,7 @@ class FoodEdit extends React.Component {
 
 	render() {
 		// const { description, imageFile } = this.state;
+		var {name, description, min_price, max_price, restaurant, addressDetail, cate, city, district, street } = this.state;
 		return (
 
 			<form onSubmit={this.onSubmit} encType="multipart/form-data">
@@ -251,7 +255,7 @@ class FoodEdit extends React.Component {
 				<div className="form-group row">
 					<label htmlFor="name" className="col-sm-2 form-control-label">Tên món ăn</label>
 					<div className="col-sm-10">
-						<input type="text" className="form-control" name="name" id="name" placeholder="Nhập tên món ăn" value={this.state.name} onChange={this.onChange} onInvalid={this.onInvalid}/>
+						<input type="text" className="form-control" name="name" id="name" placeholder="Nhập tên món ăn" value={name} onChange={this.onChange} onInvalid={this.onInvalid}/>
 					</div>
 				</div>
 
@@ -264,7 +268,7 @@ class FoodEdit extends React.Component {
 								<select className="custom-select" name="category" onChange={this.handleCateChange} onInvalid={this.onInvalid} required>
 								<option value="" disabled selected>Loại</option>
 								{
-									this.state.cate.map((cat, index) =>
+									cate.map((cat, index) =>
 
                                         this.food.category_id === cat.cate_id ?
                                         (<option key={index} value={cat.cate_id} selected> {cat.cate_name}</option>)
@@ -280,21 +284,28 @@ class FoodEdit extends React.Component {
 				<div className="form-group row">
 					<label  htmlFor="description" className="col-sm-2 form-control-label">Miêu tả</label>
 					<div className="col-sm-10">
-						<input type="text" className="form-control" name="description" id="description" value={this.state.description} placeholder="Miêu tả món ăn" onChange={this.onChange} onInvalid={this.onInvalid} required/>
+						<input type="text" className="form-control" name="description" id="description" value={description} placeholder="Miêu tả món ăn" onChange={this.onChange} onInvalid={this.onInvalid} required/>
 					</div>
 				</div>
 
 				<div className="form-group row">
-					<label  htmlFor="price" className="col-sm-2 form-control-label">Giá</label>
+					<label  htmlFor="address" className="col-sm-2 form-control-label mb-3">Giá</label>
 					<div className="col-sm-10">
-						<input type="text" className="form-control" name="price" id="price" placeholder="Giá thành" value={this.state.price} onChange={this.onChange} onInvalid={this.onInvalid} required/>
+						<div className="form-row">
+						<div className="col-sm">
+							<input type="number" className="form-control" name="min_price" placeholder="Giá tối thiểu" value={min_price} onChange={this.onChange} onInvalid={this.onInvalid} required/>
+						</div>
+						<div className="col-sm">
+							<input type="number" className="form-control" name="max_price" placeholder="Giá tối đa" value={max_price} onChange={this.onChange} onInvalid={this.onInvalid} required/>
+						</div>
+						</div>
 					</div>
 				</div>
 
 				<div className="form-group row">
 					<label htmlFor="restaurant" className="col-sm-2 form-control-label">Nhà hàng</label>
 					<div className="col-sm-10">
-						<input type="text" className="form-control" name="restaurant" id="restaurant" value={this.state.restaurant} placeholder="Nhập nhà hàng" onChange={this.onChange} onInvalid={this.onInvalid} required/>
+						<input type="text" className="form-control" name="restaurant" id="restaurant" value={restaurant} placeholder="Nhập nhà hàng" onChange={this.onChange} onInvalid={this.onInvalid} required/>
 					</div>
 				</div>
 
@@ -307,7 +318,7 @@ class FoodEdit extends React.Component {
 								<select className="custom-select" name="cityOpt" onChange={this.handleCityChange} onInvalid={this.onInvalid} required>
 									<option value="" disabled selected>Tỉnh/Thành phố</option>
 									{
-										this.state.city.map((ct, index) =>
+										city.map((ct, index) =>
                                             this.food.city_id === ct.city_id ?
                                             (<option key={index} value={ct.city_id} selected>{ct.city_name}</option>)
 											: (<option key={index} value={ct.city_id}>{ct.city_name}</option>)
@@ -320,7 +331,7 @@ class FoodEdit extends React.Component {
 								<select className="custom-select" name="districtOpt" onChange={this.handleDistrictChange} onInvalid={this.onInvalid} required>
 									<option value="" disabled selected>Quận/Huyện</option>
 									{
-										this.state.district.map((dist, index) =>
+										district.map((dist, index) =>
                                             this.food.district_id === dist.district_id ?
                                             (<option key={index} value={dist.district_id} selected>{dist.district_name}</option>)
 							            	:(<option key={index} value={dist.district_id}>{dist.district_name}</option>)
@@ -333,7 +344,7 @@ class FoodEdit extends React.Component {
 								<select className="custom-select" name="streetOpt" onChange={this.handleStreetChange} onInvalid={this.onInvalid} required>
 									<option value="" disabled selected>Đường/Phố</option>
 									{
-										this.state.street.map((str, index) =>
+										street.map((str, index) =>
                                             this.food.street_id === str.street_id ?
                                             (<option key={index} value={str.street_id} selected>{str.street_name}</option>)
 											:(<option key={index} value={str.street_id}>{str.street_name}</option>)
@@ -348,7 +359,7 @@ class FoodEdit extends React.Component {
 				<div className="form-group row">
 					<label  htmlFor="addNumber" className="col-sm-2 form-control-label">Số nhà/Ngõ</label>
 					<div className="col-sm-10">
-						<input type="text" className="form-control" name="addressDetail" id="addNumber" value={this.state.addressDetail} placeholder="Chi tiết số nhà/ngõ" onChange={this.onChange} onInvalid={this.onInvalid} required/>
+						<input type="text" className="form-control" name="addressDetail" id="addNumber" value={addressDetail} placeholder="Chi tiết số nhà/ngõ" onChange={this.onChange} onInvalid={this.onInvalid} required/>
 					</div>
 				</div>
 

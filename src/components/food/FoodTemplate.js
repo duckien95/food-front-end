@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import Services from '../service/Service'
+const Service = new Services();
 
 class FoodList extends React.Component{
     constructor(props) {
@@ -30,7 +32,11 @@ class FoodList extends React.Component{
                                                 <span> {food.name} </span>
 
                                             </li>
-                                            <li className="li-child-suggest"><span> {food.prices}</span></li>
+                                            <li className="li-child-suggest">
+                                                <span>
+                                                    { Service.formatMoney(`${food.min_price}`) + (Number(food.max_price) > 0 ? (' - ' + Service.formatMoney(`${food.max_price}`)) : '') } VND
+                                                </span>
+                                            </li>
                                             <li className="li-child-suggest">{ food.street_number + ' ' + food.street_name + ', ' + food.district_name + ', ' + food.city_name }</li>
                                             {
                                                 food.distance !== undefined ? (<li className="li-child-suggest">Khoảng cách {food.distance}</li>) : ''
