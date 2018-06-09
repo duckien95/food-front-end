@@ -179,8 +179,6 @@ class ListFood extends React.Component{
                             <th className="" scope="col">Quận</th>
                             <th className="" scope="col">Thành phố</th>
                             <th className="" scope="col">Đăng bởi</th>
-                            <th className="" scope="col">Thích</th>
-                            <th className="" scope="col">Lưu</th>
                             <th className="" scope="col">Trạng thái</th>
                             <th className="" scope="col">Cập nhật</th>
                         </tr>
@@ -197,53 +195,14 @@ class ListFood extends React.Component{
                             <td className="food_district">{food.district_name}</td>
                             <td className="food_city">{food.city_name}</td>
                             <td className="food_owner">{food.owner_name}</td>
-                            <td className="like-fav">
 
-                                { food.like.length ?
-                                    (
-                                        <div className="dropdown">
-                                            <div className="dropdown-toggle" data-toggle="dropdown">
-                                                <span className="text-danger">{food.like.length} lượt</span>
-                                            </div>
-                                            <div className="dropdown-menu">
-                                                {
-                                                    food.like.map( (like, index) =>
-                                                        <a target="_blank" key={index} href=''  className="dropdown-item">{index + 1 +  '. ' + like.username}</a>
-                                                    )
-                                                }
-                                            </div>
-                                        </div>
-                                    ) : (<span className="text-primary">Không</span>)
-                                }
-
-                            </td>
-                            <td className="like-fav">
-
-                                { food.favorite.length ?
-                                    (
-                                        <div className="dropdown">
-                                            <div className="dropdown-toggle" data-toggle="dropdown">
-                                                <span className="text-danger">{food.favorite.length} lượt</span>
-                                            </div>
-                                            <div className="dropdown-menu">
-                                                {
-                                                    food.favorite.map( (fav, index) =>
-                                                        <a target="_blank" key={index} href=''  className="dropdown-item">{index + 1 +  '. ' + fav.username}</a>
-                                                    )
-                                                }
-                                            </div>
-                                        </div>
-                                    ) : (<span className="text-primary">Không</span>)
-                                }
-
-                            </td>
                             <td className="food_status">
                                 {
                                     food.status === 'approve' ? (<span className="text-success">Đã duyệt</span>) : (<span className="text-danger">Chờ duyệt</span>)
                                 }
                             </td>
 
-                            <td>
+                            <td className="text-center">
                                 <a target='_blank' href={'/food/edit/' + food.id} className="btn btn-primary a-admin-page"><i className="fa fa-edit"></i></a>
                                 <a target='_blank' href={'/food-info/' + food.id} className="btn btn-info a-admin-page mx-2"><i className="fas fa-desktop"></i></a>
                                 <button className="btn btn-danger" data-toggle="modal" data-target={"#deletePost" +  index}><i className="far fa-trash-alt"></i></button>

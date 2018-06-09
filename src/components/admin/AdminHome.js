@@ -5,7 +5,9 @@ import ListFood from "./ListFood"
 import ListUser from "./ListUser"
 import ListFoodPending from "./ListFoodPending"
 import ListFoodApprove from './ListFoodApprove'
+import ListInteractive from './ListInteractive'
 import ListRestaurant from "./ListRestaurant"
+import ListMediaPending from "./ListMediaPending"
 import ListImage from "./ListImage"
 import ListVideo from "./ListVideo"
 import $ from 'jquery'
@@ -57,7 +59,7 @@ class AdminHome extends React.Component{
                             <ul className="collapse list-unstyled pl-4" id="media">
                                 <li><a onClick={this.chooseType('image')} className="nav-active">Hình ảnh</a></li>
                                 <li><a onClick={this.chooseType('video')} className="nav-active">Video</a></li>
-                                <li><a onClick={this.chooseType('')} className="nav-active">Hình ảnh - video mới chia sẻ</a></li>
+                                <li><a onClick={this.chooseType('media-pending')} className="nav-active">Hình ảnh - video mới chia sẻ</a></li>
                             </ul>
                         </li>
                         <li className="border-top border-light">
@@ -85,7 +87,9 @@ class AdminHome extends React.Component{
                             ( type === 'restaurant' ? <ListRestaurant /> :
                             ( type === "food-pending" ? <ListFoodPending /> :
                             ( type === 'image' ? <ListImage /> :
-                            ( type === 'video' ? <ListVideo /> : <ListFoodApprove />)))))
+                            ( type === 'video' ? <ListVideo /> :
+                            ( type === 'food-interactive' ? <ListInteractive /> :
+                            ( type === 'media-pending' ? <ListMediaPending /> : <ListFoodApprove />)))))))
                         }
                         </div>
                     </div>

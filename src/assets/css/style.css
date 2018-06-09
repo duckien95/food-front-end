@@ -66,7 +66,16 @@ tr.admin td:last-child{
     margin: auto !important;
 }
 
-.food_name, .food_street, .food_restaurant, .media-food-name, .media-street {
+.food_name, .food_restaurant {
+    table-layout: auto;
+    width: 14%;
+}
+
+.food_street {
+    width: 16%
+}
+
+ .media-food-name, .media-street {
     table-layout: auto;
     width: 11%;
 }

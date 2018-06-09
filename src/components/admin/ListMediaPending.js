@@ -16,17 +16,16 @@ class ListFood extends React.Component{
             districtSelected: -1,
             category: -1,
             content: '',
-            status: 'approve'
+            status: ''
         }
-        this.handleDistrictChange = this.handleDistrictChange.bind(this);
-        this.handleCateChange = this.handleCateChange.bind(this);
+
         this.onChange = this.onChange.bind(this);
         this.onSearch = this.onSearch.bind(this);
     }
 
     componentDidMount(){
 
-        axios.get(Service.getServerHostName() + "/api/admin/food-approve")
+        axios.get(Service.getServerHostName() + "/api/admin/media-pending")
         .then(res => {
             // console.log(res.data);
             this.setState({foods : res.data.foods})
@@ -61,7 +60,7 @@ class ListFood extends React.Component{
                         // this.props.history.replace('/food/list', { msg : 'Thành công', title: 'Xóa bài viết', timeOut: 2000 })
                         NotificationManager.success('Thành công', 'Xóa bài viết', 3000);
                         $('.close').click();
-                        axios.get(Service.getServerHostName() + "/api/admin/food-approve")
+                        axios.get(Service.getServerHostName() + "/api/admin/media-pending")
                         .then(res => {
                             // console.log(res.data);
                             this.setState({foods : res.data.foods})
@@ -76,16 +75,16 @@ class ListFood extends React.Component{
         )
     }
 
-    handleDistrictChange(e){
-        var districtID =  e.target.value
-        this.setState({districtSelected : districtID});
-    }
-
-    handleCateChange(e) {
-        // var cate_id = e.target.value;
-        this.setState({ category : e.target.value });
-
-    }
+    // handleDistrictChange(e){
+    //     var districtID =  e.target.value
+    //     this.setState({districtSelected : districtID});
+    // }
+    //
+    // handleCateChange(e) {
+    //     // var cate_id = e.target.value;
+    //     this.setState({ category : e.target.value });
+    //
+    // }
 
     onChange (e){
         const state = this.state;
@@ -98,7 +97,8 @@ class ListFood extends React.Component{
         e.preventDefault();
 
         const { districtSelected, category, content, status } = this.state;
-        var data = { districtSelected, category, content, status};
+
+        var data = { districtSelected, category, content, status };
         axios.post(Service.getServerHostName() + '/api/admin/food-search', data)
         .then(res => {
             // console.log(res);
@@ -131,7 +131,7 @@ class ListFood extends React.Component{
                 <form onSubmit={this.onSearch} className="search-form">
                     <div className="form-row">
                         <div className="col-sm mb-1">
-                            <select className="custom-select" name="district" onChange={this.handleDistrictChange} onInvalid={this.onInvalid}>
+                            <select className="custom-select" name="districtSelected" onChange={this.onChange} onInvalid={this.onInvalid}>
                                 <option value="-1" selected>Quận/Huyện</option>
                                 {
                                     this.state.district.map((dist, index) =>
@@ -145,7 +145,7 @@ class ListFood extends React.Component{
 
 
                         <div className="col-sm mb-1">
-                            <select className="custom-select" name="category" onChange={this.handleCateChange} >
+                            <select className="custom-select" name="category" onChange={this.onChange} >
                             <option value="-1" selected>Loại món ăn</option>
                             {
                                 this.state.cate.map((cat, index) =>
@@ -161,7 +161,7 @@ class ListFood extends React.Component{
                             <input className="search" name="content" onChange={this.onChange} placeholder="Nhập tên món ăn" aria-label="Search" />
                         </div>
                         <div className="col-sm mb-1">
-                            <button className="search btn btn-info" type="submit">Tìm kiếm</button>
+                            <button className="search btn btn-primary" type="submit">Tìm kiếm</button>
                         </div>
 
                     </div>
@@ -173,6 +173,7 @@ class ListFood extends React.Component{
                         <tr className="table-success admin">
                             <th className="" scope="col">STT</th>
                             <th className="" scope="col">Tên</th>
+                            <th className="" scope="col">Loại</th>
                             <th className="" scope="col">Nhà Hàng</th>
                             <th className="" scope="col">Đường</th>
                             <th className="" scope="col">Quận</th>
@@ -188,11 +189,13 @@ class ListFood extends React.Component{
                         <tr key={index} className='admin'>
                             <th className="text-center" scope="row">{index + 1}</th>
                             <td className="food_name"><a href={'/food-info/' +  food.id }>{food.name}</a></td>
+                            <td className="food_cate">{food.cate_name}</td>
                             <td className="food_restaurant">{food.restaurant_name}</td>
                             <td className="food_street">{food.street_number + ', ' + food.street_name}</td>
                             <td className="food_district">{food.district_name}</td>
                             <td className="food_city">{food.city_name}</td>
                             <td className="food_owner">{food.owner_name}</td>
+
                             <td className="food_status">
                                 {
                                     food.status === 'approve' ? (<span className="text-success">Đã duyệt</span>) : (<span className="text-danger">Chờ duyệt</span>)
@@ -201,7 +204,7 @@ class ListFood extends React.Component{
 
                             <td className="text-center">
                                 <a target='_blank' href={'/food/edit/' + food.id} className="btn btn-primary a-admin-page"><i className="fa fa-edit"></i></a>
-                                <a target='_blank' href={'/food-info/' + food.id} className="btn btn-info a-admin-page mx-2"><i className="far fas fa-desktop"></i></a>
+                                <a target='_blank' href={'/food-info/' + food.id} className="btn btn-info a-admin-page mx-2"><i className="fas fa-desktop"></i></a>
                                 <button className="btn btn-danger" data-toggle="modal" data-target={"#deletePost" +  index}><i className="far fa-trash-alt"></i></button>
                                 <div>
                                     <div className="modal fade" id={"deletePost" + index} role="dialog">

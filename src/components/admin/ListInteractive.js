@@ -26,7 +26,7 @@ class ListFood extends React.Component{
 
     componentDidMount(){
 
-        axios.get(Service.getServerHostName() + "/api/admin/food-approve")
+        axios.get(Service.getServerHostName() + "/api/admin/food-interactive")
         .then(res => {
             // console.log(res.data);
             this.setState({foods : res.data.foods})
@@ -61,7 +61,7 @@ class ListFood extends React.Component{
                         // this.props.history.replace('/food/list', { msg : 'Thành công', title: 'Xóa bài viết', timeOut: 2000 })
                         NotificationManager.success('Thành công', 'Xóa bài viết', 3000);
                         $('.close').click();
-                        axios.get(Service.getServerHostName() + "/api/admin/food-approve")
+                        axios.get(Service.getServerHostName() + "/api/admin/food-interactive")
                         .then(res => {
                             // console.log(res.data);
                             this.setState({foods : res.data.foods})
@@ -177,7 +177,9 @@ class ListFood extends React.Component{
                             <th className="" scope="col">Đường</th>
                             <th className="" scope="col">Quận</th>
                             <th className="" scope="col">Thành phố</th>
-                            <th className="" scope="col">Đăng bởi</th>
+                            <th className="" scope="col">Thích</th>
+                            <th className="" scope="col">Lưu</th>
+                            <th className="" scope="col">Bình luận</th>
                             <th className="" scope="col">Trạng thái</th>
                             <th className="" scope="col">Cập nhật</th>
                         </tr>
@@ -192,7 +194,59 @@ class ListFood extends React.Component{
                             <td className="food_street">{food.street_number + ', ' + food.street_name}</td>
                             <td className="food_district">{food.district_name}</td>
                             <td className="food_city">{food.city_name}</td>
-                            <td className="food_owner">{food.owner_name}</td>
+                            <td className="">
+
+                                { food.like.length ?
+                                    (
+                                        <div className="dropdown">
+                                            <div className="dropdown-toggle" data-toggle="dropdown">
+                                                <span className="text-danger">{food.like.length} lượt</span>
+                                            </div>
+                                            <div className="dropdown-menu">
+                                                {
+                                                    food.like.map( (like, index) =>
+                                                        <a key={index} href=''  className="dropdown-item">{index + 1 +  '. ' + like.username}</a>
+                                                    )
+                                                }
+                                            </div>
+                                        </div>
+                                    ) : (<span className="text-primary">Không</span>)
+                                }
+
+                            </td>
+                            <td className="">
+
+                                { food.favorite.length ?
+                                    (
+                                        <div className="dropdown">
+                                            <div className="dropdown-toggle" data-toggle="dropdown">
+                                                <span className="text-danger">{food.favorite.length} lượt</span>
+                                            </div>
+                                            <div className="dropdown-menu">
+                                                {
+                                                    food.favorite.map( (fav, index) =>
+                                                        <a key={index} href=''  className="dropdown-item">{index + 1 +  '. ' + fav.username}</a>
+                                                    )
+                                                }
+                                            </div>
+                                        </div>
+                                    ) : (<span className="text-primary">Không</span>)
+                                }
+
+                            </td>
+                            <td className="">
+
+                                { food.comment.length ?
+                                    (
+                                        <div className="dropdown">
+                                            <div className="dropdown-toggle" data-toggle="dropdown">
+                                                <span className="text-danger">{food.comment.length} lượt</span>
+                                            </div>
+                                        </div>
+                                    ) : (<span className="text-primary">Không</span>)
+                                }
+
+                            </td>
                             <td className="food_status">
                                 {
                                     food.status === 'approve' ? (<span className="text-success">Đã duyệt</span>) : (<span className="text-danger">Chờ duyệt</span>)
