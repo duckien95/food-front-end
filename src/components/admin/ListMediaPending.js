@@ -178,8 +178,7 @@ class ListFood extends React.Component{
                             <th className="" scope="col">Đường</th>
                             <th className="" scope="col">Quận</th>
                             <th className="" scope="col">Thành phố</th>
-                            <th className="" scope="col">Đăng bởi</th>
-                            <th className="" scope="col">Trạng thái</th>
+                            <th className="" scope="col">Ảnh-Video</th>
                             <th className="" scope="col">Cập nhật</th>
                         </tr>
                     </thead>
@@ -194,11 +193,21 @@ class ListFood extends React.Component{
                             <td className="food_street">{food.street_number + ', ' + food.street_name}</td>
                             <td className="food_district">{food.district_name}</td>
                             <td className="food_city">{food.city_name}</td>
-                            <td className="food_owner">{food.owner_name}</td>
 
                             <td className="food_status">
-                                {
-                                    food.status === 'approve' ? (<span className="text-success">Đã duyệt</span>) : (<span className="text-danger">Chờ duyệt</span>)
+                                { food.images ?
+                                    (
+                                        <div >
+                                            <span className="text-danger">{food.images} ảnh</span>
+                                        </div>
+
+                                    ) : (
+                                        food.videos ? (
+                                            <div>
+                                                <span className="text-danger">{food.videos} video</span>
+                                            </div>
+                                        ) : ''
+                                    )
                                 }
                             </td>
 

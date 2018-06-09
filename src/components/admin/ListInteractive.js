@@ -238,10 +238,8 @@ class ListFood extends React.Component{
 
                                 { food.comment.length ?
                                     (
-                                        <div className="dropdown">
-                                            <div className="dropdown-toggle" data-toggle="dropdown">
-                                                <span className="text-danger">{food.comment.length} lượt</span>
-                                            </div>
+                                        <div>
+                                            <span className="text-danger">{food.comment.length} lượt</span>
                                         </div>
                                     ) : (<span className="text-primary">Không</span>)
                                 }
