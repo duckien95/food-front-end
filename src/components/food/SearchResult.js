@@ -40,12 +40,12 @@ class SearchResult extends React.Component{
 
         $('.search-not-found')[0].style.visibility = 'hidden';
 
-        axios.get(Service.getServerHostName() + '/api/food/category-list')
-        .then(
-            res => {
-                this.setState({ foodCategoryList : res.data.data})
-            }
-        )
+        // axios.get(Service.getServerHostName() + '/api/food/category-list')
+        // .then(
+        //     res => {
+        //         this.setState({ foodCategoryList : res.data.data})
+        //     }
+        // )
         // console.log(Service.getListDistance());
         var maxDistance = localStorage.getItem('distance');
         // console.log(maxDistance === undefined);
@@ -114,7 +114,7 @@ class SearchResult extends React.Component{
 
     render(){
         return(
-            <div className="mrg-15 px-1">
+            <div className="mrg-15 px-1 my-4">
             <div className="">
                 <div className="text-center text-danger search-not-found alert alert-light w-100">{this.state.msg}</div>
             </div>

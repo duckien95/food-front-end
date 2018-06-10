@@ -98,10 +98,10 @@ class Navbar extends React.Component{
                                             {
                                                 this.state.user.type !== "normal" ? <a href='/admin/pending' className="dropdown-item" >Duyệt bài</a> : ''
                                             }
-                                            <a href={'/food/create'} className="dropdown-item" >Đăng bài</a>
-                                            <a href={'/food-favorite/' + this.state.user.id } className="dropdown-item" >Bài viết đã lưu lại</a>
-                                            <a href={'/food-like/' + this.state.user.id } className="dropdown-item" >Bài viết đã thích</a>
-                                            <a href={'/food-post/' + this.state.user.id } className="dropdown-item" >Bài viết đã đăng</a>
+                                            <a href={'/food/create'} className="dropdown-item">Thêm món ăn</a>
+                                            <a href={'/food-favorite/' + this.state.user.id } className="dropdown-item" >Món ăn đã lưu lại</a>
+                                            <a href={'/food-like/' + this.state.user.id } className="dropdown-item" >Món ăn đã thích</a>
+                                            <a href={'/food-post/' + this.state.user.id } className="dropdown-item" >Món ăn đã đăng</a>
                                             <a href={'/edit/' + this.state.user.id } className="dropdown-item" >Chỉnh sửa thông tin</a>
                                             <a className="dropdown-item" onClick={this.handleLogout} >Đăng xuất</a>
                                     </div>
@@ -153,10 +153,10 @@ class Navbar extends React.Component{
                                             {
                                                 this.state.user.type !== "normal" ? <a href='/admin/pending' className="dropdown-item" >Duyệt bài</a> : ''
                                             }
-                                            <a href={'/food/create'} className="dropdown-item" >Đăng bài</a>
-                                            <a href={'/food-favorite/' + this.state.user.id } className="dropdown-item" >Bài viết đã lưu lại</a>
-                                            <a href={'/food-like/' + this.state.user.id } className="dropdown-item" >Bài viết đã thích</a>
-                                            <a href={'/food-post/' + this.state.user.id } className="dropdown-item" >Bài viết đã đăng</a>
+                                            <a href={'/food/create'} className="dropdown-item" >Thêm món ăn</a>
+                                            <a href={'/food-favorite/' + this.state.user.id } className="dropdown-item" >Món ăn đã lưu lại</a>
+                                            <a href={'/food-like/' + this.state.user.id } className="dropdown-item" >Món ăn đã thích</a>
+                                            <a href={'/food-post/' + this.state.user.id } className="dropdown-item" >Món ăn đã đăng</a>
                                             <a href={'/edit/' + this.state.user.id } className="dropdown-item" >Chỉnh sửa thông tin</a>
                                             <a className="dropdown-item" onClick={this.handleLogout} >Đăng xuất</a>
                                     </div>
@@ -172,7 +172,7 @@ class Navbar extends React.Component{
 
                                 <ul className="navbar-nav mr-auto">
                                     <li className="nav-item">
-                                        <Link to={'/'} className="nav-link">VIETFOOD</Link>
+                                        <Link to={'/'} className="nav-link">Trang chủ</Link>
                                     </li >
 
                                     <li className="nav-item dropdown">

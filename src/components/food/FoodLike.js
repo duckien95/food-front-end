@@ -9,7 +9,7 @@ class FoodLike extends React.Component{
         super();
         this.state  = {
             foodList : [],
-            title: "Danh sách các bài viết đã thích"
+            title: "Danh sách các món ăn đã thích"
         }
 
     }

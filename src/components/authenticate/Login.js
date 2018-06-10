@@ -59,6 +59,7 @@ class Login extends Component {
                 } else {
                     // this.props.history.replace('/');
                     window.location.reload('/')
+                    window.history.back();
                 }
 
             })
@@ -121,6 +122,7 @@ class Login extends Component {
                 .then((result) => {
                     // console.log(result);
                     window.location.reload('/')
+                    window.history.back();
                 })
                 .catch((err)=> {
                     console.log("error");

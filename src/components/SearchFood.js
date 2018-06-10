@@ -15,10 +15,15 @@ class Search extends React.Component{
             streetSelected: -1,
             distanceSelected: -1,
             content: '',
+            max_price: '',
+            min_price: '',
             district: [],
             street: [],
             cate: [],
             cateDetail: [],
+            list_max_price: [],
+            main_list_max: [],
+            list_min_price: [],
             foodList:[],
             login : false,
             user: [],
@@ -31,15 +36,11 @@ class Search extends React.Component{
         this.handleCateChange = this.handleCateChange.bind(this);
         this.handleDistrictChange = this.handleDistrictChange.bind(this);
 		this.handleStreetChange = this.handleStreetChange.bind(this);
-        this.handleDistanceChange = this.handleDistanceChange.bind(this);
+        this.handleDistanceChange = this.handleDistanceChange.bind(this)
+        this.handleMinPrice =  this.handleMinPrice.bind(this);
         this.onChange = this.onChange.bind(this);
         this.getMyLocation = this.getMyLocation.bind(this);
         this.onSearch = this.onSearch.bind(this)
-    }
-
-
-    componentWillMount(){
-
     }
 
     componentDidMount(){
@@ -47,36 +48,45 @@ class Search extends React.Component{
         // console.log("URL : " + window.location.pathname);
         this.setState({ distance: Service.getListDistance() });
         var localSeach = localStorage.getItem('search-info');
-        // console.log(localSeach !== null);
-        if(localSeach !== null){
-            var searchInfo = JSON.parse(localSeach);
-            console.log(searchInfo);
-            this.setState({
-                category: searchInfo.category,
-                detail: searchInfo.detail,
-                districtSelected: searchInfo.districtSelected,
-                streetSelected: searchInfo.streetSelected,
-                distanceSelected: searchInfo.distanceSelected
-            })
-        }
-        // console.log(this.props);
+        console.log(localSeach);
+        console.log(window.location.pathname);
         if(window.location.pathname !== "/search"){
-            // localStorage.removeItem('search-info');
-            // localStorage.setItem('search-info',
-            //     JSON.stringify({
-            //         districtSelected : -1,
-            //         streetSelected: -1,
-            //         distanceSelected : -1,
-            //         category : -1,
-            //         detail : -1
-            //     })
-            // );
-            this.setState({
+            console.log('path name != search');
+            // alert('path name != search');
+            localStorage.removeItem('search-info');
+            var data = {
                 districtSelected : -1,
                 distanceSelected : -1,
-                category : -1
-            })
+                category: -1,
+                min_price : -1,
+                max_price : -1
+            }
+            localStorage.setItem('search-info',
+                JSON.stringify(data)
+            );
+            this.setState(data)
         }
+        else {
+            if(localSeach !== null){
+                console.log('searchInfo not null');
+                // alert('searchInfo not null');
+                var searchInfo = JSON.parse(localSeach);
+                // console.log(searchInfo);
+                this.setState({
+                    category: searchInfo.category,
+                    detail: searchInfo.detail,
+                    districtSelected: searchInfo.districtSelected,
+                    streetSelected: searchInfo.streetSelected,
+                    distanceSelected: searchInfo.distanceSelected,
+                    min_price: searchInfo.min_price,
+                    max_price: searchInfo.max_price
+                })
+
+            }
+        }
+
+        // console.log(this.props);
+
         $('#link-to-search')[0].style.visibility = "hidden";
 
         axios.get(Service.getServerHostName() + "/api/category")
@@ -89,6 +99,20 @@ class Search extends React.Component{
 			this.setState({ district: res.data.data[1] });
 		});
 
+        axios.get(Service.getServerHostName() + '/api/food-min-price')
+        .then(
+            res => {
+                this.setState({ list_min_price : res.data.prices })
+            }
+        )
+
+        axios.get(Service.getServerHostName() + '/api/food-max-price')
+        .then(
+            res => {
+                this.setState({ list_max_price : res.data.prices, main_list_max: res.data.prices })
+            }
+        )
+
         // console.log(this.state.districtSelected);
 
 
@@ -100,7 +124,7 @@ class Search extends React.Component{
         localStorage.removeItem('distance');
         localStorage.removeItem('search-info');
 
-        const { content, latitude, longitude, districtSelected, category, distanceSelected } = this.state;
+        var { content, latitude, longitude, districtSelected, category, distanceSelected, min_price, max_price } = this.state;
         var streetSelected = -1, detail = -1;
         // var districtSelected = this.state.districtSelected;
         // var streetSelected = (this.state.streetSelected ? this.state.streetSelected : -1);
@@ -115,12 +139,14 @@ class Search extends React.Component{
                     streetSelected: -1,
                     distanceSelected : distanceSelected,
                     category : category,
-                    detail : -1
+                    detail : -1,
+                    min_price: min_price,
+                    max_price: max_price
                 })
             );
         }
-
-        var data = { districtSelected, streetSelected, distanceSelected,  category, detail, content, latitude, longitude };
+        max_price = Number(max_price);
+        var data = { districtSelected, streetSelected, distanceSelected,  category, detail, content, min_price, max_price, latitude, longitude };
         axios.post(Service.getServerHostName() + '/api/food-search', data)
         .then(res => {
             // console.log(res);
@@ -148,8 +174,8 @@ class Search extends React.Component{
                 else {
                     window.location.reload();
                 }
-
-                console.log("pathname = " + window.location.pathname);
+                //
+                // console.log("pathname = " + window.location.pathname);
 
 
             }
@@ -180,6 +206,27 @@ class Search extends React.Component{
         })
       }
 
+    }
+
+    handleMinPrice(e) {
+        var min_price = Number(e.target.value),
+            list_max = this.state.main_list_max,
+            new_list_max = [];
+        console.log(list_max.length);
+        for (let i = 0; i < list_max.length; i++) {
+            if(Number(list_max[i].max_price) > min_price){
+                new_list_max.push(list_max[i]);
+            }
+        }
+
+        this.setState( { min_price: min_price, list_max_price: new_list_max });
+        axios.get(Service.getServerHostName() + '/api/food-max-price')
+        .then(
+            res => {
+                this.setState({ main_list_max: res.data.prices })
+            }
+        )
+        // console.log(this.state.main_list_max);
     }
 
     handleDistrictChange(e){
@@ -268,6 +315,33 @@ class Search extends React.Component{
                                 }
                             </select>
                         </div>
+                        <div className="col-sm mb-1">
+                            <select className="custom-select" name="min_price" onChange={this.handleMinPrice} >
+                                <option value="-1" selected>Giá tối thiểu</option>
+                                {
+                                    this.state.list_min_price.map((price, index) =>
+                                        Number(this.state.min_price) === Number(price.min_price) ?
+                                            (<option key={index} value={price.min_price} selected>Trên {Service.formatMoney(`${price.min_price}`)} VND</option>)
+                                            : (<option key={index} value={price.min_price}>Trên {Service.formatMoney(`${price.min_price}`)} VND</option>)
+                                    )
+                                }
+                            </select>
+                        </div>
+
+                        <div className="col-sm mb-1">
+                            <select className="custom-select" name="max_price" onChange={this.onChange} >
+                                <option value="-1" selected>Giá tối đa</option>
+                                {
+                                    this.state.list_max_price.map((price, index) =>
+                                        Number(this.state.max_price) === Number(price.max_price) ?
+                                            (<option key={index} value={price.max_price} selected>Dưới {Service.formatMoney(`${price.max_price}`)} VND</option>)
+                                            : (<option key={index} value={price.max_price}>Dưới {Service.formatMoney(`${price.max_price}`)} VND</option>)
+
+                                    )
+                                }
+                            </select>
+                        </div>
+
                         <div className="col-sm mb-1">
                             <input className="search" name="content" onChange={this.onChange} placeholder="Nhập tên món ăn" aria-label="Search" />
                         </div>

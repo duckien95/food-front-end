@@ -83,7 +83,7 @@ class FoodDetail extends React.Component {
             // console.log($(document).find('.home-image').length);
         });
 
-        console.log('componentDidMount');
+        // console.log('componentDidMount');
 
 
         // console.log(localStorage.getItem('user'));
@@ -106,17 +106,17 @@ class FoodDetail extends React.Component {
             }
         ).then(
              res => {
-                 axios.get(Service.getServerHostName() + '/api/comments/' + this.props.match.params.foodId)
-                 .then(
-                     res =>{
-                        var comment = res.data.data;
+                axios.get(Service.getServerHostName() + '/api/comments/' + this.props.match.params.foodId)
+                .then(
+                    res =>{
+                    var comment = res.data.data;
                         if(comment.length){
                             this.setState({ comments : comment})
                         } else {
                             this.setState({ comments : []})
                         }
-                     }
-                 )
+                    }
+                )
              }
         ).then(
             res => {
@@ -170,6 +170,7 @@ class FoodDetail extends React.Component {
 
                     if(this.state.user !== null){
                         if(this.state.user.type !== "normal"){
+                            $('#admin-act').removeClass('d-none');
                             $('#deletePost')[0].style.visibility='visible';
                             $('#editPost')[0].style.visibility='visible';
                             if(data.status === "pending"){
@@ -255,6 +256,33 @@ class FoodDetail extends React.Component {
             hour + ':' +
             (minute > 9 ? '' : '0') + minute + ':' +
             (second > 9 ? '' : '0') + second ;
+    }
+
+    onDeleteComment = (comment_id) => (e) => {
+        e.preventDefault();
+        axios.post(Service.getServerHostName() + '/api/delete-comment', { comment_id })
+        .then(
+            res => {
+                if(res.data.status === 'success'){
+                    NotificationManager.info('Thành công', 'Xóa bình luận');
+                    axios.get(Service.getServerHostName() + '/api/comments/' + this.props.match.params.foodId)
+                    .then(
+                        res =>{
+                        var comment = res.data.data;
+                            if(comment.length){
+                                this.setState({ comments : comment})
+                            } else {
+                                this.setState({ comments : []})
+                            }
+                        }
+                    )
+                }
+                else {
+                    NotificationManager.error('Bình luận chưa được xóa', 'Có lỗi xảy ra')
+                }
+            }
+        )
+        // console.log(comment_id);
     }
 
     onDeleteVideo = (file_id) => (e) => {
@@ -589,12 +617,12 @@ class FoodDetail extends React.Component {
                 axios.post(Service.getServerHostName() + "/food/add-media-file", formData)
                 .then((result) => {
                     if(result.data.status === 'success'){
-                        NotificationManager.success('Tệp tin đã được tải lên', 'Thành công')
+                        NotificationManager.info('Tệp tin đã được tải lên, hình ảnh và video cuả bạn sẽ được duyệt vào 24h hàng ngày', 'Thành công', 10000)
                         $('#closeModal')[0].click();
                         // window.location.reload();
                     }
                     else {
-                        NotificationManager.success('Tệp tin chưa được tải lên', 'Có lỗi xảy ra')
+                        NotificationManager.error('Tệp tin chưa được tải lên', 'Có lỗi xảy ra')
                     }
 
                 })
@@ -739,7 +767,7 @@ class FoodDetail extends React.Component {
             <div className="row">
                 <NotificationContainer/>
                 <a href='/admin' className="btn redirect d-none">Redirect</a>
-                <div className="col-md-12 px-1 mb-3">
+                <div className="col-md-12 px-1 mb-3 d-none" id="admin-act">
                     <div className="row">
                         <div className="col-sm">
                             <button id="approvePost" className="max-width btn btn-info" onClick={this.onApprove}>Duyệt bài<i className="fas fa-thumbs-up mx-2"></i></button>
@@ -837,14 +865,14 @@ class FoodDetail extends React.Component {
                                           <div className    ="modal-content">
                                             <div className  ="modal-header">
                                               <h4 className ="modal-title text-center">Thêm ảnh và video</h4>
-                                              <button type="button" id="closeModal" class="close" data-dismiss="modal">&times;</button>
+                                              <button type="button" id="closeModal" className="close" data-dismiss="modal">&times;</button>
                                             </div>
                                             <div className="modal-body">
                                                 <form onSubmit={this.onAddImgVideo} encType="multipart/form-data">
                                                     {
                                                         this.state.message === '' ?
                                                         '' :
-                                                        (<div class="alert alert-danger col-md-12 text-center">
+                                                        (<div className="alert alert-danger col-md-12 text-center">
                                                             {this.state.message}
                                                         </div>)
                                                     }
@@ -953,17 +981,18 @@ class FoodDetail extends React.Component {
 
                                 {
                                     videoUrl.map((video, index) =>
-                                    <div className="col-md-6 px-1 py-1 d-inline-flex row">
+                                    <div className="col-md-6 px-1 py-1 d-inline-flex row" key={index}>
                                         <div className="col-md-12">
                                             <iframe key={index} className="w-100 video-drive" title={index} src={"https://drive.google.com/file/d/" + video + "/preview"}></iframe>
-                                            <div className="row py-1">
-                                                <div className="col-sm">
-                                                    <button onClick={this.onDeleteVideo(video)} className="btn btn-danger w-100">Xóa video</button>
-                                                </div>
-                                                <div className="col-sm">
 
+                                            {  Auth.loggedIn()  && this.state.user.type === "admin" ? (
+                                                <div className="row py-1">
+                                                    <div className="col-sm">
+                                                        <button onClick={this.onDeleteVideo(video)} className="btn btn-danger w-100">Xóa video</button>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            ) : '' }
+
                                         </div>
                                     </div>
                                     )
@@ -1091,36 +1120,46 @@ class FoodDetail extends React.Component {
                         <div className="title px-1 py-1">Bình luận bài viết</div>
 
                         {
-                            comments.map( (comment,index) =>
-                                <div className="row my-2" key={index}>
+                            comments.map( (cmt,index) =>
+                            <div className="my-2"  key={index}>
+                                <div className="row">
                                     <div className="col-md-1 px-1 py-1">
                                         <img className="comment-avatar w-100" src="https://www.jennstrends.com/wp-content/uploads/2013/10/bad-profile-pic-2.jpeg" />
                                     </div>
-                                    <div className="col-md-11 px-1 py-1">
-                                        <div className='comment-username'>{comment.username}</div>
-                                        <div>{comment.content}</div>
-                                        <div className='comment-datetime'>{this.converDateTime(comment.date)}</div>
+                                    <div className="col-md-10 px-1 py-1">
+                                        <div className='comment-username'>{cmt.username}</div>
+                                        <div>{cmt.content}</div>
+                                        <div className='comment-datetime'>{this.converDateTime(cmt.date)}</div>
                                     </div>
+                                    {
+                                        Auth.loggedIn()  && (this.state.user.type === "admin" || this.state.user.id === cmt.user_id) ? (
+                                            <div className="col-md-1 px-1 py-1">
+                                                <button onClick={this.onDeleteComment(cmt.id)} className="btn btn-danger float-right"><i className="far fa-trash-alt"></i></button>
+                                            </div>
+                                        ) : ''
+                                    }
+
                                 </div>
+                            </div>
                             )
                         }
                         <div className="row my-2 px-1 py-1">
                         {
                             this.state.message === '' ?
                             '' :
-                            (<div class="alert alert-danger col-md-12 text-center" id="msg">
+                            (<div className="alert alert-danger col-md-12 text-center" id="msg">
                                 {this.state.message}
                             </div>)
                         }
                         <form className="w-100" onSubmit={this.handleSubmitComment}>
-                            <div class="form-group">
-                                <textarea class="form-control" placeholder="Bình luận..." rows="5" id="comment" value={this.state.content} onChange={this.handleTextChange}></textarea>
+                            <div className="form-group">
+                                <textarea className="form-control" placeholder="Bình luận..." rows="5" id="comment" value={this.state.content} onChange={this.handleTextChange}></textarea>
                                 <button className="btn btn-primary float-right">Bình luận</button>
                             </div>
                         </form>
                         </div>
                     </div>
-                    <div className="col-md-12">
+                    <div className="col-md-12 mb-4">
 
                         <div className="title px-1 py-1">
                             {this.state.food.cate_name} tại {this.state.food.city_name}

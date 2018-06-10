@@ -14,7 +14,7 @@ class FoodList extends React.Component{
 
     render(){
         return(
-            <div className="">
+            <div className="mb-4">
                 <div className="text-center title-header">{this.props.title}</div>
                 <div className="row">
                 {

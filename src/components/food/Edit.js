@@ -172,7 +172,7 @@ class FoodEdit extends React.Component {
 				if(result.data.status === 'success'){
 
 					this.props.history.replace("/food-info/" + this.food.id);
-					NotificationManager.success('Thành công', 'Sửa bài viết');
+					NotificationManager.success('Thành công', 'Sửa thông tin món ăn');
 				}
 				else {
 					NotificationManager.error('', 'Có lỗi xảy ra');
@@ -251,7 +251,7 @@ class FoodEdit extends React.Component {
 
 			<form onSubmit={this.onSubmit} encType="multipart/form-data">
 				<NotificationContainer />
-				<div className="title-header text-center mb-3">Cập nhật bài viết</div>
+				<div className="title-header text-center mb-3">Cập nhật thông tin món ăn</div>
 				<div className="form-group row">
 					<label htmlFor="name" className="col-sm-2 form-control-label">Tên món ăn</label>
 					<div className="col-sm-10">

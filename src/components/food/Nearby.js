@@ -34,7 +34,7 @@ class Nearby extends React.Component{
 
     render(){
         return(
-            <div>
+            <div className="my-4">
                 <div className="text-center mb-3">
                     <div className="nearby-title">Địa điểm ở gần</div>
                     <div className="nearby-header">{this.state.info.res_name}</div>

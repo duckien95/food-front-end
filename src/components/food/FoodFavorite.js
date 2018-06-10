@@ -9,7 +9,7 @@ class FoodList extends React.Component{
         super();
         this.state  = {
             foodList : [],
-            title: "Danh sách các bài viết đã lưu"
+            title: "Danh sách các món ăn đã lưu"
         }
 
     }

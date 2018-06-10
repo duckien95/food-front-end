@@ -144,7 +144,7 @@ class FoodCreate extends React.Component {
 		e.preventDefault();
 
 
-		const { name, description, min_price, max_price, category, detail, restaurant, citySelected, districtSelected, streetSelected, addressDetail, imageFile, videoFile} = this.state;
+		var { name, description, min_price, max_price, category, detail, restaurant, citySelected, districtSelected, streetSelected, addressDetail, imageFile, videoFile} = this.state;
 
 		let formData = new FormData();
 
@@ -180,11 +180,11 @@ class FoodCreate extends React.Component {
 			if(res.data.status === 'success'){
 				window.location.replace("/food/create");
 				// window.location.replace('/');
-				NotificationManager.success('Thành công','Đăng bài viết',3000);
+				NotificationManager.success('Thành công','Thêm món ăn',3000);
 				// this.props.history.replace('/food/list', { msg : 'Thành công', title: 'Đăng bài viết', timeOut: 2000 })
 			}
 			else {
-				NotificationManager.error('Bài viết chưa được đăng', 'Có lỗi xảy ra');
+				NotificationManager.error('Món ăn chưa được đăng', 'Có lỗi xảy ra');
 			}
 
 				// this.props.history.replace("/");
@@ -193,13 +193,22 @@ class FoodCreate extends React.Component {
 	}
 
 	onInvalid(e){
-		console.log("value " + e.target.value );
-		console.log(e.target.value === "");
-		if(e.target.value === ""){
+		// console.log("value " + e.target.value );
+		console.log(e.target.name);
+		if(e.target.value === ''){
 			e.target.setCustomValidity('Trường này không được để trống');
 		}
 		else{
-			e.target.setCustomValidity('');
+			if(e.target.name === "min_price"){
+				e.target.setCustomValidity('Giá thành không được nhỏ hơn 0');
+			}
+			else if(e.target.name === "max_price"){
+				e.target.setCustomValidity('Giá tối đa không được nhỏ hơn 0 và phải lớn hơn giá tối thiểu');
+			}
+			else {
+				e.target.setCustomValidity('');
+			}
+
 		}
 	}
 
@@ -260,7 +269,7 @@ class FoodCreate extends React.Component {
 		return (
 			<form onSubmit={this.onSubmit} encType="multipart/form-data">
 				<NotificationContainer />
-				<div className="title-header text-center mb-3">Đăng bài viết mới</div>
+				<div className="title-header text-center mb-3">Thêm món ăn mới</div>
 				<div className="form-group row">
 					<label htmlFor="name" className="col-sm-2 form-control-label">Tên món ăn</label>
 					<div className="col-sm-10">
@@ -301,10 +310,10 @@ class FoodCreate extends React.Component {
 					<div className="col-sm-10">
 						<div className="form-row">
 						<div className="col-sm">
-							<input type="number" className="form-control" name="min_price" placeholder="Giá tối thiểu" onChange={this.onChange} onInvalid={this.onInvalid} required/>
+							<input type="number" className="form-control" name="min_price" min="0" placeholder="Giá tối thiểu" onChange={this.onChange} onInvalid={this.onInvalid} required/>
 						</div>
 						<div className="col-sm">
-							<input type="number" className="form-control" name="max_price" placeholder="Giá tối đa" onChange={this.onChange} onInvalid={this.onInvalid} required/>
+							<input type="number" className="form-control" name="max_price" min={this.state.min_price} placeholder="Giá tối đa" onChange={this.onChange} onInvalid={this.onInvalid}/>
 						</div>
 						</div>
 					</div>
