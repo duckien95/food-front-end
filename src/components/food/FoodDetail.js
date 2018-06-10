@@ -1170,7 +1170,7 @@ class FoodDetail extends React.Component {
                                 <div className="col-xs-6 col-md-4 suggest px-1 py-1" key={index}>
                                     <a href={"/food-info/" + food.id}>
                                         <div>
-                                            <img  src={Service.getServerHostName() + "/images/index.jpg"} className="home-image" />
+                                            <img  src={Service.getServerHostName() + "/images/avatar.jpg"} className="home-image" />
                                         </div>
                                         <div className="food-detail-info px-2">
                                                 <div className="food-title-name">
