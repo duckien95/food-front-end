@@ -34,7 +34,10 @@ class FoodList extends React.Component{
                                                 { Service.formatMoney(`${food.min_price}`) + (Number(food.max_price) > 0 ? (' - ' + Service.formatMoney(`${food.max_price}`)) : '') } VND
                                             </span>
                                         </div>
-                                        <div className="">{ food.street_number + ' ' + food.street_name + ', ' + food.district_name + ', ' + food.city_name }</div>
+                                        {
+                                            food.street_number !== undefined ? (<div className="">{ food.street_number + ' ' + food.street_name + ', ' + food.district_name + ', ' + food.city_name }</div>) : ''
+                                        }
+
                                         {
                                             food.distance !== undefined ? (<div className="li-child-suggest">Khoảng cách {food.distance}</div>) : ''
                                         }

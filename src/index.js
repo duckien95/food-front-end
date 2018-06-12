@@ -21,6 +21,7 @@ import FoodEdit from './components/food/Edit';
 import FoodFavorite from './components/food/FoodFavorite';
 import FoodLike from './components/food/FoodLike';
 import FoodPost from './components/food/FoodPost';
+import FoodInRestaurant from "./components/food/FoodInRestaurant"
 import FoodByCategory from './components/food/FoodByCategory';
 import Nearby from './components/food/Nearby';
 import SearchResult from './components/food/SearchResult';
@@ -61,6 +62,7 @@ ReactDOM.render(
             <Route path="/food-favorite/:userId" component={FoodFavorite} />
             <Route path="/food-like/:userId" component={FoodLike} />
             <Route path="/food-post/:userId" component={FoodPost} />
+            <Route path="/restaurant/:restaurant_name" component={FoodInRestaurant} />
             <Route path="/lightbox" component={LightboxExample} />
             <Route path="/search" component={SearchResult} />
             <Route path="/nearby/:place" component={Nearby} />

@@ -19,6 +19,7 @@ class FoodDetail extends React.Component {
             nearbyUrl: '',
             origin : '',
             res_name : '',
+            restaurant_name_url: '',
             food: [],
             videoUrl: [],
             imageUrl: [],
@@ -164,6 +165,7 @@ class FoodDetail extends React.Component {
                         nearbyUrl : nearbyUrl,
                         origin : originPlace,
                         res_name : res_name,
+                        restaurant_name_url: res_name.split(' ').join('-'),
                         listFileId: data.listFileId,
                         avatar: data.avatar
                     });
@@ -179,15 +181,18 @@ class FoodDetail extends React.Component {
                         }
                     }
 
-                    return data.category_id;
+                    // return data.category_id;
+                    return data;
                 })
             }
         ).then(
             res => {
-               axios.get(Service.getServerHostName() + '/api/food-category/' + res)
+               axios.get(Service.getServerHostName() + '/api/food-in-place/' + res.category_id + '/' + res.district_id + '/' + res.city_id)
                .then(res => {
                    this.setState({ sameCateList : res.data.foods })
                })
+
+
            }
        )
     }
@@ -813,7 +818,7 @@ class FoodDetail extends React.Component {
                             <tbody>
                                 <tr>
                                     <td className="index-column">Nhà hàng</td>
-                                    <td>{food.restaurant_name}</td>
+                                    <td><a target="_blank" href={"/restaurant/" + this.state.res_name }>{food.restaurant_name}</a></td>
                                 </tr>
                                 <tr>
                                     <td>Giá</td>
@@ -1162,7 +1167,7 @@ class FoodDetail extends React.Component {
                     <div className="col-md-12 mb-4">
 
                         <div className="title px-1 py-1">
-                            {this.state.food.cate_name} tại {this.state.food.city_name}
+                            {this.state.food.cate_name} tại { this.state.food.district_name + ', ' + this.state.food.city_name}
                         </div>
                         <div className="row">
                         {

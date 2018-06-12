@@ -95,9 +95,6 @@ class Navbar extends React.Component{
                                         <i className="fa fa-cog"></i>
                                     </a>
                                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                            {
-                                                this.state.user.type !== "normal" ? <a href='/admin/pending' className="dropdown-item" >Duyệt bài</a> : ''
-                                            }
                                             <a href={'/food/create'} className="dropdown-item">Thêm món ăn</a>
                                             <a href={'/food-favorite/' + this.state.user.id } className="dropdown-item" >Món ăn đã lưu lại</a>
                                             <a href={'/food-like/' + this.state.user.id } className="dropdown-item" >Món ăn đã thích</a>
